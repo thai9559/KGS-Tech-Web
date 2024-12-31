@@ -1,0 +1,81 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:9000"
+    volumes:
+      - ./backend:/var/www/html
+      - ./backend/storage:/var/www/html/storage
+      - ./backend/bootstrap/cache:/var/www/html/bootstrap/cache
+    networks:
+      - laravel-network
+    depends_on:
+      - mysql
+    environment:
+      - DB_HOST=mysql
+
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: secret   # Mật khẩu cho root
+      MYSQL_DATABASE: laravel      # Tên cơ sở dữ liệu
+      MYSQL_USER: app               # Tên người dùng
+      MYSQL_PASSWORD: secret        # Mật khẩu của người dùng 'app'
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - laravel-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql        
+      PMA_USER: root         
+      PMA_PASSWORD: secret   
+    ports:
+      - "8080:80"           
+    networks:
+      - laravel-network
+
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./backend:/var/www/html
+    networks:
+      - laravel-network
+    depends_on:
+      - app
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - laravel-network
+    depends_on:
+      - app
+
+
+
+networks:
+  laravel-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
