@@ -3,5 +3,19 @@
   "company": "会社",
   "business": "ビジネス",
   "blog": "ブログ",
-  "welcome": "私たちのウェブサイトへようこそ！"
+  "welcome": "私たちのウェブサイトへようこそ！",
+  "benefits": {
+    "technology": "先進技術",
+    "technology_description": "最新の技術を使用して最適なソリューションを提供し、作業効率を向上させ、コストを削減します。",
+    "professional_team": "プロフェッショナルチーム",
+    "professional_team_description": "私たちのエンジニアは十分に訓練されており、プロジェクトの実施プロセス全体でサポートを提供します。",
+    "custom_solutions": "カスタマイズソリューション",
+    "custom_solutions_description": "お客様のニーズと要件に特別に合わせた技術ソリューションを提供します。",
+    "sustainable_growth": "持続可能な成長",
+    "sustainable_growth_description": "安定した技術ソリューションを通じて、お客様のビジネスに長期的な成長をもたらすことを約束します。",
+    "customer_service": "献身的なカスタマーサービス",
+    "customer_service_description": "お客様の満足度を重視し、迅速で効果的なサポートサービスを提供します。",
+    "strategic_advice": "戦略的アドバイス",
+    "strategic_advice_description": "プロセスを最適化し、コストを削減するための技術およびビジネス戦略を提供します。"
+  }
 }

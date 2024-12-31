@@ -3,5 +3,19 @@
   "company": "Công ty",
   "business": "Dịch vụ",
   "blog": "Blog",
-  "welcome": "Chào mừng bạn đến với trang web của chúng tôi!"
+  "welcome": "Chào mừng bạn đến với trang web của chúng tôi!",
+  "benefits": {
+    "technology": "Công nghệ tiên tiến",
+    "technology_description": "Chúng tôi sử dụng công nghệ mới nhất để mang lại giải pháp tối ưu, giúp nâng cao hiệu suất công việc và giảm chi phí.",
+    "professional_team": "Đội ngũ chuyên nghiệp",
+    "professional_team_description": "Đội ngũ kỹ sư của chúng tôi được đào tạo bài bản, luôn sẵn sàng hỗ trợ bạn trong suốt quá trình triển khai dự án.",
+    "custom_solutions": "Giải pháp tùy chỉnh",
+    "custom_solutions_description": "Chúng tôi cung cấp các giải pháp công nghệ được tùy chỉnh đặc biệt cho nhu cầu và yêu cầu của từng khách hàng.",
+    "sustainable_growth": "Tăng trưởng bền vững",
+    "sustainable_growth_description": "Chúng tôi cam kết mang lại sự phát triển lâu dài cho doanh nghiệp của bạn thông qua các giải pháp công nghệ ổn định.",
+    "customer_service": "Dịch vụ khách hàng tận tâm",
+    "customer_service_description": "Chúng tôi luôn chú trọng đến sự hài lòng của khách hàng, đảm bảo dịch vụ hỗ trợ nhanh chóng và hiệu quả.",
+    "strategic_advice": "Tư vấn chiến lược",
+    "strategic_advice_description": "Chúng tôi cung cấp các chiến lược công nghệ và kinh doanh để giúp bạn tối ưu hóa các quy trình và tiết kiệm chi phí."
+  }
 }

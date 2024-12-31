@@ -1,8 +1,21 @@
 {
-    "home": "Home",
-    "company": "Company",
-    "business": "Business",
-    "blog": "Blog",
-    "welcome": "Welcome to our website!"
+  "home": "Home",
+  "company": "Company",
+  "business": "Business",
+  "blog": "Blog",
+  "welcome": "Welcome to our website!",
+  "benefits": {
+    "technology": "Advanced technology",
+    "technology_description": "We use the latest technology to provide optimal solutions, enhancing work efficiency and reducing costs.",
+    "professional_team": "Professional team",
+    "professional_team_description": "Our engineers are well-trained and always ready to support you throughout the project implementation process.",
+    "custom_solutions": "Custom solutions",
+    "custom_solutions_description": "We provide technology solutions specifically tailored to the needs and requirements of each customer.",
+    "sustainable_growth": "Sustainable growth",
+    "sustainable_growth_description": "We are committed to bringing long-term growth to your business through stable technology solutions.",
+    "customer_service": "Dedicated customer service",
+    "customer_service_description": "We focus on customer satisfaction, ensuring fast and effective support services.",
+    "strategic_advice": "Strategic consulting",
+    "strategic_advice_description": "We provide technology and business strategies to help you optimize processes and save costs."
   }
-  
+}
