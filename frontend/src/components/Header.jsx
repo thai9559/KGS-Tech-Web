@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Select } from 'antd';
-import { useTranslation } from 'react-i18next';
+import React, { useState } from "react";
+import { Select } from "antd";
+import { useTranslation } from "react-i18next";
 const { Option } = Select;
 
 const Header = ({ home, company, business, blog }) => {
   const { t, i18n } = useTranslation();
 
-  const [language, setLanguage] = useState('vi'); // Mặc định là Tiếng Việt
+  const [language, setLanguage] = useState("vi"); // Mặc định là Tiếng Việt
   const [menuOpen, setMenuOpen] = useState(false); // Điều khiển menu mở/đóng
 
   const handleLanguageChange = (value) => {
@@ -24,7 +24,7 @@ const Header = ({ home, company, business, blog }) => {
           onClick={toggleMenu}
           className="text-2xl focus:outline-none z-50 relative"
         >
-          {menuOpen ? '✖' : '☰'} 
+          {menuOpen ? "✖" : "☰"}
         </button>
       </div>
 
@@ -34,7 +34,7 @@ const Header = ({ home, company, business, blog }) => {
 
       <nav
         className={`fixed top-0 left-0 w-full h-full bg-gray-800 flex flex-col items-center justify-center transform ${
-          menuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+          menuOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
         } transition-all duration-300 ease-in-out z-40 lg:static lg:transform-none lg:translate-y-0 lg:opacity-100 lg:h-auto lg:flex-row lg:bg-white`}
       >
         <ul className="flex flex-col lg:flex-row gap-8 cursor-pointer text-white lg:text-black w-full lg:w-auto">
@@ -45,20 +45,20 @@ const Header = ({ home, company, business, blog }) => {
         </ul>
       </nav>
 
-      <div className="hidden lg:flex items-center gap-4">
-      <Select
+      <div className=" items-center gap-4">
+        <Select
           defaultValue="vi"
           onChange={handleLanguageChange}
           className="text-black bg-transparent focus:outline-none shadow-none border-none p-0"
           bordered={false} // Loại bỏ border của Select
           dropdownStyle={{
-            background: '#f9fafb',
+            background: "#f9fafb",
           }} // Thay đổi màu nền của dropdown
           style={{
-            width:110,
+            width: 110,
             padding: 0,
-            boxShadow: 'none',
-            border: 'none',
+            boxShadow: "none",
+            border: "none",
           }}
         >
           <Option value="vi">Tiếng Việt</Option>
