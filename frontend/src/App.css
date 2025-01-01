@@ -1,0 +1,15 @@
+:root {
+    --background-color: #f4f8ff;
+    /* Màu nền mặc định */
+}
+
+body {
+    background-color: var(--background-color);
+    /* Sử dụng biến màu nền */
+    font-family: Arial, sans-serif;
+    color: white;
+    /* Màu chữ để dễ đọc trên nền đen */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
