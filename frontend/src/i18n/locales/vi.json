@@ -17,5 +17,118 @@
     "customer_service_description": "Chúng tôi luôn chú trọng đến sự hài lòng của khách hàng, đảm bảo dịch vụ hỗ trợ nhanh chóng và hiệu quả.",
     "strategic_advice": "Tư vấn chiến lược",
     "strategic_advice_description": "Chúng tôi cung cấp các chiến lược công nghệ và kinh doanh để giúp bạn tối ưu hóa các quy trình và tiết kiệm chi phí."
-  }
+  },
+  "blogData": {
+    "latest_posts": "Bài viết mới nhất",
+    "post1": {
+      "title": "Bài viết 1",
+      "description": "Đây là mô tả cho bài viết 1"
+    },
+    "post2": {
+      "title": "Bài viết 2",
+      "description": "Đây là mô tả cho bài viết 2"
+    },
+    "post3": {
+      "title": "Bài viết 3",
+      "description": "Đây là mô tả cho bài viết 3"
+    },
+    "post4": {
+      "title": "Bài viết 4",
+      "description": "Đây là mô tả cho bài viết 4"
+    },
+    "date_label": "Ngày đăng: "
+  },
+  "footer": {
+    "company": "Công ty",
+    "about_us": "Về chúng tôi",
+    "careers": "Cơ hội nghề nghiệp",
+    "privacy_policy": "Chính sách bảo mật",
+    "contact_info": "Thông tin liên hệ",
+    "address": "40 Đường 16, Phường An Phú, Thành phố Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "039 * **",
+    "email": "KSG_tech@mail.com",
+    "follow_us": "Theo dõi chúng tôi"
+  },
+  "BusinessPage": {
+    "title": "Chào mừng đến với công ty của chúng tôi",
+    "subtitle": "Đổi mới vì một tương lai tươi sáng.",
+    "aboutUs": {
+      "title": "Về dịch vụ",
+      "description": "Chúng tôi cung cấp dịch vụ phát triển các giải pháp công nghệ toàn diện, bao gồm phát triển ứng dụng hệ thống web, ứng dụng di động và website. Với đội ngũ kỹ thuật viên giàu kinh nghiệm, chúng tôi tạo ra các sản phẩm tối ưu hóa quy trình làm việc, nâng cao hiệu quả hoạt động và mang đến trải nghiệm người dùng tuyệt vời trên mọi nền tảng. Dù bạn cần ứng dụng web linh hoạt, app di động mượt mà hay website chuyên nghiệp, chúng tôi luôn cam kết cung cấp giải pháp phù hợp và hiệu quả, giúp doanh nghiệp bạn phát triển mạnh mẽ trong thời đại số."
+    },
+    "services": {
+      "title": "Dịch vụ của chúng tôi",
+      "webDevelopment": {
+        "title": "Phát triển ứng dụng hệ thống web",
+        "description": "Chúng tôi chuyên phát triển các ứng dụng hệ thống web, đảm bảo tính linh hoạt và hiệu quả trong việc tối ưu hóa quy trình công việc và nâng cao trải nghiệm người dùng."
+      },
+      "smartphoneAppDevelopment": {
+        "title": "Phát triển ứng dụng di động",
+        "description": "Chúng tôi phát triển các ứng dụng di động tối ưu, mang lại sự tiện lợi và hiệu quả cho người dùng trên cả hai nền tảng iOS và Android."
+      },
+      "websiteDevelopment": {
+        "title": "Phát triển website",
+        "description": "Chúng tôi cung cấp giải pháp phát triển website tùy chỉnh, giúp doanh nghiệp của bạn nổi bật và thành công trong thị trường cạnh tranh ngày nay."
+      }
+    },
+    "whatClientsSay": {
+        "title": "Khách Hàng Nói Gì Về Chúng Tôi",
+        "testimony1": "\"Công ty này cung cấp dịch vụ tuyệt vời, và chúng tôi đã thấy những cải tiến rõ rệt trong hoạt động của mình. Rất đáng khen ngợi!\"",
+        "name1": "John Doe",
+        "position1": "Giám Đốc Điều Hành, TechCorp",
+        "testimony2": "\"Đội ngũ của họ rất chuyên nghiệp, tận tâm và đam mê trong việc cung cấp các giải pháp tốt nhất cho khách hàng. Một trải nghiệm tuyệt vời!\"",
+        "name2": "Jane Smith",
+        "position2": "Giám Đốc Marketing, InnovateX",
+        "testimony3": "\"Chúng tôi ấn tượng với tốc độ và hiệu quả của các giải pháp được cung cấp. Chuyên môn của họ đã giúp chúng tôi vượt qua những thử thách nghiêm trọng.\"",
+        "name3": "Michael Brown",
+        "position3": "Người Sáng Lập, GreenTech",
+        "testimony4": "\"Mối quan hệ hợp tác với công ty này thật tuyệt vời. Họ luôn vượt qua kỳ vọng của chúng tôi và mang lại kết quả xuất sắc.\"",
+        "name4": "Emily White",
+        "position4": "Quản Lý Hoạt Động, Global Enterprises"
+      
+    },
+    "contact": {
+      "title": "Liên hệ với chúng tôi",
+      "description": "Chúng tôi rất vui được nghe từ bạn! Liên hệ với chúng tôi để biết thêm chi tiết hoặc cơ hội hợp tác.",
+      "errorMessage": "Vui lòng điền đầy đủ các trường.",
+      "successMessage": "Tin nhắn của bạn đã được gửi thành công!",
+      "email": "Email",
+      "subject": "Chủ đề",
+      "selectSubject": "Chọn một chủ đề",
+      "workInquiry": "Yêu cầu công việc",
+      "supportRequest": "Yêu cầu hỗ trợ",
+      "generalInquiry": "Yêu cầu chung",
+      "otherInquiry": "Khác (vui lòng chỉ định)",
+      "specifySubject": "Vui lòng chỉ định",
+      "content": "Nội dung",
+      "submit": "Gửi"
+    }
+  },
+    "coreValues": {
+      "title": "Giá trị cốt lõi",
+      "innovation": "Đổi mới",
+      "innovationDescription": "Chúng tôi luôn tìm kiếm các giải pháp sáng tạo để phát triển không ngừng. Đổi mới không chỉ là tạo ra các sản phẩm mới, mà còn là cách chúng tôi tư duy và giải quyết các vấn đề.",
+      "responsibility": "Trách nhiệm",
+      "responsibilityDescription": "Chúng tôi cam kết mang lại giá trị bền vững cho khách hàng và cộng đồng, không chỉ hoàn thành công việc đúng hạn mà còn có trách nhiệm đối với xã hội và môi trường.",
+      "collaboration": "Hợp tác",
+      "collaborationDescription": "Mối quan hệ hợp tác lâu dài là nền tảng cho sự phát triển của chúng tôi. Chúng tôi tin rằng sự hợp tác, trao đổi và hỗ trợ lẫn nhau là chìa khóa để giải quyết vấn đề và tạo ra giá trị lâu dài.",
+      "creativity": "Sáng tạo",
+      "creativityDescription": "Sáng tạo là động lực của sự phát triển. Chúng tôi khuyến khích mọi người mang đến những ý tưởng đột phá và giải pháp sáng tạo."
+    },
+      "leadership": {
+        "title": "Ban lãnh đạo",
+        "ceo": "Giám đốc điều hành (CEO)",
+        "cto": "Giám đốc công nghệ (CTO)",
+        "coo": "Giám đốc vận hành (COO)"
+      },
+    
+    "companyOverview": {
+      "title": "Giới thiệu về Công ty KGS - Tech",
+      "description": "KGS - Tech là công ty công nghệ hàng đầu chuyên cung cấp các giải pháp phần mềm sáng tạo, dịch vụ tư vấn công nghệ và các dịch vụ IT uy tín cho khách hàng toàn cầu."
+    },
+    "mission": {
+      "title": "Sứ mệnh",
+      "description": "Sứ mệnh của chúng tôi là mang lại những giải pháp sáng tạo, giúp doanh nghiệp phát triển mạnh mẽ trong kỷ nguyên số. Chúng tôi cam kết cung cấp các sản phẩm và dịch vụ không chỉ đáp ứng nhu cầu hiện tại mà còn giúp khách hàng vươn lên dẫn đầu trong ngành."
+    }
+  
 }

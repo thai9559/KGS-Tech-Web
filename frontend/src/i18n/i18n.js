@@ -13,7 +13,7 @@ i18n
       en: { translation: en },
     },
     lng: "vi", // Ngôn ngữ mặc định
-    fallbackLng: "vi", // Ngôn ngữ dự phòng
+    fallbackLng: "en", // Ngôn ngữ dự phòng
     interpolation: {
       escapeValue: false, // React đã bảo vệ khỏi injection
     },

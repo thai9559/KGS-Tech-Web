@@ -1,13 +1,13 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
+import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
-import {
-  FaMicrochip,
-  FaUsers,
-  FaCogs,
-  FaSeedling,
-  FaHeadset,
-  FaLightbulb,
-} from "react-icons/fa";
+
+const FaMicrochip = lazy(() => import("react-icons/fa").then(module => ({ default: module.FaMicrochip })));
+const FaUsers = lazy(() => import("react-icons/fa").then(module => ({ default: module.FaUsers })));
+const FaCogs = lazy(() => import("react-icons/fa").then(module => ({ default: module.FaCogs })));
+const FaSeedling = lazy(() => import("react-icons/fa").then(module => ({ default: module.FaSeedling })));
+const FaHeadset = lazy(() => import("react-icons/fa").then(module => ({ default: module.FaHeadset })));
+const FaLightbulb = lazy(() => import("react-icons/fa").then(module => ({ default: module.FaLightbulb })));
 
 const Benefits = () => {
   const { t } = useTranslation();
@@ -46,31 +46,58 @@ const Benefits = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6 mt-10">
-      {benefits.map((benefit) => (
-        <div
-          key={benefit.title}
-          className="relative p-8 bg-[#1ea0ff] text-center text-white shadow-2xl overflow-hidden group transition-all duration-700 h-[240px]" // Giảm chiều cao từ 250px xuống 220px
-        >
-          {/* Lớp phủ chuyển màu nền từ top xuống khi hover */}
-          <div className="absolute inset-0 bg-[#E5D9F2] transform scale-y-0 group-hover:scale-y-100 transition-all duration-700 origin-top z-0"></div>{" "}
-          {/* Tăng duration ở đây */}
-          {/* Nội dung - icon và title */}
-          <div className=" w-[320px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center">
-            {/* Thêm icon màu trắng */}
-            {benefit.icon}
-            {/* Tiêu đề */}
-            <h2 className="text-2xl w-full font-bold">{benefit.title}</h2>
-          </div>
-          {/* Mô tả hiển thị khi hover, che khuất icon và title */}
-          <div className="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-in-out bg-white p-4">
-            <p className="text-black text-left text-2xl">
-              {benefit.description}
-            </p>
-          </div>
+    <>
+      <Helmet>
+        <title>{'KGS Tech'}</title>
+        <meta
+          name="description"
+          content={t("seo.benefits.description")}
+        />
+        <meta
+          property="og:title"
+          content={t("benefits.page_title")}
+        />
+        <meta
+          property="og:description"
+          content={t("seo.benefits.description")}
+        />
+        <meta
+          property="og:image"
+          content="https://example.com/benefits-image.jpg" // Thay thế bằng hình ảnh đại diện
+        />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
+      <Suspense fallback={<div>Loading...</div>}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-6 mt-10">
+          {benefits.map((benefit) => (
+            <div
+              key={benefit.title}
+              className="relative p-8  bg-[#1ea0ff] text-center text-white shadow-2xl overflow-hidden group transition-all duration-500 h-[240px]"
+            >
+              {/* Giao diện mobile (iPad trở xuống) */}
+              <div className="flex flex-col items-center lg:hidden">
+                {benefit.icon}
+                <h2 className="text-xl font-bold mt-2">{benefit.title}</h2>
+                <p className="text-base mt-2">{benefit.description}</p>
+              </div>
+              {/* Giao diện desktop (từ 1024px trở lên) */}
+              <div className="hidden lg:flex flex-col items-center group h-[250px]">
+                <div className="w-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center transition-all duration-700 ease-in-out opacity-100 group-hover:opacity-0 group-hover:translate-y-[-100%]">
+                  {benefit.icon}
+                  <h2 className="text-3xl font-bold">{benefit.title}</h2>
+                </div>
+                <div className="absolute inset-0 p-10 justify-center z-30 bg-white transform translate-y-12 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-700 ease-in-out">
+                  <p className="text-black text-2xl text-left">
+                    {benefit.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      </Suspense>
+    </>
   );
 };
 

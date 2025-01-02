@@ -1,88 +1,132 @@
-// src/components/BlogSlider.js
-import React from "react";
-import Slider from "react-slick";
+import React, { Suspense, lazy } from "react";
+import { Helmet } from "react-helmet";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useTranslation } from "react-i18next";
 
-const blogData = [
+const Slider = lazy(() => import("react-slick")); // Lazy load Slider component
+
+const BlogSliderData = [
   {
     id: 1,
-    title: "Blog Post 1",
+    titleKey: "blogData.post1.title",
+    descriptionKey: "blogData.post1.description",
     imageUrl:
       "https://i.pinimg.com/736x/86/0a/fd/860afd97e98a5ac0d8c1dcc9087ff4b1.jpg",
-    description: "This is the description for blog post 1",
-    date: "2024-12-20", // Ngày đăng
+    date: "2024-12-20",
   },
   {
     id: 2,
-    title: "Blog Post 2",
+    titleKey: "blogData.post2.title",
+    descriptionKey: "blogData.post2.description",
     imageUrl:
       "https://i.pinimg.com/736x/52/53/3f/52533fd8f3742503453bd849769f7e1f.jpg",
-    description: "This is the description for blog post 2",
     date: "2024-12-22",
   },
   {
     id: 3,
-    title: "Blog Post 3",
+    titleKey: "blogData.post3.title",
+    descriptionKey: "blogData.post3.description",
     imageUrl:
       "https://i.pinimg.com/736x/df/8a/8e/df8a8ec01f58e4933ebf96734d878b07.jpg",
-    description: "This is the description for blog post 3",
     date: "2024-12-25",
   },
   {
     id: 4,
-    title: "Blog Post 4",
+    titleKey: "blogData.post4.title",
+    descriptionKey: "blogData.post4.description",
     imageUrl:
       "https://i.pinimg.com/736x/19/01/a7/1901a7994208a372544c486071edfb98.jpg",
-    description: "This is the description for blog post 4",
     date: "2024-12-30",
   },
 ];
 
 const BlogSlider = () => {
+  const { t, i18n } = useTranslation();
+
   const settings = {
-    dots: true, // Hiển thị dots
-    infinite: true, // Quay lại đầu khi hết slide
-    speed: 500, // Thời gian chuyển slide
-    slidesToShow: 1, // Số slide hiển thị cùng lúc
-    slidesToScroll: 1, // Số slide cuộn mỗi lần
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
-  // Hàm chuyển đổi ngày tháng thành định dạng đẹp hơn
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", options); // Thay đổi format tùy theo nhu cầu
+    const locale = i18n.language;
+    return date.toLocaleDateString(locale, options);
   };
 
   return (
     <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
-      <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-6">
-        Latest Blog Posts
+      <Helmet>
+      <title>{'KGS Tech'}</title>
+        <meta
+          name="description"
+          content={t("seo.blogSlider.description")}
+        />
+        <meta
+          property="og:title"
+          content={t("blogData.latest_posts")}
+        />
+        <meta
+          property="og:description"
+          content={t("seo.blogSlider.description")}
+        />
+        <meta
+          property="og:image"
+          content="https://i.pinimg.com/736x/86/0a/fd/860afd97e98a5ac0d8c1dcc9087ff4b1.jpg"
+        />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
+      <h2 className="text-3xl font-beVietnam text-center text-gray-900 mb-6">
+        {t("blogData.latest_posts")}
       </h2>
-      <Slider {...settings}>
-        {blogData.map((blog) => (
-          <div
-            key={blog.id}
-            className="bg-white rounded-lg shadow-lg overflow-hidden"
-          >
-            <img
-              className="w-full h-56 object-cover"
-              src={blog.imageUrl}
-              alt={blog.title}
-            />
-            <div className="p-6">
-              <h3 className="text-2xl font-bold text-gray-900 hover:text-indigo-600 transition duration-300">
-                {blog.title}
-              </h3>
-              <p className="mt-2 text-gray-600">{blog.description}</p>
-              <p className="mt-4 text-sm text-gray-500 italic">
-                {formatDate(blog.date)}
-              </p>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Slider {...settings}>
+          {BlogSliderData.map((blog) => (
+            <div key={blog.id} className="px-4 lg:px-6">
+              <div className="bg-white cursor-pointer rounded-lg shadow-lg overflow-hidden transition duration-300 hover:shadow-lg hover:shadow-blue-500">
+                <img
+                  className="w-full h-56 object-cover"
+                  src={blog.imageUrl}
+                  alt={blog.title}
+                />
+                <div className="p-6">
+                  <h3 className="text-2xl font-bold text-gray-900 font-beVietnam hover:text-indigo-600 transition duration-300">
+                    {t(blog.titleKey)}
+                  </h3>
+                  <p className="mt-2 text-gray-600">
+                    {t(blog.descriptionKey)}
+                  </p>
+                  <p className="mt-4 text-sm text-gray-500 italic">
+                    {t("blogData.date_label")} {formatDate(blog.date)}
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
-      </Slider>
+          ))}
+        </Slider>
+      </Suspense>
     </div>
   );
 };

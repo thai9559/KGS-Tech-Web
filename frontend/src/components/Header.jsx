@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Select } from "antd";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";  
+
 const { Option } = Select;
 
 const Header = ({ home, company, business, blog }) => {
@@ -38,14 +40,22 @@ const Header = ({ home, company, business, blog }) => {
         } transition-all duration-300 ease-in-out z-40 lg:static lg:transform-none lg:translate-y-0 lg:opacity-100 lg:h-auto lg:flex-row lg:bg-white`}
       >
         <ul className="flex flex-col lg:flex-row gap-8 cursor-pointer text-white lg:text-black w-full lg:w-auto">
-          <li className="hover:text-gray-400 text-center">{home}</li>
-          <li className="hover:text-gray-400 text-center">{company}</li>
-          <li className="hover:text-gray-400 text-center">{business}</li>
-          <li className="hover:text-gray-400 text-center">{blog}</li>
+          <li className="hover:text-gray-400 font-medium text-xl font-poppins text-center">
+            <Link to="/home">{home}</Link> 
+          </li>
+          <li className="hover:text-gray-400 font-medium text-xl font-poppins text-center">
+            <Link to="company">{company}</Link> 
+          </li>
+          <li className="hover:text-gray-400 font-medium text-xl font-poppins text-center">
+            <Link to="/business">{business}</Link>
+          </li>
+          <li className="hover:text-gray-400 font-medium text-xl font-poppins text-center">
+            <Link to="/blog">{blog}</Link> 
+          </li>
         </ul>
       </nav>
 
-      <div className=" items-center gap-4">
+      <div className="items-center gap-4">
         <Select
           defaultValue="vi"
           onChange={handleLanguageChange}

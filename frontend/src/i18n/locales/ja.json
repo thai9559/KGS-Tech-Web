@@ -5,17 +5,130 @@
   "blog": "ブログ",
   "welcome": "私たちのウェブサイトへようこそ！",
   "benefits": {
-    "technology": "先進技術",
-    "technology_description": "最新の技術を使用して最適なソリューションを提供し、作業効率を向上させ、コストを削減します。",
-    "professional_team": "プロフェッショナルチーム",
-    "professional_team_description": "私たちのエンジニアは十分に訓練されており、プロジェクトの実施プロセス全体でサポートを提供します。",
-    "custom_solutions": "カスタマイズソリューション",
-    "custom_solutions_description": "お客様のニーズと要件に特別に合わせた技術ソリューションを提供します。",
+    "technology": "最先端技術",
+    "technology_description": "最新の技術を駆使して、業務効率を向上させ、コストを削減する最適なソリューションを提供します。",
+    "professional_team": "プロフェッショナルなチーム",
+    "professional_team_description": "私たちのエンジニアは専門的な訓練を受けており、プロジェクトの実施過程でいつでもサポートを提供します。",
+    "custom_solutions": "カスタムソリューション",
+    "custom_solutions_description": "お客様のニーズに合わせた特別な技術ソリューションを提供します。",
     "sustainable_growth": "持続可能な成長",
-    "sustainable_growth_description": "安定した技術ソリューションを通じて、お客様のビジネスに長期的な成長をもたらすことを約束します。",
-    "customer_service": "献身的なカスタマーサービス",
-    "customer_service_description": "お客様の満足度を重視し、迅速で効果的なサポートサービスを提供します。",
-    "strategic_advice": "戦略的アドバイス",
-    "strategic_advice_description": "プロセスを最適化し、コストを削減するための技術およびビジネス戦略を提供します。"
-  }
+    "sustainable_growth_description": "安定した技術ソリューションを通じて、お客様のビジネスに長期的な成長をもたらすことをお約束します。",
+    "customer_service": "専任のカスタマーサービス",
+    "customer_service_description": "お客様の満足を最優先に、迅速で効果的なサポートサービスを提供しています。",
+    "strategic_advice": "戦略的コンサルティング",
+    "strategic_advice_description": "業務プロセスを最適化し、コストを削減するための戦略的な技術およびビジネスのアドバイスを提供します。"
+  },
+  "blogData": {
+    "latest_posts": "最新の投稿",
+    "post1": {
+      "title": "ブログ投稿1",
+      "description": "これはブログ投稿1の説明です"
+    },
+    "post2": {
+      "title": "ブログ投稿2",
+      "description": "これはブログ投稿2の説明です"
+    },
+    "post3": {
+      "title": "ブログ投稿3",
+      "description": "これはブログ投稿3の説明です"
+    },
+    "post4": {
+      "title": "ブログ投稿4",
+      "description": "これはブログ投稿4の説明です"
+    },
+    "date_label": "投稿日: "
+  },
+  "footer": {
+    "company": "会社",
+    "about_us": "私たちについて",
+    "careers": "キャリア",
+    "privacy_policy": "プライバシーポリシー",
+    "contact_info": "連絡先情報",
+    "address": "ベトナム、ホーチミン市、スードック市、アンフー区、16番地、40番",
+    "phone": "039 * **",
+    "email": "KSG_tech@mail.com",
+    "follow_us": "フォローする"
+  },
+  "BusinessPage": {
+    "title": "私たちの会社へようこそ",
+    "subtitle": "明るい未来のために革新する。",
+    "aboutUs": {
+      "title": "私たちについて",
+      "description": "私たちは、世界をより良い場所にするための革新的なソリューションを創造することに情熱を注いでいるチームです。私たちの使命は、顧客に卓越したサービスを提供し、協力的で包括的な環境を作り上げることです。"
+    },
+    "services": {
+      "title": "当社のサービス",
+      "webDevelopment": {
+        "title": "ウェブシステムアプリケーションの開発",
+        "description": "私たちは、ワークフローの最適化とユーザー体験の向上を実現する柔軟で効率的なウェブシステムアプリケーションを開発します。"
+      },
+      "smartphoneAppDevelopment": {
+        "title": "スマートフォンアプリケーションの開発",
+        "description": "私たちは、iOSおよびAndroidプラットフォームに対応した最適化されたスマートフォンアプリケーションを開発しています。"
+      },
+      "websiteDevelopment": {
+        "title": "ウェブサイトの開発",
+        "description": "私たちは、競争の激しい市場でビジネスを成功させるためにカスタマイズされたウェブサイト開発ソリューションを提供します。"
+      }
+    },
+    "whatClientsSay": {
+      "title": "お問い合わせ",
+      "testimony1": "\"この会社は素晴らしいサービスを提供しており、私たちの業務に大きな改善が見られました。非常にお勧めします！\"",
+      "name1": "John Doe",
+      "position1": "CEO、TechCorp",
+      "testimony2": "\"彼らのチームは非常にプロフェッショナルで、献身的で、お客様に最良の解決策を提供することに情熱を持っています。素晴らしい経験でした！\"",
+      "name2": "Jane Smith",
+      "position2": "マーケティングディレクター、InnovateX",
+      "testimony3": "\"提供された解決策の速さと効率性に感銘を受けました。彼らの専門知識のおかげで、私たちは重要な課題を克服することができました。\"",
+      "name3": "Michael Brown",
+      "position3": "創業者、GreenTech",
+      "testimony4": "\"この会社との協力は非常に素晴らしかったです。彼らは常に私たちの期待を超え、優れた結果を提供してくれました。\"",
+      "name4": "Emily White",
+      "position4": "オペレーションマネージャー、Global Enterprises"
+    },
+    "contact": {
+      "title": "お問い合わせ",
+      "description": "ご連絡いただけることを楽しみにしています！詳細やパートナーシップの機会については、お気軽にご連絡ください。",
+      "errorMessage": "すべての項目を記入してください。",
+      "successMessage": "メッセージは正常に送信されました！",
+      "email": "メールアドレス",
+      "subject": "件名",
+      "selectSubject": "件名を選択してください",
+      "workInquiry": "仕事に関する問い合わせ",
+      "supportRequest": "サポートリクエスト",
+      "generalInquiry": "一般的な問い合わせ",
+      "otherInquiry": "その他（詳細を記入してください）",
+      "specifySubject": "件名を指定してください",
+      "content": "内容",
+      "submit": "送信"
+    }
+
+  },
+    "coreValues": {
+      "title": "コアバリュー",
+      "innovation": "革新",
+      "innovationDescription": "私たちは常に創造的な解決策を探し、成長を続けています。革新は新しい製品を作ることだけでなく、私たちがどのように考え、問題を解決するかにも関わっています。",
+      "responsibility": "責任",
+      "responsibilityDescription": "私たちは顧客と社会に持続可能な価値を提供することを約束します。責任とは、期限内に仕事を終わらせるだけでなく、社会と環境に対する責任をも意味します。",
+      "collaboration": "協力",
+      "collaborationDescription": "長期的なパートナーシップは私たちの成長の基盤です。私たちは、協力、交流、相互支援が問題解決と持続可能な価値創造の鍵であると信じています。",
+      "creativity": "創造性",
+      "creativityDescription": "創造性は成長の原動力です。私たちは、革新的なアイデアと創造的な解決策を生み出すことを奨励しています。"
+    },
+      "leadership": {
+        "title": "リーダーシップ",
+        "ceo": "CEO",
+        "cto": "CTO",
+        "coo": "COO"
+      },
+    
+    
+    "companyOverview": {
+      "title": "KGS - Techの紹介",
+      "description": "KGS - Techは、革新的なソフトウェアソリューション、テクノロジーコンサルティングサービス、そして信頼性のあるITサービスをグローバルに提供する先進的なテクノロジー企業です。"
+    },
+    "mission": {
+      "title": "使命",
+      "description": "私たちの使命は、ビジネスがデジタル時代において成長するための革新的な解決策を提供することです。現在のニーズを満たすだけでなく、顧客が業界をリードできるよう支援する製品とサービスを提供します。"
+    }
 }

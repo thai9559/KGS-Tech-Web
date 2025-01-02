@@ -1,21 +1,134 @@
 {
-  "home": "Home",
-  "company": "Company",
-  "business": "Business",
-  "blog": "Blog",
-  "welcome": "Welcome to our website!",
-  "benefits": {
-    "technology": "Advanced technology",
-    "technology_description": "We use the latest technology to provide optimal solutions, enhancing work efficiency and reducing costs.",
-    "professional_team": "Professional team",
-    "professional_team_description": "Our engineers are well-trained and always ready to support you throughout the project implementation process.",
-    "custom_solutions": "Custom solutions",
-    "custom_solutions_description": "We provide technology solutions specifically tailored to the needs and requirements of each customer.",
-    "sustainable_growth": "Sustainable growth",
-    "sustainable_growth_description": "We are committed to bringing long-term growth to your business through stable technology solutions.",
-    "customer_service": "Dedicated customer service",
-    "customer_service_description": "We focus on customer satisfaction, ensuring fast and effective support services.",
-    "strategic_advice": "Strategic consulting",
-    "strategic_advice_description": "We provide technology and business strategies to help you optimize processes and save costs."
+    "home": "Home",
+    "company": "Company",
+    "business": "Business",
+    "blog": "Blog",
+    "welcome": "Welcome to our website!",
+    "benefits": {
+      "technology": "Advanced Technology",
+      "technology_description": "We use the latest technology to deliver optimal solutions that enhance work efficiency and reduce costs.",
+      "professional_team": "Professional Team",
+      "professional_team_description": "Our engineers are well-trained and always ready to support you throughout the project implementation process.",
+      "custom_solutions": "Custom Solutions",
+      "custom_solutions_description": "We offer customized technology solutions tailored to the needs and requirements of each client.",
+      "sustainable_growth": "Sustainable Growth",
+      "sustainable_growth_description": "We are committed to delivering long-term growth for your business through stable technology solutions.",
+      "customer_service": "Dedicated Customer Service",
+      "customer_service_description": "We focus on customer satisfaction and ensure fast and effective support services.",
+      "strategic_advice": "Strategic Advice",
+      "strategic_advice_description": "We provide technology and business strategies to help you optimize processes and save costs."
+    },
+    "blogData": {
+      "latest_posts": "Latest Posts",
+      "post1": {
+        "title": "Post 1",
+        "description": "This is the description for Post 1"
+      },
+      "post2": {
+        "title": "Post 2",
+        "description": "This is the description for Post 2"
+      },
+      "post3": {
+        "title": "Post 3",
+        "description": "This is the description for Post 3"
+      },
+      "post4": {
+        "title": "Post 4",
+        "description": "This is the description for Post 4"
+      },
+      "date_label": "Published on: "
+    },
+    "footer": {
+      "company": "Company",
+      "about_us": "About Us",
+      "careers": "Career Opportunities",
+      "privacy_policy": "Privacy Policy",
+      "contact_info": "Contact Information",
+      "address": "40 Street 16, An Phu Ward, Thu Duc City, Ho Chi Minh City, Vietnam",
+      "phone": "039 * **",
+      "email": "KSG_tech@mail.com",
+      "follow_us": "Follow Us"
+    },
+    "BusinessPage": {
+      "title": "Welcome to Our Company",
+      "subtitle": "Innovating for a brighter future.",
+      "aboutUs": {
+        "title": "About Us",
+        "description": "We are a passionate team, dedicated to creating innovative solutions that make the world a better place. Our mission is to provide excellent service to our customers while building a collaborative and inclusive work environment."
+      },
+      "services": {
+        "title": "Our Services",
+        "webDevelopment": {
+          "title": "Web System Application Development",
+          "description": "We specialize in developing web system applications that ensure flexibility and efficiency in optimizing workflows and enhancing user experience."
+        },
+        "smartphoneAppDevelopment": {
+          "title": "Mobile App Development",
+          "description": "We develop optimized mobile applications that provide convenience and efficiency for users on both iOS and Android platforms."
+        },
+        "websiteDevelopment": {
+          "title": "Website Development",
+          "description": "We provide customized website development solutions that help your business stand out and succeed in today’s competitive market."
+        }
+      },
+      "whatClientsSay": {
+          "title": "What Our Clients Say",
+          "testimony1": "\"This company offers excellent service, and we have seen significant improvements in our operations. Highly recommend!\"",
+          "name1": "John Doe",
+          "position1": "CEO, TechCorp",
+          "testimony2": "\"Their team is very professional, dedicated, and passionate about providing the best solutions for clients. A great experience!\"",
+          "name2": "Jane Smith",
+          "position2": "Marketing Director, InnovateX",
+          "testimony3": "\"We were impressed with the speed and efficiency of the solutions provided. Their expertise helped us overcome critical challenges.\"",
+          "name3": "Michael Brown",
+          "position3": "Founder, GreenTech",
+          "testimony4": "\"The collaboration with this company has been exceptional. They always exceed our expectations and deliver top-notch results.\"",
+          "name4": "Emily White",
+          "position4": "Operations Manager, Global Enterprises"
+      },
+      "contact": {
+        "title": "Contact Us",
+        "description": "We are excited to hear from you! Contact us for more details or partnership opportunities.",
+        "errorMessage": "Please fill out all fields.",
+        "successMessage": "Your message has been sent successfully!",
+        "email": "Email",
+        "subject": "Subject",
+        "selectSubject": "Select a subject",
+        "workInquiry": "Work-related Inquiry",
+        "supportRequest": "Support Request",
+        "generalInquiry": "General Inquiry",
+        "otherInquiry": "Other (please specify)",
+        "specifySubject": "Please specify",
+        "content": "Content",
+        "submit": "Submit"
+      }
+      
+    },
+        "coreValues": {
+          "title": "Core Values",
+          "innovation": "Innovation",
+          "innovationDescription": "We constantly search for creative solutions to keep growing. Innovation is not only about creating new products, but also about how we think and solve problems.",
+          "responsibility": "Responsibility",
+          "responsibilityDescription": "We are committed to delivering sustainable value to customers and society, not just completing tasks on time but also having responsibility towards society and the environment.",
+          "collaboration": "Collaboration",
+          "collaborationDescription": "Long-term partnerships are the foundation of our growth. We believe cooperation, exchange, and mutual support are key to solving problems and creating lasting value.",
+          "creativity": "Creativity",
+          "creativityDescription": "Creativity is the driving force behind development. We encourage everyone to bring breakthrough ideas and creative solutions."
+        },
+        "leadership": {
+            "title": "Leadership",
+            "ceo": "CEO",
+            "cto": "CTO",
+            "coo": "COO"
+          },
+        "companyOverview": {
+          "title": "About KGS - Tech",
+          "description": "KGS - Tech is a leading technology company providing innovative software solutions, technology consulting services, and trusted IT services globally."
+        },
+        "mission": {
+          "title": "Mission",
+          "description": "Our mission is to provide innovative solutions that help businesses grow in the digital era. We are committed to providing products and services that not only meet current needs but also help customers lead the industry."
+        }
+      
   }
-}
+  

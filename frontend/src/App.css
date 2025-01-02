@@ -13,3 +13,21 @@ body {
     padding: 0;
     box-sizing: border-box;
 }
+
+.container {
+    max-width: 1600px; /* Giới hạn chiều rộng của phần nội dung */
+    margin-left: auto; /* Căn trái */
+    margin-right: auto; /* Căn phải */
+}
+.banner {
+    max-width: 1850px; /* Giới hạn chiều rộng của phần nội dung */
+    margin-left: auto; /* Căn trái */
+    margin-right: auto; /* Căn phải */
+}
+
+.benefit {
+    max-width: 1600px; /* Giới hạn chiều rộng của phần nội dung */
+    margin-left: auto; /* Căn trái */
+    margin-right: auto; /* Căn phải */
+}
+
