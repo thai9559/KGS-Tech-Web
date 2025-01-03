@@ -99,7 +99,6 @@ function Business() {
           <AboutUs
             title={t("BusinessPage.aboutUs.title")}
             description={t("BusinessPage.aboutUs.description")}
-            image1="https://res.cloudinary.com/dtnuj2les/image/upload/v1735811318/napkin-selection_1_og87a0.png"
             image="https://i.pinimg.com/736x/31/a4/9c/31a49cc7862d3d096852e91a0193a39c.jpg"
           />
         </div>

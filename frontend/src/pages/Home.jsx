@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Layout from "../components/Layout";
-import BannerSlider from "../components/BannerSlider";
-import Benefits from "../components/Benefits";
-import BlogSlider from "../components/BlogData";
+import BannerSlider from "../components/Home/BannerSlider";
+import Benefits from "../components/Home/Benefits";
+import BlogSlider from "../components/Home/BlogData";
 import VerticalCarousel from "../components/Carousel";
+import CompanyStats from "../components/Home/CompanyStats";
+
 export default function Home() {
   const { t } = useTranslation();
 
   const sections = [
     { id: "bannerSlider", label: "Banner Slider", active: false },
+    { id: "companyStats", label: "companyStats", active: false },
     { id: "benefits", label: "Benefits", active: false },
+
     { id: "blogSlider", label: "Blog Slider", active: false },
   ];
 
@@ -36,7 +40,18 @@ export default function Home() {
     return updatedSections;
   };
 
-  useEffect(() => { 
+  const handleSectionClick = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start", // Đảm bảo phần tử được đưa lên đầu màn hình
+      });
+      setActiveSection(id); // Cập nhật active section
+    }
+  };
+
+  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -50,10 +65,14 @@ export default function Home() {
 
   return (
     <Layout>
-      <VerticalCarousel sections={enhancedSections} />
+      <VerticalCarousel sections={enhancedSections} onSectionClick={handleSectionClick} />
       <div className="flex flex-col">
-        <div id="bannerSlider"  >
+        <div id="bannerSlider">
           <BannerSlider />
+        </div>
+        <div id="companyStats" className="container">
+          <h2 className="text-black text-3xl text-center font-beVietnam font-semibold mt-10">{t('stats.ask')}</h2>
+          <CompanyStats />
         </div>
         <div id="benefits" className="container">
           <Benefits />

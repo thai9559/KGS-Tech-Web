@@ -6,7 +6,7 @@ function Contact() {
   const [formData, setFormData] = useState({
     email: '',
     subject: '',
-    subjectOther: '',  // Added "Other" subject option
+    subjectOther: '',
     content: '',
   });
 
@@ -31,7 +31,7 @@ function Contact() {
     } else {
       setErrorMessage('');
       setSuccessMessage(t('BusinessPage.contact.successMessage'));
-      
+
       // Reset form data after successful submission
       setFormData({
         email: '',
@@ -51,30 +51,56 @@ function Contact() {
 
   return (
     <section className="text-center py-12 bg-[#1ea0ff] text-white">
-      <h2 className="text-3xl font-semibold mb-4 text-black">{t('BusinessPage.contact.title')}</h2>
-      <p className="text-lg mb-8 text-black">{t('BusinessPage.contact.description')}</p>
-      <form onSubmit={handleSubmit} className="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
+  <h2 className="text-4xl font-semibold mb-6 text-white">{t('BusinessPage.contact.title')}</h2>
+  <p className="text-2xl mb-10 text-white p-4">{t('BusinessPage.contact.description')}</p>
+
+  <div className="flex flex-col lg:flex-row flex-wrap gap-12 justify-center items-center lg:items-start">
+    {/* Left section: Reasons to contact */}
+    <div className="w-full sm:w-10/12 lg:w-5/12 p-4 sm:p-6 lg:p-8 mb-8 lg:mb-0 bg-[#1ea0ff]">
+      <h3 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{t('BusinessPage.contact.reasonsTitle')}</h3>
+      <ul className="pl-5 text-left text-white space-y-3 text-lg sm:text-xl lg:text-2xl">
+        {[
+          'reasonAppDevelopment',
+          'reasonMobileApp',
+          'reasonWebsiteDevelopment',
+          'reasonSoftwareIntegration',
+          'reasonEcommerce',
+          'reasonConsulting',
+          'reasonMaintenance',
+          'reasonDigitalMarketing',
+        ].map((reason, idx) => (
+          <li key={idx} className="flex items-start">
+            <span className="text-white mr-3">✔</span>
+            {t(`BusinessPage.contact.${reason}`)}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    {/* Right section: Contact form */}
+    <div className="w-full sm:w-10/12 lg:w-5/12 bg-white p-4 sm:p-6 lg:p-8 rounded-lg shadow-lg">
+      <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
         <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium text-black">{t('BusinessPage.contact.email')}</label>
+          <label htmlFor="email" className="block text-left text-lg font-medium text-black">{t('BusinessPage.contact.email')}</label>
           <input
             type="email"
             id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full text-black px-3 py-2 border border-gray-300 rounded-md"
+            className="w-full text-black px-4 py-3 border border-gray-300 rounded-md"
             required
           />
         </div>
 
         <div className="mb-4">
-          <label htmlFor="subject" className="block text-sm font-medium text-black">{t('BusinessPage.contact.subject')}</label>
+          <label htmlFor="subject" className="block text-left text-lg font-medium text-black">{t('BusinessPage.contact.subject')}</label>
           <select
             id="subject"
             name="subject"
             value={formData.subject}
             onChange={handleChange}
-            className="w-full px-3 py-2 text-black border border-gray-300 rounded-md"
+            className="w-full px-4 py-3 text-black border border-gray-300 rounded-md"
             required
           >
             <option value="">{t('BusinessPage.contact.selectSubject')}</option>
@@ -87,41 +113,44 @@ function Contact() {
 
         {formData.subject === 'other' && (
           <div className="mb-4">
-            <label htmlFor="subjectOther" className="block text-sm font-medium text-black">{t('BusinessPage.contact.specifySubject')}</label>
+            <label htmlFor="subjectOther" className="block text-left text-lg font-medium text-black">{t('BusinessPage.contact.specifySubject')}</label>
             <input
               type="text"
               id="subjectOther"
               name="subjectOther"
               value={formData.subjectOther}
               onChange={handleChange}
-              className="w-full px-3 text-black py-2 border border-gray-300 rounded-md"
+              className="w-full px-4 py-3 text-black border border-gray-300 rounded-md"
             />
           </div>
         )}
 
         <div className="mb-4">
-          <label htmlFor="content" className="block text-sm font-medium text-black">{t('BusinessPage.contact.content')}</label>
+          <label htmlFor="content" className="block text-left text-lg font-medium text-black">{t('BusinessPage.contact.content')}</label>
           <textarea
             id="content"
             name="content"
             value={formData.content}
             onChange={handleChange}
-            className="w-full text-black px-3 py-2 border border-gray-300 rounded-md"
+            className="w-full text-black px-4 py-3 border border-gray-300 rounded-md"
             required
           ></textarea>
         </div>
 
-        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-        {successMessage && <p className="text-green-500">{successMessage}</p>}
+        {errorMessage && <p className="text-red-500 text-lg">{errorMessage}</p>}
+        {successMessage && <p className="text-green-500 text-lg">{successMessage}</p>}
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300"
+          className="w-full bg-blue-600 text-white py-3 px-8 rounded-lg hover:bg-blue-700 transition duration-300 text-lg"
         >
           {t('BusinessPage.contact.submit')}
         </button>
       </form>
-    </section>
+    </div>
+  </div>
+</section>
+
   );
 }
 

@@ -4,6 +4,19 @@
   "business": "Dịch vụ",
   "blog": "Blog",
   "welcome": "Chào mừng bạn đến với trang web của chúng tôi!",
+  "stats": {
+    "ask":"Tại sao chọn KGS Tech?",
+    "users": "Người dùng",
+    "happyUsers": "Người hạnh phúc",
+    "awards": "Giải thưởng",
+    "countries": "Quốc gia phục vụ",
+    "genuineService": "Dịch vụ chính hãng",
+    "ratings": "Đánh giá",
+    "customerSupport": "Hỗ trợ khách hàng",
+    "revenue": "Doanh thu",
+    "technology": "Công nghệ sử dụng",
+    "certifications": "Chứng nhận"
+  },
   "benefits": {
     "technology": "Công nghệ tiên tiến",
     "technology_description": "Chúng tôi sử dụng công nghệ mới nhất để mang lại giải pháp tối ưu, giúp nâng cao hiệu suất công việc và giảm chi phí.",
@@ -38,6 +51,29 @@
     },
     "date_label": "Ngày đăng: "
   },
+  "blogPage":{
+    "search": {
+      "placeholder": "Tìm kiếm bài viết..."
+    },
+    "filter": {
+      "category": "Chọn chủ đề",
+      "time": "Chọn mốc thời gian",
+      "sort": "Sắp xếp theo",
+      "reset": "Đặt lại bộ lọc",
+      "react": "React",
+      "tailwind": "Tailwind CSS",
+      "antd": "Ant Design",
+      "1month": "1 tháng trước",
+      "3months": "3 tháng trước",
+      "6months": "6 tháng trước",
+      "12months": "12 tháng trước",
+      "newest": "Mới nhất",
+      "oldest": "Cũ nhất"
+    }
+  },
+  "blogList": {
+    "title": "Danh Sách Blog"
+  },
   "footer": {
     "company": "Công ty",
     "about_us": "Về chúng tôi",
@@ -53,7 +89,7 @@
     "title": "Chào mừng đến với công ty của chúng tôi",
     "subtitle": "Đổi mới vì một tương lai tươi sáng.",
     "aboutUs": {
-      "title": "Về dịch vụ",
+      "title": "Về chúng tôi",
       "description": "Chúng tôi cung cấp dịch vụ phát triển các giải pháp công nghệ toàn diện, bao gồm phát triển ứng dụng hệ thống web, ứng dụng di động và website. Với đội ngũ kỹ thuật viên giàu kinh nghiệm, chúng tôi tạo ra các sản phẩm tối ưu hóa quy trình làm việc, nâng cao hiệu quả hoạt động và mang đến trải nghiệm người dùng tuyệt vời trên mọi nền tảng. Dù bạn cần ứng dụng web linh hoạt, app di động mượt mà hay website chuyên nghiệp, chúng tôi luôn cam kết cung cấp giải pháp phù hợp và hiệu quả, giúp doanh nghiệp bạn phát triển mạnh mẽ trong thời đại số."
     },
     "services": {
@@ -72,63 +108,76 @@
       }
     },
     "whatClientsSay": {
-        "title": "Khách Hàng Nói Gì Về Chúng Tôi",
-        "testimony1": "\"Công ty này cung cấp dịch vụ tuyệt vời, và chúng tôi đã thấy những cải tiến rõ rệt trong hoạt động của mình. Rất đáng khen ngợi!\"",
-        "name1": "John Doe",
-        "position1": "Giám Đốc Điều Hành, TechCorp",
-        "testimony2": "\"Đội ngũ của họ rất chuyên nghiệp, tận tâm và đam mê trong việc cung cấp các giải pháp tốt nhất cho khách hàng. Một trải nghiệm tuyệt vời!\"",
-        "name2": "Jane Smith",
-        "position2": "Giám Đốc Marketing, InnovateX",
-        "testimony3": "\"Chúng tôi ấn tượng với tốc độ và hiệu quả của các giải pháp được cung cấp. Chuyên môn của họ đã giúp chúng tôi vượt qua những thử thách nghiêm trọng.\"",
-        "name3": "Michael Brown",
-        "position3": "Người Sáng Lập, GreenTech",
-        "testimony4": "\"Mối quan hệ hợp tác với công ty này thật tuyệt vời. Họ luôn vượt qua kỳ vọng của chúng tôi và mang lại kết quả xuất sắc.\"",
-        "name4": "Emily White",
-        "position4": "Quản Lý Hoạt Động, Global Enterprises"
-      
+      "title": "Khách Hàng Nói Gì Về Chúng Tôi",
+      "testimony1": "\"Công ty này cung cấp dịch vụ tuyệt vời, và chúng tôi đã thấy những cải tiến rõ rệt trong hoạt động của mình. Rất đáng khen ngợi!\"",
+      "name1": "John Doe",
+      "position1": "Giám Đốc Điều Hành, TechCorp",
+      "testimony2": "\"Đội ngũ của họ rất chuyên nghiệp, tận tâm và đam mê trong việc cung cấp các giải pháp tốt nhất cho khách hàng. Một trải nghiệm tuyệt vời!\"",
+      "name2": "Jane Smith",
+      "position2": "Giám Đốc Marketing, InnovateX",
+      "testimony3": "\"Chúng tôi ấn tượng với tốc độ và hiệu quả của các giải pháp được cung cấp. Chuyên môn của họ đã giúp chúng tôi vượt qua những thử thách nghiêm trọng.\"",
+      "name3": "Michael Brown",
+      "position3": "Người Sáng Lập, GreenTech",
+      "testimony4": "\"Mối quan hệ hợp tác với công ty này thật tuyệt vời. Họ luôn vượt qua kỳ vọng của chúng tôi và mang lại kết quả xuất sắc.\"",
+      "name4": "Emily White",
+      "position4": "Quản Lý Hoạt Động, Global Enterprises"
     },
     "contact": {
       "title": "Liên hệ với chúng tôi",
-      "description": "Chúng tôi rất vui được nghe từ bạn! Liên hệ với chúng tôi để biết thêm chi tiết hoặc cơ hội hợp tác.",
+      "description": "Chúng tôi rất hân hạnh được lắng nghe từ bạn! Hãy liên hệ để biết thêm chi tiết hoặc cơ hội hợp tác.",
       "errorMessage": "Vui lòng điền đầy đủ các trường.",
       "successMessage": "Tin nhắn của bạn đã được gửi thành công!",
       "email": "Email",
       "subject": "Chủ đề",
       "selectSubject": "Chọn một chủ đề",
-      "workInquiry": "Yêu cầu công việc",
+      "workInquiry": "Yêu cầu liên quan đến công việc",
       "supportRequest": "Yêu cầu hỗ trợ",
       "generalInquiry": "Yêu cầu chung",
-      "otherInquiry": "Khác (vui lòng chỉ định)",
-      "specifySubject": "Vui lòng chỉ định",
+      "otherInquiry": "Khác (vui lòng nêu rõ)",
+      "specifySubject": "Vui lòng nêu rõ",
       "content": "Nội dung",
-      "submit": "Gửi"
+      "submit": "Gửi",
+      "reasonsTitle": "Tại sao liên hệ với chúng tôi",
+      "reasonAppDevelopment": "Phát triển hệ thống ứng dụng",
+      "reasonMobileApp": "Phát triển ứng dụng di động",
+      "reasonWebsiteDevelopment": "Phát triển trang web",
+      "reasonSoftwareIntegration": "Tích hợp liền mạch phần mềm và API từ bên thứ ba",
+      "reasonEcommerce": "Phát triển nền tảng thương mại điện tử để tăng doanh số trực tuyến",
+      "reasonConsulting": "Dịch vụ tư vấn CNTT để cải thiện hiệu quả hoạt động",
+      "reasonMaintenance": "Bảo trì và hỗ trợ liên tục cho các sản phẩm kỹ thuật số của bạn",
+      "reasonDigitalMarketing": "Giải pháp tiếp thị kỹ thuật số để mở rộng phạm vi kinh doanh của bạn"
     }
   },
-    "coreValues": {
-      "title": "Giá trị cốt lõi",
-      "innovation": "Đổi mới",
-      "innovationDescription": "Chúng tôi luôn tìm kiếm các giải pháp sáng tạo để phát triển không ngừng. Đổi mới không chỉ là tạo ra các sản phẩm mới, mà còn là cách chúng tôi tư duy và giải quyết các vấn đề.",
-      "responsibility": "Trách nhiệm",
-      "responsibilityDescription": "Chúng tôi cam kết mang lại giá trị bền vững cho khách hàng và cộng đồng, không chỉ hoàn thành công việc đúng hạn mà còn có trách nhiệm đối với xã hội và môi trường.",
-      "collaboration": "Hợp tác",
-      "collaborationDescription": "Mối quan hệ hợp tác lâu dài là nền tảng cho sự phát triển của chúng tôi. Chúng tôi tin rằng sự hợp tác, trao đổi và hỗ trợ lẫn nhau là chìa khóa để giải quyết vấn đề và tạo ra giá trị lâu dài.",
-      "creativity": "Sáng tạo",
-      "creativityDescription": "Sáng tạo là động lực của sự phát triển. Chúng tôi khuyến khích mọi người mang đến những ý tưởng đột phá và giải pháp sáng tạo."
+  "coreValues": {
+    "title": "Giá trị cốt lõi",
+    "innovation": "Đổi mới",
+    "innovationDescription": "Chúng tôi luôn tìm kiếm các giải pháp sáng tạo để phát triển không ngừng. Đổi mới không chỉ là tạo ra các sản phẩm mới, mà còn là cách chúng tôi tư duy và giải quyết các vấn đề.",
+    "responsibility": "Trách nhiệm",
+    "responsibilityDescription": "Chúng tôi cam kết mang lại giá trị bền vững cho khách hàng và cộng đồng, không chỉ hoàn thành công việc đúng hạn mà còn có trách nhiệm đối với xã hội và môi trường.",
+    "collaboration": "Hợp tác",
+    "collaborationDescription": "Mối quan hệ hợp tác lâu dài là nền tảng cho sự phát triển của chúng tôi. Chúng tôi tin rằng sự hợp tác, trao đổi và hỗ trợ lẫn nhau là chìa khóa để giải quyết vấn đề và tạo ra giá trị lâu dài.",
+    "creativity": "Sáng tạo",
+    "creativityDescription": "Sáng tạo là động lực của sự phát triển. Chúng tôi khuyến khích mọi người mang đến những ý tưởng đột phá và giải pháp sáng tạo."
+  },
+    "leadership": {
+      "title": "Ban lãnh đạo",
+      "name1": "Yamada Tarou",
+      "name2": "Satou Ichirou",
+      "name3": "Suzuki Jirou",
+      "ceo": "Giám đốc điều hành (CEO)",
+      "cto": "Giám đốc công nghệ (CTO)",
+      "coo": "Giám đốc vận hành (COO)"
     },
-      "leadership": {
-        "title": "Ban lãnh đạo",
-        "ceo": "Giám đốc điều hành (CEO)",
-        "cto": "Giám đốc công nghệ (CTO)",
-        "coo": "Giám đốc vận hành (COO)"
-      },
-    
-    "companyOverview": {
-      "title": "Giới thiệu về Công ty KGS - Tech",
-      "description": "KGS - Tech là công ty công nghệ hàng đầu chuyên cung cấp các giải pháp phần mềm sáng tạo, dịch vụ tư vấn công nghệ và các dịch vụ IT uy tín cho khách hàng toàn cầu."
-    },
-    "mission": {
-      "title": "Sứ mệnh",
-      "description": "Sứ mệnh của chúng tôi là mang lại những giải pháp sáng tạo, giúp doanh nghiệp phát triển mạnh mẽ trong kỷ nguyên số. Chúng tôi cam kết cung cấp các sản phẩm và dịch vụ không chỉ đáp ứng nhu cầu hiện tại mà còn giúp khách hàng vươn lên dẫn đầu trong ngành."
-    }
   
+  "Collabs": {
+    "title": "Thương hiệu đối tác"
+  },
+  "companyOverview": {
+    "title": "Giới thiệu về Công ty KGS - Tech",
+    "description": "KGS - Tech là công ty công nghệ hàng đầu chuyên cung cấp các giải pháp phần mềm sáng tạo, dịch vụ tư vấn công nghệ và các dịch vụ IT uy tín cho khách hàng toàn cầu."
+  },
+  "mission": {
+    "title": "Sứ mệnh",
+    "description": "Sứ mệnh của chúng tôi là mang lại những giải pháp sáng tạo, giúp doanh nghiệp phát triển mạnh mẽ trong kỷ nguyên số. Chúng tôi cam kết cung cấp các sản phẩm và dịch vụ không chỉ đáp ứng nhu cầu hiện tại mà còn giúp khách hàng vươn lên dẫn đầu trong ngành."
+  }
 }

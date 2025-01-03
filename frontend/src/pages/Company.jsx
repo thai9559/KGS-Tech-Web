@@ -6,7 +6,7 @@ import Mission from '../components/Company/Misson';
 import Layout from '../components/Layout';
 import { useTranslation } from 'react-i18next';
 import VerticalCarousel from '../components/Carousel';
-
+import LogoSlider from '../components/Company/LogoSlider';
 const Company = () => {
   const { t } = useTranslation();
 
@@ -29,16 +29,26 @@ const Company = () => {
     },
     
   ];
+  const logos = [
+    "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886228/kmslogo_l2fx2y.png",
+    "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886295/viettel-removebg-preview_brfhlc.png",
+    "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886393/LG-removebg-preview_dmc3t5.png",
+    "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/fpt-removebg-preview_dlhdq6.png",
+    "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/hitachi-removebg-preview_geekow.png",
+    "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/vng-removebg-preview_sokbcl.png",
+    "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886519/itel-mobile-logo-vector-removebg-preview_miveta.png",
+  ];
 
   const leaders = [
-    { name: 'Nguyễn Văn A', position: t('leadership.ceo'), avatar: 'https://i.pinimg.com/736x/ac/fb/a1/acfba1ae7dbb27565726c47aac8f3472.jpg' },
-    { name: 'Trần Thị B', position: t('leadership.cto'), avatar: 'https://i.pinimg.com/736x/3c/8e/60/3c8e60e9a61ac79b61120ecd5f5edbdc.jpg' },
-    { name: 'Lê Văn C', position: t('leadership.coo'), avatar: 'https://i.pinimg.com/736x/94/0e/6e/940e6e1c37f451e7efc6420947e1f1f9.jpg' },
+    { name: "Yamada Tarou", position: "ceo", avatar: 'https://i.pinimg.com/736x/ac/fb/a1/acfba1ae7dbb27565726c47aac8f3472.jpg' },
+    { name: "Satou Ichirou", position: "cto", avatar: 'https://i.pinimg.com/736x/3c/8e/60/3c8e60e9a61ac79b61120ecd5f5edbdc.jpg' },
+    { name: "Suzuki Jirou", position: "coo", avatar: 'https://i.pinimg.com/736x/94/0e/6e/940e6e1c37f451e7efc6420947e1f1f9.jpg' },
   ];
 
   const sections = [
     { id: 'companyOverview', label: t('companyOverview.title'), active: false },
     { id: 'coreValues', label: t('coreValues.title'), active: false },
+    { id: 'logoSlider', label: t('logoSlider.title'), active: false },
     { id: 'mission', label: t('mission.title'), active: false },
     { id: 'leadership', label: t('leadership.title'), active: false },
   ];
@@ -111,8 +121,12 @@ const Company = () => {
         </div>
 
         {/* Core Values */}
-        <div id="coreValues" className="container min-h-[20vh] ">
+        <div id="coreValues" className="container min-h-[30vh] ">
           <CoreValues values={coreValues} />
+        </div>
+
+        <div id="logoSlider" className='container min-h-[40vh]'>
+        <LogoSlider logos={logos} />
         </div>
 
         {/* Mission */}

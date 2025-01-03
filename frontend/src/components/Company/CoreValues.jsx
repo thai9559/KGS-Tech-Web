@@ -1,6 +1,6 @@
 // src/components/CoreValues.js
 import React from 'react';
-import { FaLeaf, FaChartLine, FaHandshake } from 'react-icons/fa'; // Các icon minh họa
+import { FaLeaf, FaChartLine, FaHandshake } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
 const CoreValues = ({ values }) => {
@@ -18,7 +18,7 @@ const CoreValues = ({ values }) => {
         {values.map((value, index) => (
           <div
             key={index}
-            className="w-96 p-10 flex justify-center items-center flex-col shadow-lg rounded-xl text-center transform transition-all hover:scale-105 hover:shadow-2xl bg-white"
+            className="w-96 p-10 flex justify-center items-center flex-col shadow-lg rounded-xl text-center transform transition-all sm:hover:scale-105 sm:hover:shadow-2xl bg-white"
           >
             {/* Icon minh họa */}
             <div className="mb-6 text-4xl text-blue-600">

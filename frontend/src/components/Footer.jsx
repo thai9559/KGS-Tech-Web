@@ -42,7 +42,7 @@ const Footer = () => {
           {/* Social Media Links */}
           <div>
             <h3 className="text-2xl font-bold mb-4">{t('footer.follow_us')}</h3>
-            <div className="flex justify-center space-x-4 items-center">
+            <div className="flex justify-center md:justify-start space-x-4 items-center">
               <a href="#" className="flex items-center text-lg hover:underline">
                 <FaFacebookF className="text-blue-600 mr-2 w-6 h-6" /> Facebook
               </a>

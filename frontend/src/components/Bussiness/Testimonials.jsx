@@ -6,7 +6,7 @@ function Testimonials({ testimonials, title }) {
       <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">
         {title}  {/* Render title passed as prop */}
       </h2>
-      <div className="grid grid-cols-1 p-4 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
+      <div className="grid grid-cols-1 p-4 sm:grid-cols-2 lg:grid-cols-4 gap-2 justify-items-center">
         {testimonials.map((testimonial, index) => (
           <div key={index} className="text-center bg-white p-8 rounded-lg shadow-md">
             <p className="text-gray-600 mb-4">{testimonial.quote}</p>  {/* Render quote passed as prop */}

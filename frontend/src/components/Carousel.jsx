@@ -4,12 +4,12 @@ const VerticalCarousel = ({ sections, onSectionClick }) => {
   const handleScroll = (id) => {
     const section = document.getElementById(id);
     if (section) {
-      const headerHeight = 50; // Giả sử header có chiều cao 50px, điều chỉnh nếu cần
+      const headerHeight = 50; 
       window.scrollTo({
-        top: section.offsetTop - headerHeight, // Điều chỉnh offset với header
+        top: section.offsetTop - headerHeight, 
         behavior: "smooth",
       });
-      onSectionClick(id); // Cập nhật active section khi cuộn
+      onSectionClick(id); 
     }
   };
 
@@ -21,10 +21,10 @@ const VerticalCarousel = ({ sections, onSectionClick }) => {
           onClick={() => handleScroll(section.id)}
           className={`w-4 h-4 rounded-full my-2 transition-all duration-700 ease-in-out transform ${
             section.active
-              ? "bg-white scale-125 border-2 border-[#1ea0ff]" // Khi active, màu trắng và phóng to với border xanh
-              : "bg-blue-500 hover:bg-blue-600 scale-90 border-2 border-[#1ea0ff]" // Khi chưa active, có border xanh nhẹ
+              ? "bg-white scale-125 border-2 border-[#1ea0ff]" 
+              : "bg-blue-500 hover:bg-blue-600 scale-90 border-2 border-[#1ea0ff]" 
           }`}
-          style={{ zIndex: 100 }} // Đảm bảo button luôn nổi bật phía trên các phần tử khác
+          style={{ zIndex: 100 }} 
         ></button>
       ))}
     </div>
@@ -32,3 +32,4 @@ const VerticalCarousel = ({ sections, onSectionClick }) => {
 };
 
 export default VerticalCarousel;
+  

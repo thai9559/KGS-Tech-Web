@@ -4,6 +4,19 @@
   "business": "ビジネス",
   "blog": "ブログ",
   "welcome": "私たちのウェブサイトへようこそ！",
+  "stats": {
+    "ask":"なぜKGS Techを選ぶのか?",
+    "users": "ユーザー数",
+    "happyUsers": "幸せなユーザー",
+    "awards": "受賞歴",
+    "countries": "サービス国",
+    "genuineService": "正規サービス",
+    "ratings": "評価",
+    "customerSupport": "カスタマーサポート",
+    "revenue": "収益",
+    "technology": "使用技術",
+    "certifications": "認証"
+  },
   "benefits": {
     "technology": "最先端技術",
     "technology_description": "最新の技術を駆使して、業務効率を向上させ、コストを削減する最適なソリューションを提供します。",
@@ -38,6 +51,29 @@
     },
     "date_label": "投稿日: "
   },
+  "blogPage":{
+    "search": {
+     "placeholder": "ブログ記事を検索..."
+    },
+    "filter": {
+      "category": "カテゴリを選択",
+      "time": "期間を選択",
+      "sort": "並べ替え",
+      "reset": "フィルターをリセット",
+      "react": "React",
+      "tailwind": "Tailwind CSS",
+      "antd": "Ant Design",
+      "1month": "1ヶ月前",
+      "3months": "3ヶ月前",
+      "6months": "6ヶ月前",
+      "12months": "12ヶ月前",
+      "newest": "最新",
+      "oldest": "最古"
+    }
+  },
+  "blogList": {
+    "title": "ブログリスト"
+  },
   "footer": {
     "company": "会社",
     "about_us": "私たちについて",
@@ -54,7 +90,7 @@
     "subtitle": "明るい未来のために革新する。",
     "aboutUs": {
       "title": "私たちについて",
-      "description": "私たちは、世界をより良い場所にするための革新的なソリューションを創造することに情熱を注いでいるチームです。私たちの使命は、顧客に卓越したサービスを提供し、協力的で包括的な環境を作り上げることです。"
+      "description": "私たちは、ウェブシステムアプリケーション開発、モバイルアプリ開発、ウェブサイト作成を含む包括的な技術ソリューション開発サービスを提供しています。経験豊富な技術者チームと共に、業務プロセスを最適化し、運用効率を向上させ、すべてのプラットフォームで優れたユーザー体験を提供する製品を開発しています。柔軟なウェブアプリケーション、スムーズなモバイルアプリ、またはプロフェッショナルなウェブサイトが必要な場合でも、私たちは常に効果的で適切なソリューションを提供し、デジタル時代での貴社の成長をサポートすることをお約束します。"
     },
     "services": {
       "title": "当社のサービス",
@@ -88,47 +124,59 @@
     },
     "contact": {
       "title": "お問い合わせ",
-      "description": "ご連絡いただけることを楽しみにしています！詳細やパートナーシップの機会については、お気軽にご連絡ください。",
-      "errorMessage": "すべての項目を記入してください。",
-      "successMessage": "メッセージは正常に送信されました！",
+      "description": "ご連絡をお待ちしております！詳細や提携の機会についてお気軽にお問い合わせください。",
+      "errorMessage": "すべてのフィールドを入力してください。",
+      "successMessage": "メッセージが正常に送信されました！",
       "email": "メールアドレス",
       "subject": "件名",
       "selectSubject": "件名を選択してください",
-      "workInquiry": "仕事に関する問い合わせ",
+      "workInquiry": "仕事に関するお問い合わせ",
       "supportRequest": "サポートリクエスト",
-      "generalInquiry": "一般的な問い合わせ",
-      "otherInquiry": "その他（詳細を記入してください）",
-      "specifySubject": "件名を指定してください",
+      "generalInquiry": "一般的なお問い合わせ",
+      "otherInquiry": "その他（具体的に記載してください）",
+      "specifySubject": "具体的に記載してください",
       "content": "内容",
-      "submit": "送信"
+      "submit": "送信",
+      "reasonsTitle": "お問い合わせの理由",
+      "reasonAppDevelopment": "アプリシステムの開発",
+      "reasonMobileApp": "モバイルアプリの開発",
+      "reasonWebsiteDevelopment": "ウェブサイトの開発",
+      "reasonSoftwareIntegration": "サードパーティソフトウェアとAPIのシームレスな統合",
+      "reasonEcommerce": "オンライン販売を促進するためのEコマースプラットフォームの開発",
+      "reasonConsulting": "業務効率を向上させるためのITコンサルティングサービス",
+      "reasonMaintenance": "デジタル製品の継続的な保守とサポート",
+      "reasonDigitalMarketing": "ビジネスの範囲を拡大するためのデジタルマーケティングソリューション"
     }
-
   },
-    "coreValues": {
-      "title": "コアバリュー",
-      "innovation": "革新",
-      "innovationDescription": "私たちは常に創造的な解決策を探し、成長を続けています。革新は新しい製品を作ることだけでなく、私たちがどのように考え、問題を解決するかにも関わっています。",
-      "responsibility": "責任",
-      "responsibilityDescription": "私たちは顧客と社会に持続可能な価値を提供することを約束します。責任とは、期限内に仕事を終わらせるだけでなく、社会と環境に対する責任をも意味します。",
-      "collaboration": "協力",
-      "collaborationDescription": "長期的なパートナーシップは私たちの成長の基盤です。私たちは、協力、交流、相互支援が問題解決と持続可能な価値創造の鍵であると信じています。",
-      "creativity": "創造性",
-      "creativityDescription": "創造性は成長の原動力です。私たちは、革新的なアイデアと創造的な解決策を生み出すことを奨励しています。"
-    },
-      "leadership": {
-        "title": "リーダーシップ",
-        "ceo": "CEO",
-        "cto": "CTO",
-        "coo": "COO"
-      },
-    
-    
-    "companyOverview": {
-      "title": "KGS - Techの紹介",
-      "description": "KGS - Techは、革新的なソフトウェアソリューション、テクノロジーコンサルティングサービス、そして信頼性のあるITサービスをグローバルに提供する先進的なテクノロジー企業です。"
-    },
-    "mission": {
-      "title": "使命",
-      "description": "私たちの使命は、ビジネスがデジタル時代において成長するための革新的な解決策を提供することです。現在のニーズを満たすだけでなく、顧客が業界をリードできるよう支援する製品とサービスを提供します。"
-    }
+  "coreValues": {
+    "title": "コアバリュー",
+    "innovation": "革新",
+    "innovationDescription": "私たちは常に創造的な解決策を探し、成長を続けています。革新は新しい製品を作ることだけでなく、私たちがどのように考え、問題を解決するかにも関わっています。",
+    "responsibility": "責任",
+    "responsibilityDescription": "私たちは顧客と社会に持続可能な価値を提供することを約束します。責任とは、期限内に仕事を終わらせるだけでなく、社会と環境に対する責任をも意味します。",
+    "collaboration": "協力",
+    "collaborationDescription": "長期的なパートナーシップは私たちの成長の基盤です。私たちは、協力、交流、相互支援が問題解決と持続可能な価値創造の鍵であると信じています。",
+    "creativity": "創造性",
+    "creativityDescription": "創造性は成長の原動力です。私たちは、革新的なアイデアと創造的な解決策を生み出すことを奨励しています。"
+  },
+  "leadership": {
+    "title": "リーダーシップ",
+    "name1":"山田 太郎",
+    "name2":"佐藤 一郎",
+    "name3":"鈴木 次郎",
+    "ceo": "最高経営責任者 (CEO)",
+    "cto": "最高技術責任者 (CTO)",
+    "coo": "最高執行責任者 (COO)"
+  },
+  "Collabs": {
+    "title": "提携しているブランド"
+  },
+  "companyOverview": {
+    "title": "KGS - Techの紹介",
+    "description": "KGS - Techは、革新的なソフトウェアソリューション、テクノロジーコンサルティングサービス、そして信頼性のあるITサービスをグローバルに提供する先進的なテクノロジー企業です。"
+  },
+  "mission": {
+    "title": "使命",
+    "description": "私たちの使命は、ビジネスがデジタル時代において成長するための革新的な解決策を提供することです。現在のニーズを満たすだけでなく、顧客が業界をリードできるよう支援する製品とサービスを提供します。"
+  }
 }
