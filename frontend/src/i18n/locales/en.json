@@ -52,6 +52,7 @@
     "date_label": "Published on: "
   },
   "blogPage":{
+    "back":"Go back",
     "search": {
       "placeholder": "Search for blog posts..."
     },

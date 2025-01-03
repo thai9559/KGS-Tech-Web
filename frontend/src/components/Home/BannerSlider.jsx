@@ -1,21 +1,22 @@
-import React from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import React from "react";
+import Slider from "react-slick";
+import { FaChevronDown } from "react-icons/fa";  // Import icon mũi tên xuống
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-const BannerSlider = () => {
+const BannerSlider = ({ onScrollToContent }) => {
   const settings = {
-    dots: true, 
-    infinite: true, 
-    speed: 1500, 
-    slidesToShow: 1, 
-    slidesToScroll: 1, 
-    autoplay: true, 
-    autoplaySpeed: 2000, 
+    dots: true,
+    infinite: true,
+    speed: 1500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
   };
 
   return (
-    <div className="w-[100%] mx-auto">
+    <div className="w-[100%] mx-auto relative">
       <Slider {...settings}>
         <div>
           <img
@@ -39,6 +40,14 @@ const BannerSlider = () => {
           />
         </div>
       </Slider>
+
+      {/* Nút mũi tên xuống */}
+      <button
+        onClick={onScrollToContent}  // Khi nhấn vào nút sẽ cuộn xuống phần nội dung
+        className="absolute bottom-[-20px] left-[80%] transform -translate-x-1/2 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 transition duration-300 z-10"
+      >
+        <FaChevronDown size={15} />
+      </button>
     </div>
   );
 };

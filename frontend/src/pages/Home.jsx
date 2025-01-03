@@ -12,9 +12,8 @@ export default function Home() {
 
   const sections = [
     { id: "bannerSlider", label: "Banner Slider", active: false },
-    { id: "companyStats", label: "companyStats", active: false },
+    { id: "companyStats", label: "Company Stats", active: false },
     { id: "benefits", label: "Benefits", active: false },
-
     { id: "blogSlider", label: "Blog Slider", active: false },
   ];
 
@@ -45,9 +44,16 @@ export default function Home() {
     if (element) {
       element.scrollIntoView({
         behavior: "smooth",
-        block: "start", // Đảm bảo phần tử được đưa lên đầu màn hình
+        block: "start",
       });
-      setActiveSection(id); // Cập nhật active section
+      setActiveSection(id);
+    }
+  };
+
+  const scrollToContent = () => {
+    const element = document.getElementById("companyStats");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -68,7 +74,7 @@ export default function Home() {
       <VerticalCarousel sections={enhancedSections} onSectionClick={handleSectionClick} />
       <div className="flex flex-col">
         <div id="bannerSlider">
-          <BannerSlider />
+          <BannerSlider onScrollToContent={scrollToContent} />
         </div>
         <div id="companyStats" className="container">
           <h2 className="text-black text-3xl text-center font-beVietnam font-semibold mt-10">{t('stats.ask')}</h2>

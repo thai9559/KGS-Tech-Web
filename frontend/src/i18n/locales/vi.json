@@ -52,6 +52,7 @@
     "date_label": "Ngày đăng: "
   },
   "blogPage":{
+    "back":"Quay lại",
     "search": {
       "placeholder": "Tìm kiếm bài viết..."
     },

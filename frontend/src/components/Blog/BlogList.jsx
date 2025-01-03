@@ -14,7 +14,7 @@ const BlogList = ({ blogs }) => {
       {blogs.map((blog, index) => (
         <div
           key={index}
-          className="bg-white shadow-lg rounded-lg mb-6 p-6 cursor-pointer"
+          className="bg-white shadow-lg rounded-lg mb-6 p-6 hover:shadow-lg hover:shadow-blue-500 cursor-pointer"
           onClick={() => handleBlogClick(blog.id)}  // Chuyển hướng đến trang chi tiết khi click vào blog
         >
           {/* Hình ảnh minh họa */}

@@ -52,6 +52,7 @@
     "date_label": "投稿日: "
   },
   "blogPage":{
+    "back":"戻る",
     "search": {
      "placeholder": "ブログ記事を検索..."
     },
