@@ -18,8 +18,7 @@ const Header = ({ home, company, business, blog }) => {
     setLanguage(value);
     i18n.changeLanguage(value);
 
-    // Lưu ngôn ngữ vào localStorage
-    localStorage.setItem("language", value); // Lưu ngôn ngữ vào localStorage
+    localStorage.setItem("language", value); 
   };
 
   // Toggle menu mở/đóng

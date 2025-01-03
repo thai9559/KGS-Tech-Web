@@ -7,7 +7,7 @@ const BannerSlider = () => {
   const settings = {
     dots: true, 
     infinite: true, 
-    speed: 500, 
+    speed: 1500, 
     slidesToShow: 1, 
     slidesToScroll: 1, 
     autoplay: true, 
@@ -19,23 +19,23 @@ const BannerSlider = () => {
       <Slider {...settings}>
         <div>
           <img
-            src="https://th.bing.com/th/id/OIP.iejvk6XSWz0KZ9JHvjnT6gHaD5?rs=1&pid=ImgDetMain"
+            src="https://res.cloudinary.com/dtnuj2les/image/upload/v1735895694/people-learning-language-medium-shot_mlfjha.jpg"
             alt="Banner 1"
-            className="w-full h-full   "
+            className="w-full h-[450px] md:h-[800px] object-cover"
           />
         </div>
         <div>
           <img
-            src="https://i.pinimg.com/736x/a8/fb/8a/a8fb8ae5925fdea0c79a8e7148a3a195.jpg"
+            src="https://res.cloudinary.com/dtnuj2les/image/upload/v1735895946/close-up-young-colleagues-having-meeting_akm1o4.jpg"
             alt="Banner 2"
-            className="w-full h-[700px] object-cover"
+            className="w-full h-[450px] md:h-[800px] object-cover"
           />
         </div>
         <div>
           <img
-            src="https://i.pinimg.com/736x/2f/f9/38/2ff93805b8023f1d6d44f5d45854ca25.jpg"
+            src="https://res.cloudinary.com/dtnuj2les/image/upload/v1735896054/concentrated-woman-with-students-table_fglrfz.jpg"
             alt="Banner 3"
-            className="w-full h-[700px] object-cover"
+            className="w-full h-[450px] md:h-[800px] object-cover"
           />
         </div>
       </Slider>
