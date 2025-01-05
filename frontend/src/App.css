@@ -1,33 +1,32 @@
 :root {
-    --background-color: #f4f8ff;
-    /* Màu nền mặc định */
+  --background-color: #f4f8ff;
+  /* Màu nền mặc định */
 }
 
 body {
-    background-color: var(--background-color);
-    /* Sử dụng biến màu nền */
-    font-family: Arial, sans-serif;
-    color: white;
-    /* Màu chữ để dễ đọc trên nền đen */
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  background-color: var(--background-color);
+  /* Sử dụng biến màu nền */
+  font-family: Arial, sans-serif;
+  color: white;
+  /* Màu chữ để dễ đọc trên nền đen */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .container {
-    max-width: 1600px; /* Giới hạn chiều rộng của phần nội dung */
-    margin-left: auto; /* Căn trái */
-    margin-right: auto; /* Căn phải */
+  max-width: 1600px; /* Giới hạn chiều rộng của phần nội dung */
+  margin-left: auto; /* Căn trái */
+  margin-right: auto; /* Căn phải */
 }
 .banner {
-    max-width: 1850px; /* Giới hạn chiều rộng của phần nội dung */
-    margin-left: auto; /* Căn trái */
-    margin-right: auto; /* Căn phải */
+  max-width: 1850px; /* Giới hạn chiều rộng của phần nội dung */
+  margin-left: auto; /* Căn trái */
+  margin-right: auto; /* Căn phải */
 }
 
 .benefit {
-    max-width: 1600px; /* Giới hạn chiều rộng của phần nội dung */
-    margin-left: auto; /* Căn trái */
-    margin-right: auto; /* Căn phải */
+  max-width: 1600px; /* Giới hạn chiều rộng của phần nội dung */
+  margin-left: auto; /* Căn trái */
+  margin-right: auto; /* Căn phải */
 }
-

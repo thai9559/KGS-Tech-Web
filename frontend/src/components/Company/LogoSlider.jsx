@@ -2,34 +2,34 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const LogoSlider = ({ logos }) => {
-      const { t } = useTranslation();
-    
+  const { t } = useTranslation();
+
   const settings = {
-    dots: false, 
-    infinite: true, 
-    speed: 500, 
-    slidesToShow: 5, 
-    slidesToScroll: 1, 
-    autoplay: true, 
-    autoplaySpeed: 1500, 
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 1500,
     responsive: [
       {
-        breakpoint: 1024, 
+        breakpoint: 1024,
         settings: {
           slidesToShow: 4,
         },
       },
       {
-        breakpoint: 768, 
+        breakpoint: 768,
         settings: {
           slidesToShow: 3,
         },
       },
       {
-        breakpoint: 480, 
+        breakpoint: 480,
         settings: {
           slidesToShow: 2,
         },
@@ -39,8 +39,8 @@ const LogoSlider = ({ logos }) => {
 
   return (
     <div className="py-8">
-        <h2 className="text-4xl font-semibold text-center text-blue-600 mb-12">
-        {t('Collabs.title')}
+      <h2 className="text-3xl font-semibold text-center text-blue-600 mb-12">
+        {t("Collabs.title")}
       </h2>
       <Slider {...settings} className="px-4">
         {logos.map((logo, index) => (
@@ -48,7 +48,7 @@ const LogoSlider = ({ logos }) => {
             <img
               src={logo}
               alt={`Company Logo ${index + 1}`}
-              className="w-50 h-28 object-contain" 
+              className="w-50 h-28 object-contain"
             />
           </div>
         ))}

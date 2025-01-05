@@ -78,15 +78,9 @@ const BlogSlider = () => {
   return (
     <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
       <Helmet>
-      <title>{'KGS Tech'}</title>
-        <meta
-          name="description"
-          content={t("seo.blogSlider.description")}
-        />
-        <meta
-          property="og:title"
-          content={t("blogData.latest_posts")}
-        />
+        <title>{"KGS Tech"}</title>
+        <meta name="description" content={t("seo.blogSlider.description")} />
+        <meta property="og:title" content={t("blogData.latest_posts")} />
         <meta
           property="og:description"
           content={t("seo.blogSlider.description")}
@@ -98,7 +92,7 @@ const BlogSlider = () => {
         <meta property="og:type" content="website" />
       </Helmet>
 
-      <h2 className="text-3xl font-beVietnam text-center text-gray-900 mb-6">
+      <h2 className="text-3xl text-primary font-bold font-notoSansJP text-center  mb-6">
         {t("blogData.latest_posts")}
       </h2>
       <Suspense fallback={<div>Loading...</div>}>
@@ -115,9 +109,7 @@ const BlogSlider = () => {
                   <h3 className="text-2xl font-bold text-gray-900 font-beVietnam hover:text-indigo-600 transition duration-300">
                     {t(blog.titleKey)}
                   </h3>
-                  <p className="mt-2 text-gray-600">
-                    {t(blog.descriptionKey)}
-                  </p>
+                  <p className="mt-2 text-gray-600">{t(blog.descriptionKey)}</p>
                   <p className="mt-4 text-sm text-gray-500 italic">
                     {t("blogData.date_label")} {formatDate(blog.date)}
                   </p>

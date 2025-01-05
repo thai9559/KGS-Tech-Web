@@ -4,7 +4,7 @@ const BlogCard = ({ blog }) => {
   return (
     <div className="flex flex-col md:flex-row bg-white shadow-lg rounded-lg overflow-hidden mb-6 cursor-pointer">
       {/* Blog Image */}
-      <div className="w-full md:w-1/3">
+      <div className="w-[300px] md:w-1/3">
         <img
           src={blog.image}
           alt={blog.title}
@@ -14,7 +14,7 @@ const BlogCard = ({ blog }) => {
       {/* Blog Content */}
       <div className="p-6 flex flex-col justify-between w-full md:w-2/3">
         <div>
-          <h3 className="text-xl font-bold text-black mb-2">{blog.title}</h3>
+          <h3 className="text-base font-bold text-black mb-2">{blog.title}</h3>
           <p className="text-black mb-4">{blog.description}</p>
         </div>
         <div className="flex justify-between items-center">
