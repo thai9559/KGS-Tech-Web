@@ -71,13 +71,18 @@ export default function Home() {
 
   return (
     <Layout>
-      <VerticalCarousel sections={enhancedSections} onSectionClick={handleSectionClick} />
+      <VerticalCarousel
+        sections={enhancedSections}
+        onSectionClick={handleSectionClick}
+      />
       <div className="flex flex-col">
         <div id="bannerSlider">
           <BannerSlider onScrollToContent={scrollToContent} />
         </div>
         <div id="companyStats" className="container">
-          <h2 className="text-black text-3xl text-center font-beVietnam font-semibold mt-10">{t('stats.ask')}</h2>
+          <h2 className="text-primary text-3xl text-center  font-beVietnam font-semibold mt-10">
+            {t("stats.ask")}
+          </h2>
           <CompanyStats />
         </div>
         <div id="benefits" className="container">
