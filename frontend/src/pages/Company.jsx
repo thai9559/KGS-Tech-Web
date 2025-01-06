@@ -7,6 +7,7 @@ import Layout from '../components/Layout';
 import { useTranslation } from 'react-i18next';
 import VerticalCarousel from '../components/Carousel';
 import LogoSlider from '../components/Company/LogoSlider';
+import Banner from '../components/Company/Banner';
 const Company = () => {
   const { t } = useTranslation();
 
@@ -23,11 +24,7 @@ const Company = () => {
       title: t('coreValues.collaboration'), 
       description: t('coreValues.collaborationDescription') 
     },
-    {
-      title: t('coreValues.creativity'),
-      description: t('coreValues.creativityDescription')
-    },
-    
+
   ];
   const logos = [
     "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886228/kmslogo_l2fx2y.png",
@@ -112,32 +109,31 @@ const Company = () => {
         activeSection={activeSection}
       />
 
-      <div className="bg-gray-50 py-16 px-4">
-        <div id="companyOverview" className="container min-h-[40vh] ">
-          <CompanyOverview
+      <div className="bg-gray-50 ">
+        <div id="companyOverview" className=" min-h-[40vh] ">
+         <div>
+         <Banner title={t('companyOverview.title')}  description={t('companyOverview.description')}/>
+         </div>
+          {/* <CompanyOverview
             title={t('companyOverview.title')}
             description={t('companyOverview.description')}
-          />
+          /> */}
         </div>
 
-        {/* Core Values */}
-        <div id="coreValues" className="container min-h-[30vh] ">
+       <div id="coreValues" className="container min-h-[30vh] ">
           <CoreValues values={coreValues} />
-        </div>
+        </div> 
 
-        <div id="logoSlider" className='container min-h-[40vh]'>
+        <div id="logoSlider" className='container overflow-hidden min-h-[40vh]'>
         <LogoSlider logos={logos} />
         </div>
 
-        {/* Mission */}
         <div id="mission" className="container min-h-[40vh]">
           <Mission mission={t('mission.description')} />
         </div>
-
-        {/* Leadership */}
         <div id="leadership" className="container">
           <Leadership leaders={leaders} />
-        </div>
+        </div> 
       </div>
     </Layout>
   );

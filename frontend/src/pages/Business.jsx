@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom"; // Thêm useLocation
 import Layout from "../components/Layout";
 import AboutUs from "../components/Bussiness/AboutUs";
 import Services from "../components/Bussiness/Services";
@@ -11,6 +12,8 @@ import { useTranslation } from "react-i18next";
 
 function Business() {
   const { t } = useTranslation();
+  const location = useLocation(); // Lấy thông tin URL
+  const [activeSection, setActiveSection] = useState("aboutUs");
 
   const testimonials = [
     {
@@ -41,8 +44,6 @@ function Business() {
     { id: "testimonials", label: t("BusinessPage.whatClientsSay.title"), active: false },
     { id: "contact", label: t("BusinessPage.contact.title"), active: false },
   ];
-
-  const [activeSection, setActiveSection] = useState("aboutUs");
 
   const handleScroll = () => {
     const scrollPosition = window.scrollY + window.innerHeight / 2; 
@@ -83,6 +84,19 @@ function Business() {
     };
   }, [activeSection]); 
 
+  // Cuộn đến phần "Contact" nếu URL có chứa #contact
+  useEffect(() => {
+    if (location.hash === "#contact") {
+      const contactSection = document.getElementById("contact");
+      if (contactSection) {
+        window.scrollTo({
+          top: contactSection.offsetTop - 100, // Điều chỉnh khoảng cách
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [location]);
+
   const enhancedSections = sections.map((section) => ({
     ...section,
     active: section.id === activeSection,
@@ -109,17 +123,17 @@ function Business() {
               {
                 title: t("BusinessPage.services.webDevelopment.title"),
                 description: t("BusinessPage.services.webDevelopment.description"),
-                icon: <FaLaptopCode size={40} color="#1ea0ff" />,
+                icon: <FaLaptopCode size={40} color="#074799" />,
               },
               {
                 title: t("BusinessPage.services.smartphoneAppDevelopment.title"),
                 description: t("BusinessPage.services.smartphoneAppDevelopment.description"),
-                icon: <FaMobileAlt size={40} color="#1ea0ff" />,
+                icon: <FaMobileAlt size={40} color="#074799" />,
               },
               {
                 title: t("BusinessPage.services.websiteDevelopment.title"),
                 description: t("BusinessPage.services.websiteDevelopment.description"),
-                icon: <FaGlobe size={40} color="#1ea0ff" />,
+                icon: <FaGlobe size={40} color="#074799" />,
               },
             ]}
           />

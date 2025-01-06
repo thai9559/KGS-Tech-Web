@@ -75,7 +75,7 @@ export default function Home() {
         sections={enhancedSections}
         onSectionClick={handleSectionClick}
       />
-      <div className="flex flex-col">
+      <div className="flex flex-col overflow-hidden">
         <div id="bannerSlider">
           <BannerSlider onScrollToContent={scrollToContent} />
         </div>

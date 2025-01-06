@@ -9,7 +9,7 @@ const CoreValues = ({ values }) => {
   return (
     <section className="py-16 bg-gray-50">
       {/* Tiêu đề phần CoreValues */}
-      <h2 className="text-3xl font-semibold text-center text-blue-600 mb-12">
+      <h2 className="text-2xl font-semibold text-center text-blue-600 mb-12">
         {t("coreValues.title")} {/* Tiêu đề được dịch */}
       </h2>
 
@@ -21,7 +21,7 @@ const CoreValues = ({ values }) => {
             className="w-96 p-10 flex justify-center items-center flex-col shadow-lg rounded-xl text-center transform transition-all sm:hover:scale-105 sm:hover:shadow-2xl bg-white"
           >
             {/* Icon minh họa */}
-            <div className="mb-6 text-4xl text-blue-600">
+            <div className="mb-6 text-3xl text-blue-600">
               {index === 0 ? (
                 <FaLeaf />
               ) : index === 1 ? (

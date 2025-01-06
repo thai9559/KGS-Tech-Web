@@ -16,8 +16,8 @@ import {
 const StatsCard = ({ icon, title, number }) => (
   <div className="flex flex-col items-center text-center space-y-2">
     <div className="text-primary text-2xl">{icon}</div>
-    <p className="text-black font-semibold text-xl">{number}</p>
-    <p className="text-black text-xl font-beVietnam font-semibold">{title}</p>
+    <p className="text-black font-semibold text-base">{number}</p>
+    <p className="text-black text-base font-beVietnam font-semibold">{title}</p>
   </div>
 );
 
@@ -25,7 +25,7 @@ const CompanyStats = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-5 gap-8 p-8">
+    <div className="grid grid-cols-2 overflow-hidden md:grid-cols-5 gap-5 p-8">
       <StatsCard icon={<FaUsers />} title={t("stats.users")} number="50,000+" />
       <StatsCard
         icon={<FaSmile />}

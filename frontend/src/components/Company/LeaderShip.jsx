@@ -7,7 +7,7 @@ const Leadership = ({ leaders }) => {
 
   return (
     <section className="py-16 bg-white">
-      <h2 className="text-3xl font-semibold text-center text-blue-600 mb-8">
+      <h2 className="text-2xl font-semibold text-center text-blue-600 mb-8">
         {t("leadership.title")}
       </h2>
       <div className="flex flex-wrap justify-center gap-8">
@@ -22,10 +22,10 @@ const Leadership = ({ leaders }) => {
               className="w-full h-[80%] bg-top object-cover transition-all duration-300"
             />
             <div className="p-4 flex flex-col justify-center items-center">
-              <h3 className="text-xl font-semibold text-gray-800">
+              <h3 className="text-base font-semibold text-gray-800">
                 {t("leadership.name", { name: leader.name })}
               </h3>
-              <p className="text-base text-gray-600">
+              <p className="text-sm text-gray-600">
                 {t(`leadership.${leader.position.toLowerCase()}`)}
               </p>{" "}
               {/* Dịch chức vụ */}

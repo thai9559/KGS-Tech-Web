@@ -75,7 +75,7 @@ const Benefits = () => {
       </Helmet>
 
       <Suspense fallback={<div>Loading...</div>}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-6 mt-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 overflow-hidden gap-4 p-6 mt-10">
           {benefits.map((benefit) => (
             <div
               key={benefit.title}
@@ -84,17 +84,17 @@ const Benefits = () => {
               {/* Giao diện mobile (iPad trở xuống) */}
               <div className="flex flex-col items-center lg:hidden">
                 {benefit.icon}
-                <h2 className="text-xl font-bold mt-2">{benefit.title}</h2>
+                <h2 className="text-lg font-bold mt-2">{benefit.title}</h2>
                 <p className="text-base mt-2">{benefit.description}</p>
               </div>
               {/* Giao diện desktop (từ 1024px trở lên) */}
               <div className="hidden lg:flex flex-col  items-center group h-[250px]">
                 <div className="w-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center transition-all duration-700 ease-in-out opacity-100 group-hover:opacity-0 group-hover:translate-y-[-100%]">
                   {benefit.icon}
-                  <h2 className="text-2xl font-bold">{benefit.title}</h2>
+                  <h2 className="text-xl font-bold">{benefit.title}</h2>
                 </div>
                 <div className="absolute inset-0 p-10 justify-center z-30 bg-white transform translate-y-12 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-700 ease-in-out">
-                  <p className="text-black text-xl text-left">
+                  <p className="text-black text-base text-left">
                     {benefit.description}
                   </p>
                 </div>

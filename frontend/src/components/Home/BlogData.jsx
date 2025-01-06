@@ -99,7 +99,7 @@ const BlogSlider = () => {
         <Slider {...settings}>
           {BlogSliderData.map((blog) => (
             <div key={blog.id} className="px-4 lg:px-6">
-              <div className="bg-white cursor-pointer rounded-lg shadow-lg overflow-hidden transition duration-300 hover:shadow-lg hover:shadow-blue-500">
+              <div className="bg-white cursor-pointer overflow-hidden rounded-lg shadow-lg  transition duration-300 hover:shadow-lg hover:shadow-blue-500">
                 <img
                   className="w-full h-56 object-cover"
                   src={blog.imageUrl}

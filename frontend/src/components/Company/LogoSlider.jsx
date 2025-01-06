@@ -39,7 +39,7 @@ const LogoSlider = ({ logos }) => {
 
   return (
     <div className="py-8">
-      <h2 className="text-3xl font-semibold text-center text-blue-600 mb-12">
+      <h2 className="text-2xl font-semibold text-center text-blue-600 mb-12">
         {t("Collabs.title")}
       </h2>
       <Slider {...settings} className="px-4">
@@ -48,7 +48,7 @@ const LogoSlider = ({ logos }) => {
             <img
               src={logo}
               alt={`Company Logo ${index + 1}`}
-              className="w-50 h-28 object-contain"
+              className="w-50 h-24 object-contain"
             />
           </div>
         ))}
