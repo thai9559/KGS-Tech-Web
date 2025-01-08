@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import CoreValues from '../components/Company/CoreValues';
-import CompanyOverview from '../components/Company/CompanyOverview';
-import Leadership from '../components/Company/LeaderShip';
-import Mission from '../components/Company/Misson';
-import Layout from '../components/Layout';
-import { useTranslation } from 'react-i18next';
-import VerticalCarousel from '../components/Carousel';
-import LogoSlider from '../components/Company/LogoSlider';
-import Banner from '../components/Company/Banner';
+import React, { useState, useEffect } from "react";
+import CoreValues from "../components/Company/CoreValues";
+import CompanyOverview from "../components/Company/CompanyOverview";
+import Leadership from "../components/Company/LeaderShip";
+import Mission from "../components/Company/Misson";
+import Layout from "../components/Layout";
+import { useTranslation } from "react-i18next";
+import VerticalCarousel from "../components/Carousel";
+import LogoSlider from "../components/Company/LogoSlider";
+import Banner from "../components/Company/Banner";
 import DevelopmentTimeline from "../components/Company/DevelopmentTimeline";
 
 const Company = () => {
@@ -15,16 +15,16 @@ const Company = () => {
 
   const coreValues = [
     {
-      title: t('coreValues.innovation'),
-      description: t('coreValues.innovationDescription')
+      title: t("coreValues.innovation"),
+      description: t("coreValues.innovationDescription"),
     },
     {
-      title: t('coreValues.responsibility'),
-      description: t('coreValues.responsibilityDescription')
+      title: t("coreValues.responsibility"),
+      description: t("coreValues.responsibilityDescription"),
     },
     {
-      title: t('coreValues.collaboration'),
-      description: t('coreValues.collaborationDescription')
+      title: t("coreValues.collaboration"),
+      description: t("coreValues.collaborationDescription"),
     },
   ];
 
@@ -39,19 +39,37 @@ const Company = () => {
   ];
 
   const leaders = [
-    { name: "Yamada Tarou", position: "ceo", avatar: 'https://i.pinimg.com/736x/ac/fb/a1/acfba1ae7dbb27565726c47aac8f3472.jpg' },
-    { name: "Satou Ichirou", position: "cto", avatar: 'https://i.pinimg.com/736x/3c/8e/60/3c8e60e9a61ac79b61120ecd5f5edbdc.jpg' },
-    { name: "Suzuki Jirou", position: "coo", avatar: 'https://i.pinimg.com/736x/94/0e/6e/940e6e1c37f451e7efc6420947e1f1f9.jpg' },
+    {
+      name: "Yamada Tarou",
+      position: "ceo",
+      avatar:
+        "https://i.pinimg.com/736x/ac/fb/a1/acfba1ae7dbb27565726c47aac8f3472.jpg",
+    },
+    {
+      name: "Satou Ichirou",
+      position: "cto",
+      avatar:
+        "https://i.pinimg.com/736x/3c/8e/60/3c8e60e9a61ac79b61120ecd5f5edbdc.jpg",
+    },
+    {
+      name: "Suzuki Jirou",
+      position: "coo",
+      avatar:
+        "https://i.pinimg.com/736x/94/0e/6e/940e6e1c37f451e7efc6420947e1f1f9.jpg",
+    },
   ];
 
   const sections = [
-    { id: 'companyOverview', label: t('companyOverview.title'), active: false },
-    { id: 'developerTimeline', label: t('developerTimeline.title'), active: false },
-    { id: 'coreValues', label: t('coreValues.title'), active: false },
-    { id: 'logoSlider', label: t('logoSlider.title'), active: false },
-    { id: 'mission', label: t('mission.title'), active: false },
-    { id: 'leadership', label: t('leadership.title'), active: false },
-
+    { id: "companyOverview", label: t("companyOverview.title"), active: false },
+    {
+      id: "developerTimeline",
+      label: t("developerTimeline.title"),
+      active: false,
+    },
+    { id: "coreValues", label: t("coreValues.title"), active: false },
+    { id: "logoSlider", label: t("logoSlider.title"), active: false },
+    { id: "mission", label: t("mission.title"), active: false },
+    { id: "leadership", label: t("leadership.title"), active: false },
   ];
 
   const [activeSection, setActiveSection] = useState("companyOverview");
@@ -83,7 +101,7 @@ const Company = () => {
   const handleSectionClick = (id) => {
     const element = document.getElementById(id);
     if (element) {
-      const offset = element.offsetTop - 100; 
+      const offset = element.offsetTop - 100;
       window.scrollTo({
         top: offset,
         behavior: "smooth",
@@ -114,23 +132,26 @@ const Company = () => {
 
       <div className="bg-gray-50 ">
         <div id="companyOverview" className="min-h-[40vh] ">
-          <Banner title={t('companyOverview.title')} description={t('companyOverview.description')} />
+          <Banner
+            title={t("companyOverview.title")}
+            description={t("companyOverview.description")}
+          />
         </div>
 
-        <div id="developerTimeline" className="container min-h-[30vh]">
-          <DevelopmentTimeline /> 
+        <div id="developerTimeline" className=" min-h-[30vh]">
+          <DevelopmentTimeline />
         </div>
 
         <div id="coreValues" className="container min-h-[30vh] ">
           <CoreValues values={coreValues} />
         </div>
 
-        <div id="logoSlider" className='container overflow-hidden min-h-[40vh]'>
+        <div id="logoSlider" className="container overflow-hidden min-h-[40vh]">
           <LogoSlider logos={logos} />
         </div>
 
         <div id="mission" className="container min-h-[40vh]">
-          <Mission mission={t('mission.description')} />
+          <Mission mission={t("mission.description")} />
         </div>
 
         <div id="leadership" className="container">
