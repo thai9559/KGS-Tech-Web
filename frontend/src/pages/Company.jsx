@@ -8,24 +8,26 @@ import { useTranslation } from 'react-i18next';
 import VerticalCarousel from '../components/Carousel';
 import LogoSlider from '../components/Company/LogoSlider';
 import Banner from '../components/Company/Banner';
+import DevelopmentTimeline from "../components/Company/DevelopmentTimeline";
+
 const Company = () => {
   const { t } = useTranslation();
 
   const coreValues = [
-    { 
-      title: t('coreValues.innovation'), 
-      description: t('coreValues.innovationDescription') 
+    {
+      title: t('coreValues.innovation'),
+      description: t('coreValues.innovationDescription')
     },
-    { 
-      title: t('coreValues.responsibility'), 
-      description: t('coreValues.responsibilityDescription') 
+    {
+      title: t('coreValues.responsibility'),
+      description: t('coreValues.responsibilityDescription')
     },
-    { 
-      title: t('coreValues.collaboration'), 
-      description: t('coreValues.collaborationDescription') 
+    {
+      title: t('coreValues.collaboration'),
+      description: t('coreValues.collaborationDescription')
     },
-
   ];
+
   const logos = [
     "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886228/kmslogo_l2fx2y.png",
     "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886295/viettel-removebg-preview_brfhlc.png",
@@ -44,16 +46,18 @@ const Company = () => {
 
   const sections = [
     { id: 'companyOverview', label: t('companyOverview.title'), active: false },
+    { id: 'developerTimeline', label: t('developerTimeline.title'), active: false },
     { id: 'coreValues', label: t('coreValues.title'), active: false },
     { id: 'logoSlider', label: t('logoSlider.title'), active: false },
     { id: 'mission', label: t('mission.title'), active: false },
     { id: 'leadership', label: t('leadership.title'), active: false },
+
   ];
 
   const [activeSection, setActiveSection] = useState("companyOverview");
 
   const handleScroll = () => {
-    const scrollPosition = window.scrollY + window.innerHeight / 2; 
+    const scrollPosition = window.scrollY + window.innerHeight / 2;
     let activeId = "";
 
     sections.forEach((section) => {
@@ -79,12 +83,12 @@ const Company = () => {
   const handleSectionClick = (id) => {
     const element = document.getElementById(id);
     if (element) {
-      const offset = element.offsetTop - 100; // Điều chỉnh offset để tránh bị che khuất
+      const offset = element.offsetTop - 100; 
       window.scrollTo({
         top: offset,
         behavior: "smooth",
       });
-      setActiveSection(id); 
+      setActiveSection(id);
     }
   };
 
@@ -102,7 +106,6 @@ const Company = () => {
 
   return (
     <Layout>
-      {/* Carousel Section */}
       <VerticalCarousel
         sections={enhancedSections}
         onSectionClick={handleSectionClick}
@@ -110,30 +113,29 @@ const Company = () => {
       />
 
       <div className="bg-gray-50 ">
-        <div id="companyOverview" className=" min-h-[40vh] ">
-         <div>
-         <Banner title={t('companyOverview.title')}  description={t('companyOverview.description')}/>
-         </div>
-          {/* <CompanyOverview
-            title={t('companyOverview.title')}
-            description={t('companyOverview.description')}
-          /> */}
+        <div id="companyOverview" className="min-h-[40vh] ">
+          <Banner title={t('companyOverview.title')} description={t('companyOverview.description')} />
         </div>
 
-       <div id="coreValues" className="container min-h-[30vh] ">
+        <div id="developerTimeline" className="container min-h-[30vh]">
+          <DevelopmentTimeline /> 
+        </div>
+
+        <div id="coreValues" className="container min-h-[30vh] ">
           <CoreValues values={coreValues} />
-        </div> 
+        </div>
 
         <div id="logoSlider" className='container overflow-hidden min-h-[40vh]'>
-        <LogoSlider logos={logos} />
+          <LogoSlider logos={logos} />
         </div>
 
         <div id="mission" className="container min-h-[40vh]">
           <Mission mission={t('mission.description')} />
         </div>
+
         <div id="leadership" className="container">
           <Leadership leaders={leaders} />
-        </div> 
+        </div>
       </div>
     </Layout>
   );

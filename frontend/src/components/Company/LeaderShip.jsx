@@ -22,10 +22,10 @@ const Leadership = ({ leaders }) => {
               className="w-full h-[80%] bg-top object-cover transition-all duration-300"
             />
             <div className="p-4 flex flex-col justify-center items-center">
-              <h3 className="text-base font-semibold text-gray-800">
+              <h3 className="text-base font-semibold font-notoSansJP text-gray-800">
                 {t("leadership.name", { name: leader.name })}
               </h3>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm font-notoSansJP text-gray-600">
                 {t(`leadership.${leader.position.toLowerCase()}`)}
               </p>{" "}
               {/* Dịch chức vụ */}

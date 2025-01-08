@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
-
+import Animation from "../Animation";
 const FaMicrochip = lazy(() =>
   import("react-icons/fa").then((module) => ({ default: module.FaMicrochip }))
 );
@@ -76,7 +76,8 @@ const Benefits = () => {
 
       <Suspense fallback={<div>Loading...</div>}>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 overflow-hidden gap-4 p-6 mt-10">
-          {benefits.map((benefit) => (
+          {benefits.map((benefit,index) => (
+          <Animation key={index} animationType="fade-up">
             <div
               key={benefit.title}
               className="relative p-8  bg-primary rounded-lg border text-center text-white shadow-2xl overflow-hidden group transition-all duration-500 h-[240px]"
@@ -99,9 +100,12 @@ const Benefits = () => {
                   </p>
                 </div>
               </div>
+              
             </div>
+            </Animation>
           ))}
         </div>
+        
       </Suspense>
     </>
   );

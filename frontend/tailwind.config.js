@@ -9,6 +9,7 @@ export default {
         notoSansJP: ["Noto Sans JP", "sans-serif"],
       },
       colors: {
+        // primary: "#074799",
         primary: "#074799",
         secondary: "#FFC470",
         footer: "#000957",

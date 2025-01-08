@@ -18,22 +18,35 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const blogsPerPage = 6;
 
+  // Lắng nghe sự thay đổi của hash trong URL và cập nhật searchTerm
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (hash) {
+      setSearchTerm(hash); // Nếu có hash, cập nhật searchTerm
+    }
+  }, []); // Chỉ chạy 1 lần khi component mount
+
+  // Handle search term
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
 
+  // Handle category change
   const handleCategoryChange = (value) => {
     setSelectedCategory(value);
   };
 
+  // Handle date change
   const handleDateChange = (value) => {
     setSelectedDate(value);
   };
 
+  // Handle sort change
   const handleSortChange = (value) => {
     setSortOrder(value);
   };
 
+  // Reset all filters
   const handleResetFilters = () => {
     setSearchTerm("");
     setSelectedCategory("");
@@ -41,10 +54,11 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
     setSortOrder("asc");
   };
 
-  // Handling tag click
+  // Handle tag click (update search term and URL)
   const handleTagClick = (tag) => {
     const tagWithoutHash = tag.replace("#", "").trim();
     setSearchTerm(tagWithoutHash); // Set search term as tag without '#'
+    window.location.hash = tag; // Set URL fragment as tag (e.g., #React)
   };
 
   // Filtering the blogs
@@ -105,6 +119,9 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
     <div className="container mx-auto p-6 scroll-smooth">
       {/* Search bar */}
       <div className="mb-6 w-full lg:w-3/4">
+        {/* Display selected tag as link */}
+
+
         <Input
           placeholder={t("blogPage.search.placeholder")}
           value={searchTerm}

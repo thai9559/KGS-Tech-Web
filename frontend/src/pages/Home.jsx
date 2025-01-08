@@ -50,12 +50,6 @@ export default function Home() {
     }
   };
 
-  const scrollToContent = () => {
-    const element = document.getElementById("companyStats");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -77,7 +71,7 @@ export default function Home() {
       />
       <div className="flex flex-col overflow-hidden">
         <div id="bannerSlider">
-          <BannerSlider onScrollToContent={scrollToContent} />
+          <BannerSlider />
         </div>
         <div id="companyStats" className="container">
           <h2 className="text-primary text-3xl text-center  font-beVietnam font-semibold mt-10">

@@ -5,7 +5,7 @@ const Banner = ({ title, description }) => {
     <div className="relative">
       {/* Banner Image */}
       <div
-        className="w-full h-[450px] md:h-[800px] bg-cover object-cover bg-top-right"
+        className="w-full h-[450px] md:h-[850px] bg-cover object-cover bg-top-right"
         style={{
           backgroundImage:
             "url('https://res.cloudinary.com/dtnuj2les/image/upload/v1736130775/full-shot-smiley-people-work-min_qreonb.jpg')",

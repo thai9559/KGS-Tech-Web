@@ -5,7 +5,7 @@
   "blog": "Blog",
   "welcome": "Welcome to our website!",
   "stats": {
-    "ask":"Why Choose KGS Tech?",
+    "ask": "Why Choose KGS Tech?",
     "users": "Users",
     "happyUsers": "Happy Users",
     "awards": "Awards",
@@ -51,8 +51,8 @@
     },
     "date_label": "Published on: "
   },
-  "blogPage":{
-    "back":"Go back",
+  "blogPage": {
+    "back": "Go back",
     "search": {
       "placeholder": "Search for blog posts..."
     },
@@ -162,10 +162,10 @@
   },
   "leadership": {
     "title": "Leadership",
-    "name": "{{name}}", 
-    "name1":"Yamada Tarou",
-    "name2":"Satou Ichirou",
-    "name3":"Suzuki Jirou",
+    "name": "{{name}}",
+    "name1": "Yamada Tarou",
+    "name2": "Satou Ichirou",
+    "name3": "Suzuki Jirou",
     "ceo": "Chief Executive Officer (CEO)",
     "cto": "Chief Technology Officer (CTO)",
     "coo": "Chief Operating Officer (COO)"
@@ -173,12 +173,25 @@
   "Collabs": {
     "title": "Collaborating Brands"
   },
+  "TimeLine": {
+    "title": "Company Milestones",
+    "title1": "Company Founded",
+    "description1": "Our company was founded with a visionary goal of transforming the technology landscape. From humble beginnings, we aimed to create groundbreaking solutions that would impact industries worldwide. This milestone marked the start of our journey to innovate, disrupt, and lead in the tech space, fostering a culture of creativity, ambition, and excellence. Our foundation was built upon a shared passion for technology and a commitment to delivering value to our customers.",
+    "title2": "First Major Product Launch",
+    "description2": "After years of hard work and dedication, we launched our very first major product. This milestone was a defining moment for the company, as our product received overwhelming positive feedback and quickly gained popularity. Our team had worked tirelessly to bring this idea to life, and its success not only validated our vision but also cemented our place in the market. This launch marked the beginning of a new chapter of growth, setting the stage for future product innovations and strengthening our brand's reputation in the industry.",
+    "title3": "Global Expansion",
+    "description3": "With our initial success, we began to expand our reach beyond our local markets, taking our products and services to the global stage. Our commitment to innovation and excellence allowed us to break into multiple international markets, bringing our solutions to a broader audience. This expansion was driven by a deep understanding of diverse customer needs and a willingness to adapt to different market environments. As we grew internationally, we gained a deeper appreciation for the global technology ecosystem, further shaping our company's growth strategy and global footprint.",
+    "title4": "Major Technological Milestone",
+    "description4": "In a significant leap forward, we achieved a major technological breakthrough that propelled our innovation to new heights. This milestone involved the development of a cutting-edge technology that enhanced our product offerings and positioned us as leaders in the tech industry. The achievement not only reinforced our commitment to research and development but also paved the way for new solutions that would continue to drive our growth. It was a defining moment that demonstrated our ability to push the boundaries of what is possible and to remain at the forefront of technological advancements.",
+    "title5": "Launch of New AI Product Line",
+    "description5": "Continuing our mission to innovate, we introduced a new line of AI-powered products that revolutionized our offerings and opened new opportunities in the tech sector. This product line harnessed the power of artificial intelligence to provide smarter, more efficient solutions for our customers. By integrating advanced AI technologies into our products, we were able to enhance user experiences, improve automation, and deliver personalized solutions at an unprecedented scale. This launch marked a significant shift in our product strategy, reinforcing our position as a tech pioneer at the forefront of the AI revolution."
+  },
   "companyOverview": {
     "title": "About KGS - Tech",
     "description": "KGS - Tech is a leading technology company providing innovative software solutions, technology consulting services, and trusted IT services globally."
   },
   "mission": {
-    "contact":"Contact Us",
+    "contact": "Contact Us",
     "title": "Mission",
     "description": "Our mission is to provide innovative solutions that help businesses grow in the digital era. We are committed to providing products and services that not only meet current needs but also help customers lead the industry."
   }

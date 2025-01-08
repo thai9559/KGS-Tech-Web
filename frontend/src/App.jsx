@@ -67,6 +67,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/company" element={<Company />} />
             <Route path="/business" element={<Business />} />
+
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogDetailPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />

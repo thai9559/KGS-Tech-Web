@@ -90,7 +90,7 @@ function Business() {
       const contactSection = document.getElementById("contact");
       if (contactSection) {
         window.scrollTo({
-          top: contactSection.offsetTop - 100, // Điều chỉnh khoảng cách
+          top: contactSection.offsetTop - 50, // Điều chỉnh khoảng cách
           behavior: "smooth",
         });
       }

@@ -10,7 +10,7 @@ const CoreValues = ({ values }) => {
     <section className="py-16 bg-gray-50">
       {/* Tiêu đề phần CoreValues */}
       <h2 className="text-2xl font-semibold text-center text-blue-600 mb-12">
-        {t("coreValues.title")} {/* Tiêu đề được dịch */}
+        {t("coreValues.title")} 
       </h2>
 
       {/* Các giá trị cốt lõi */}
@@ -35,7 +35,7 @@ const CoreValues = ({ values }) => {
             <h3 className="text-xl font-semibold text-blue-600 mb-4">
               {value.title}
             </h3>
-            <p className="text-base font-medium text-gray-700 mb-4">
+            <p className="text-base font-notoSansJP font-medium text-gray-700 mb-4">
               {value.description}
             </p>
             <p className="text-md text-gray-600">{value.details}</p>
