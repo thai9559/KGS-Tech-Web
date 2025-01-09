@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from "react";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import Animation from "../Animation";
+
 const FaMicrochip = lazy(() =>
   import("react-icons/fa").then((module) => ({ default: module.FaMicrochip }))
 );
@@ -14,48 +15,9 @@ const FaCogs = lazy(() =>
 const FaSeedling = lazy(() =>
   import("react-icons/fa").then((module) => ({ default: module.FaSeedling }))
 );
-const FaHeadset = lazy(() =>
-  import("react-icons/fa").then((module) => ({ default: module.FaHeadset }))
-);
-const FaLightbulb = lazy(() =>
-  import("react-icons/fa").then((module) => ({ default: module.FaLightbulb }))
-);
 
-const Benefits = () => {
+const Benefits = ({ titles, descriptions, imageUrl }) => {
   const { t } = useTranslation();
-
-  const benefits = [
-    {
-      title: t("benefits.technology"),
-      description: t("benefits.technology_description"),
-      icon: <FaMicrochip className="text-white text-3xl mb-2" />,
-    },
-    {
-      title: t("benefits.professional_team"),
-      description: t("benefits.professional_team_description"),
-      icon: <FaUsers className="text-white text-3xl mb-2" />,
-    },
-    {
-      title: t("benefits.custom_solutions"),
-      description: t("benefits.custom_solutions_description"),
-      icon: <FaCogs className="text-white text-3xl mb-2" />,
-    },
-    {
-      title: t("benefits.sustainable_growth"),
-      description: t("benefits.sustainable_growth_description"),
-      icon: <FaSeedling className="text-white text-3xl mb-2" />,
-    },
-    {
-      title: t("benefits.customer_service"),
-      description: t("benefits.customer_service_description"),
-      icon: <FaHeadset className="text-white text-3xl mb-2" />,
-    },
-    {
-      title: t("benefits.strategic_advice"),
-      description: t("benefits.strategic_advice_description"),
-      icon: <FaLightbulb className="text-white text-3xl mb-2" />,
-    },
-  ];
 
   return (
     <>
@@ -67,43 +29,27 @@ const Benefits = () => {
           property="og:description"
           content={t("seo.benefits.description")}
         />
-        <meta
-          property="og:image"
-          content="https://example.com/benefits-image.jpg" // Thay thế bằng hình ảnh đại diện
-        />
+        <meta property="og:image" content={imageUrl} />
         <meta property="og:type" content="website" />
       </Helmet>
 
       <Suspense fallback={<div>Loading...</div>}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 overflow-hidden gap-4 p-6 mt-10">
-          {benefits.map((benefit, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-6 mt-10">
+          {titles.map((title, index) => (
             <Animation key={index} animationType="fade-up">
               <div
-                key={benefit.title}
-                className="relative p-8  bg-orange-700 rounded-lg border text-center text-white shadow-2xl overflow-hidden group transition-all duration-500 h-[240px]"
+                className="relative bg-cover bg-center rounded-lg overflow-hidden group"
+                style={{
+                  backgroundImage: `url(${imageUrl})`, // Sử dụng ảnh được truyền vào props
+                }}
               >
-                {/* Giao diện mobile (iPad trở xuống) */}
-                <div className="flex flex-col items-center lg:hidden">
-                  {benefit.icon}
-                  <h2 className="text-lg font-notoSansJP font-medium mt-2">
-                    {benefit.title}
-                  </h2>
-                  <p className="text-base mt-2 font-notoSansJP  font-medium ">
-                    {benefit.description}
-                  </p>
-                </div>
-                {/* Giao diện desktop (từ 1024px trở lên) */}
-                <div className="hidden lg:flex flex-col  items-center group h-[250px]">
-                  <div className="w-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center transition-all duration-700 ease-in-out opacity-100 group-hover:opacity-0 group-hover:translate-y-[-100%]">
-                    {benefit.icon}
-                    <h2 className="text-xl font-bold font-notoSansJP">
-                      {benefit.title}
+                {/* Ảnh nền và các div chứa thông tin */}
+                <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center p-6">
+                  <div className="text-center text-white">
+                    <h2 className="text-2xl font-bold font-notoSansJP mb-2">
+                      {title}
                     </h2>
-                  </div>
-                  <div className="absolute inset-0 p-10 justify-center z-30 bg-white transform translate-y-12 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-700 ease-in-out">
-                    <p className=" font-notoSansJP text-gray-700 font-medium text-base text-left">
-                      {benefit.description}
-                    </p>
+                    <p className="text-base font-notoSansJP">{descriptions[index]}</p>
                   </div>
                 </div>
               </div>

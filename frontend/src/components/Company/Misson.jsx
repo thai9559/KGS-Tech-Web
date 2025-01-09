@@ -24,14 +24,14 @@ const Mission = () => {
         <h2 className="text-3xl md:text-4xl text-white font-bold mb-6">
           {t("mission.title")}
         </h2>
-        <p className="text-base md:text-lg max-w-2xl mx-auto mb-10 text-shadow-lg">
+        <p className="text-base md:text-lg font-notoSansJP max-w-2xl mx-auto mb-10 text-shadow-lg">
           {t("mission.description")}
         </p>
 
         {/* Call to action button */}
         <button
           onClick={handleButtonClick}
-          className="inline-block py-3 px-8 bg-yellow-500 text-blue-900 font-semibold rounded-full hover:bg-yellow-400 transition duration-300"
+          className="inline-block py-3 px-8 font-notoSansJP bg-yellow-500 text-blue-900 font-semibold rounded-full hover:bg-yellow-400 transition duration-300"
         >
           {t("mission.contact")}
         </button>

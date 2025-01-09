@@ -14,6 +14,7 @@ const Business = lazy(() => import("./pages/Business"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogDetailPage = lazy(() => import("./pages/BlogDetailPage"));
 
+import VideoBanner from "./components/Videobanner";
 // Component loading
 const Loading = () => (
   <div className="h-screen flex items-center justify-center bg-white">
@@ -67,6 +68,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/company" element={<Company />} />
             <Route path="/business" element={<Business />} />
+            <Route path="/video" element={<VideoBanner />} />
 
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogDetailPage />} />

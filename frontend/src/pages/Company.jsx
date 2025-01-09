@@ -28,15 +28,15 @@ const Company = () => {
     },
   ];
 
-  const logos = [
-    "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886228/kmslogo_l2fx2y.png",
-    "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886295/viettel-removebg-preview_brfhlc.png",
-    "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886393/LG-removebg-preview_dmc3t5.png",
-    "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/fpt-removebg-preview_dlhdq6.png",
-    "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/hitachi-removebg-preview_geekow.png",
-    "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/vng-removebg-preview_sokbcl.png",
-    "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886519/itel-mobile-logo-vector-removebg-preview_miveta.png",
-  ];
+  // const logos = [
+  //   "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886228/kmslogo_l2fx2y.png",
+  //   "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886295/viettel-removebg-preview_brfhlc.png",
+  //   "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886393/LG-removebg-preview_dmc3t5.png",
+  //   "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/fpt-removebg-preview_dlhdq6.png",
+  //   "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/hitachi-removebg-preview_geekow.png",
+  //   "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/vng-removebg-preview_sokbcl.png",
+  //   "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886519/itel-mobile-logo-vector-removebg-preview_miveta.png",
+  // ];
 
   const leaders = [
     {
@@ -67,7 +67,6 @@ const Company = () => {
       active: false,
     },
     { id: "coreValues", label: t("coreValues.title"), active: false },
-    { id: "logoSlider", label: t("logoSlider.title"), active: false },
     { id: "mission", label: t("mission.title"), active: false },
     { id: "leadership", label: t("leadership.title"), active: false },
   ];
@@ -132,6 +131,10 @@ const Company = () => {
 
       <div className="bg-gray-50 ">
         <div id="companyOverview" className="min-h-[40vh] ">
+        <div className="bg-[#B6CBBD] p-4 h-[200px] flex flex-col justify-center items-center ">
+          <h1 className="text-xl text-primary font-notoSansJP md:text-3xl font-bold">{t("companyOverview.title")}</h1>
+          <p className="text-sm text-gray-700 font-notoSansJP font-medium md:text-lg mt-2">{t("companyOverview.description")}</p>
+        </div>
           <Banner
             title={t("companyOverview.title")}
             description={t("companyOverview.description")}
@@ -146,9 +149,6 @@ const Company = () => {
           <CoreValues values={coreValues} />
         </div>
 
-        <div id="logoSlider" className="container overflow-hidden min-h-[40vh]">
-          <LogoSlider logos={logos} />
-        </div>
 
         <div id="mission" className="container min-h-[40vh]">
           <Mission mission={t("mission.description")} />

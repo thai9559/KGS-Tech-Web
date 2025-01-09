@@ -83,7 +83,7 @@ const Header = ({ home, company, business, blog }) => {
       >
         <ul className="flex flex-col lg:flex-row gap-8 cursor-pointer text-white lg:text-black w-full lg:w-auto">
           <li
-            className={`relative hover:text-gray-400 font-medium text-base font-beVietnam text-center ${
+            className={`relative hover:text-gray-400 font-medium text-base font-notoSansJP text-center ${
               isActive("/") ? "text-primary" : ""
             }`}
           >
@@ -93,7 +93,7 @@ const Header = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-medium text-base font-beVietnam text-center ${
+            className={`relative hover:text-gray-400 font-medium text-base font-notoSansJP text-center ${
               isActive("/company") ? "text-primary" : ""
             }`}
           >
@@ -103,7 +103,7 @@ const Header = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-medium text-base font-beVietnam text-center ${
+            className={`relative hover:text-gray-400 font-medium text-base font-notoSansJP text-center ${
               isActive("/business") ? "text-primary" : ""
             }`}
           >
@@ -113,7 +113,7 @@ const Header = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-medium text-base font-beVietnam text-center ${
+            className={`relative hover:text-gray-400 font-medium text-base font-notoSansJP text-center ${
               isActive("/blog") ? "text-primary" : ""
             }`}
           >

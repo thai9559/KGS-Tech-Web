@@ -1,12 +1,8 @@
-import React, { Suspense, lazy } from "react";
+import React from "react";
 import { Helmet } from "react-helmet";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import { useTranslation } from "react-i18next";
 
-const Slider = lazy(() => import("react-slick")); // Lazy load Slider component
-
-const BlogSliderData = [
+const BlogData = [
   {
     id: 1,
     titleKey: "blogData.post1.title",
@@ -41,32 +37,8 @@ const BlogSliderData = [
   },
 ];
 
-const BlogSlider = () => {
+const BlogList = () => {
   const { t, i18n } = useTranslation();
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -76,7 +48,7 @@ const BlogSlider = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+    <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8 shadow-lg">
       <Helmet>
         <title>{"KGS Tech"}</title>
         <meta name="description" content={t("seo.blogSlider.description")} />
@@ -92,35 +64,43 @@ const BlogSlider = () => {
         <meta property="og:type" content="website" />
       </Helmet>
 
-      <h2 className="text-3xl text-primary font-bold font-notoSansJP text-center  mb-6">
+      <h2 className="text-2xl text-primary font-bold font-notoSansJP text-center mb-4">
         {t("blogData.latest_posts")}
       </h2>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Slider {...settings}>
-          {BlogSliderData.map((blog) => (
-            <div key={blog.id} className="px-4 lg:px-6">
-              <div className="bg-white cursor-pointer overflow-hidden rounded-lg shadow-lg  transition duration-300 hover:shadow-lg hover:shadow-blue-500">
+
+      <div className="space-y-4">
+        {BlogData.map((blog, index) => (
+          <div
+            key={blog.id}
+            className={`bg-white cursor-pointer overflow-hidden rounded-lg ${
+              index !== BlogData.length - 1 ? "border-b" : ""
+            }`}
+          >
+            <div className="flex flex-col lg:flex-row items-center p-3">
+              {/* Phần ảnh chiếm 35% chiều rộng */}
+              <div className="lg:w-2/5 w-full">
                 <img
-                  className="w-full h-56 object-cover"
+                  className="w-full h-40 object-cover"
                   src={blog.imageUrl}
                   alt={blog.title}
                 />
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold text-gray-900 font-beVietnam hover:text-indigo-600 transition duration-300">
-                    {t(blog.titleKey)}
-                  </h3>
-                  <p className="mt-2 text-gray-600">{t(blog.descriptionKey)}</p>
-                  <p className="mt-4 text-sm text-gray-500 italic">
-                    {t("blogData.date_label")} {formatDate(blog.date)}
-                  </p>
-                </div>
+              </div>
+              {/* Phần văn bản chiếm 65% chiều rộng và nằm bên phải ảnh */}
+              <div className="lg:w-3/5 w-full p-3 flex flex-col justify-between">
+                <h3 className="text-xl font-bold text-gray-900 font-beVietnam hover:text-indigo-600 transition duration-300">
+                  {t(blog.titleKey)}
+                </h3>
+                <p className="mt-2 text-gray-600">{t(blog.descriptionKey)}</p>
+                <p className="mt-2 text-sm text-gray-500 italic">
+                  {t("blogData.date_label")} {formatDate(blog.date)}
+                </p>
               </div>
             </div>
-          ))}
-        </Slider>
-      </Suspense>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
-export default BlogSlider;
+export default BlogList;
