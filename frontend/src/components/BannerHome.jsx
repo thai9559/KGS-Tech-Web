@@ -1,6 +1,7 @@
 import React from "react";
-
+import { useTranslation } from "react-i18next";
 const BannerHome = () => {
+  const { t } = useTranslation();
   return (
     <div
       className="relative w-full h-[117vh] sm:h-[100vh] overflow-hidden bg-cover bg-top"
@@ -10,16 +11,13 @@ const BannerHome = () => {
       }}
     >
       {/* Overlay */}
-      <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-40 flex flex-col justify-center items-center z-10">
+      <div className="absolute p-8 top-0 left-0 w-full h-full bg-black bg-opacity-40 flex flex-col justify-center items-center z-10 hidden md:flex">
         <h2 className="text-white text-4xl md:text-6xl font-bold text-center">
-          Welcome to Our World
+          {t("companyOverview.title")}
         </h2>
-        <p className="text-white text-lg md:text-xl mt-4 text-center">
-          Discover endless possibilities with our services.
+        <p className="text-sm text-white font-notoSansJP font-medium md:text-lg mt-2">
+          {t("companyOverview.description")}
         </p>
-        <button className="mt-6 px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-gray-200">
-          Learn More
-        </button>
       </div>
     </div>
   );

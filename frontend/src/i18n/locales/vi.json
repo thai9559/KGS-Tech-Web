@@ -31,6 +31,17 @@
     "strategic_advice": "Tư vấn chiến lược",
     "strategic_advice_description": "Chúng tôi cung cấp các chiến lược công nghệ và kinh doanh để giúp bạn tối ưu hóa các quy trình và tiết kiệm chi phí."
   },
+  "imageBanner": {
+  "title1": "Tư vấn Quản lý & Kết nối Nhà cung cấp",
+  "description1": "Chúng tôi cung cấp dịch vụ tư vấn quản lý nhằm tối ưu hóa chiến lược kinh doanh và cải thiện hiệu quả vận hành. Ngoài ra, chúng tôi hỗ trợ kết nối doanh nghiệp với các nhà cung cấp đáng tin cậy, đảm bảo nguồn lực ổn định để phát triển bền vững.",
+  "title2": "Tư vấn và Vận hành Ẩm thực",
+  "description2": "Với kinh nghiệm sâu rộng và chuyên môn cao trong ngành ẩm thực, chúng tôi hỗ trợ xây dựng chiến lược kinh doanh, cải thiện quy trình vận hành và mang lại trải nghiệm ẩm thực độc đáo. Mục tiêu của chúng tôi là nâng cao giá trị thương hiệu và đáp ứng nhu cầu của khách hàng.",
+  "title3": "Phát triển Hệ thống",
+  "description3": "Chúng tôi cung cấp dịch vụ phát triển hệ thống dựa trên công nghệ hiện đại, đáp ứng nhu cầu cụ thể của khách hàng. Giải pháp của chúng tôi đảm bảo hiệu quả cao, bảo mật và khả năng mở rộng, hỗ trợ doanh nghiệp phát triển và tăng cường năng lực cạnh tranh.",
+  "title4": "Giới thiệu Nhân tài Cao cấp",
+  "description4": "Chúng tôi cung cấp dịch vụ kết nối doanh nghiệp với nguồn nhân lực giàu kinh nghiệm và chuyên môn cao. Mục tiêu là hỗ trợ xây dựng đội ngũ mạnh mẽ, đáp ứng thách thức của thị trường và thúc đẩy sự phát triển của doanh nghiệp."
+}
+,
   "blogData": {
     "latest_posts": "Bài viết mới nhất",
     "post1": {

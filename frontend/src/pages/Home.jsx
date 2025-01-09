@@ -6,7 +6,7 @@ import Benefit from "../components/Home/Benefit";
 import BlogSlider from "../components/Home/BlogData";
 import VerticalCarousel from "../components/Carousel";
 import LogoGrid from "../components/Company/LogoSlider";
-
+import ImageBanner from "../components/Home/ImageBanner";
 export default function Home() {
   const { t } = useTranslation();
 
@@ -85,8 +85,11 @@ export default function Home() {
           </h2>
           <CompanyStats />
         </div>
-        <div id="benefits" >
+        <div id="benefits">
           <Benefit />
+        </div>
+        <div id="images" className="container">
+          <ImageBanner />
         </div>
         <div id="logos" className="container">
           <LogoGrid logos={logos} />

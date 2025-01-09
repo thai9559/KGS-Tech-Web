@@ -3,13 +3,11 @@ import CoreValues from "../components/Company/CoreValues";
 import CompanyOverview from "../components/Company/CompanyOverview";
 import Leadership from "../components/Company/LeaderShip";
 import Mission from "../components/Company/Misson";
-import Layout from "../components/Layout";
 import { useTranslation } from "react-i18next";
 import VerticalCarousel from "../components/Carousel";
-import LogoSlider from "../components/Company/LogoSlider";
 import Banner from "../components/Company/Banner";
 import DevelopmentTimeline from "../components/Company/DevelopmentTimeline";
-
+import LayoutCompany from "../components/LayoutCompanyt";
 const Company = () => {
   const { t } = useTranslation();
 
@@ -122,7 +120,7 @@ const Company = () => {
   }));
 
   return (
-    <Layout>
+    <LayoutCompany>
       <VerticalCarousel
         sections={enhancedSections}
         onSectionClick={handleSectionClick}
@@ -131,10 +129,14 @@ const Company = () => {
 
       <div className="bg-gray-50 ">
         <div id="companyOverview" className="min-h-[40vh] ">
-        <div className="bg-[#B6CBBD] p-4 h-[200px] flex flex-col justify-center items-center ">
-          <h1 className="text-xl text-primary font-notoSansJP md:text-3xl font-bold">{t("companyOverview.title")}</h1>
-          <p className="text-sm text-gray-700 font-notoSansJP font-medium md:text-lg mt-2">{t("companyOverview.description")}</p>
-        </div>
+          <div className="bg-[#B6CBBD] p-4 h-[200px] flex flex-col justify-center items-center ">
+            <h1 className="text-xl text-primary font-notoSansJP md:text-3xl font-bold">
+              {t("companyOverview.title")}
+            </h1>
+            <p className="text-sm text-gray-700 font-notoSansJP font-medium md:text-lg mt-2">
+              {t("companyOverview.description")}
+            </p>
+          </div>
           <Banner
             title={t("companyOverview.title")}
             description={t("companyOverview.description")}
@@ -149,7 +151,6 @@ const Company = () => {
           <CoreValues values={coreValues} />
         </div>
 
-
         <div id="mission" className="container min-h-[40vh]">
           <Mission mission={t("mission.description")} />
         </div>
@@ -158,7 +159,7 @@ const Company = () => {
           <Leadership leaders={leaders} />
         </div>
       </div>
-    </Layout>
+    </LayoutCompany>
   );
 };
 
