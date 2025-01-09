@@ -9,15 +9,16 @@ export default {
         notoSansJP: ["Noto Sans JP", "sans-serif"],
       },
       colors: {
-        // primary: "#074799",
         primary: "#3E7B27",
         secondary: "#FFC470",
         footer: "#000957",
         accent: "#00bcd4",
-        gray700: "#4B5563", 
-        orange700: "#C05621", 
+        gray700: "#4B5563",
+        orange700: "#C05621",
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/aspect-ratio"), // Thêm plugin này
+  ],
 };

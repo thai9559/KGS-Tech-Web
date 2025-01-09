@@ -31,6 +31,17 @@
     "strategic_advice": "Strategic Advice",
     "strategic_advice_description": "We provide technology and business strategies to help you optimize processes and save costs."
   },
+  "imageBanner": {
+  "title1": "Management Consulting & Supplier Matching",
+  "description1": "We provide management consulting services to optimize corporate strategies and improve operational efficiency. Additionally, we support sustainable growth by connecting businesses with reliable suppliers to secure stable resources.",
+  "title2": "Food & Beverage Consulting and Operations",
+  "description2": "With extensive experience and expertise in the food and beverage industry, we assist in developing business strategies, improving operational processes, and delivering unique dining experiences. Our goal is to enhance brand value and provide services tailored to our clients' needs.",
+  "title3": "System Development",
+  "description3": "We offer system development services that leverage the latest technologies to meet our clients' needs. Our solutions ensure high efficiency, security, and scalability, supporting businesses in achieving growth and competitiveness.",
+  "title4": "Advanced Talent Recruitment",
+  "description4": "We connect companies with experienced and highly skilled professionals through our talent recruitment services. Our goal is to help businesses build strong teams capable of addressing market challenges and driving success."
+}
+,
   "blogData": {
     "latest_posts": "Latest Posts",
     "post1": {

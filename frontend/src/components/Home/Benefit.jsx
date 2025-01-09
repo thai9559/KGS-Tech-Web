@@ -43,29 +43,53 @@ const Benefit = () => {
                     }}
                   >
                     {/* Nội dung theo chiều dọc (flex-col) */}
-                    <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center space-y-6 p-6 bg-black bg-opacity-30 z-10">
-                      <div className="bg-white p-4 flex items-center flex-col justify-center shadow-md w-full max-w-2xl">
-                        <h3 className="font-bold font-notoSansJP text-orange-700 text-2xl">{event.year1}</h3>
-                        <h4 className="font-semibold text-xl text-gray-700">{event.title1}</h4>
-                        <p className="font-notoSansJP text-center text-lg text-gray-700">{event.description1}</p>
+                    <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center space-y-2 p-6 bg-black bg-opacity-30 z-10">
+                      <div className="bg-white p-2 flex items-center flex-col justify-center shadow-md w-full max-w-2xl">
+                        <h3 className="font-bold font-notoSansJP text-orange-700 text-2xl">
+                          {event.year1}
+                        </h3>
+                        <h4 className="font-semibold text-xl text-gray-700">
+                          {event.title1}
+                        </h4>
+                        <p className="font-notoSansJP text-center text-xl text-gray-700">
+                          {event.description1}
+                        </p>
                       </div>
 
                       <div className="bg-white p-4 flex items-center flex-col shadow-md w-full max-w-2xl">
-                        <h3 className="font-bold text-2xl text-orange700">{event.year2}</h3>
-                        <h4 className="font-semibold text-xl text-gray-700">{event.title2}</h4>
-                        <p className="font-notoSansJP text-center text-lg text-gray-700">{event.description2}</p>
+                        <h3 className="font-bold text-2xl text-orange700">
+                          {event.year2}
+                        </h3>
+                        <h4 className="font-semibold text-xl text-gray-700">
+                          {event.title2}
+                        </h4>
+                        <p className="font-notoSansJP text-center text-xl text-gray-700">
+                          {event.description2}
+                        </p>
                       </div>
 
                       <div className="bg-white p-4 flex items-center flex-col shadow-md w-full max-w-2xl">
-                        <h3 className="font-bold text-2xl text-orange-700">{event.year3}</h3>
-                        <h4 className="font-semibold text-xl text-gray-700">{event.title3}</h4>
-                        <p className="font-notoSansJP text-center text-lg text-gray-700">{event.description3}</p>
+                        <h3 className="font-bold text-2xl text-orange-700">
+                          {event.year3}
+                        </h3>
+                        <h4 className="font-semibold text-xl text-gray-700">
+                          {event.title3}
+                        </h4>
+                        <p className="font-notoSansJP text-center text-lg text-gray-700">
+                          {event.description3}
+                        </p>
                       </div>
 
                       <div className="bg-white p-4 flex items-center flex-col shadow-md w-full max-w-2xl">
-                        <h3 className="font-bold text-2xl text-orange-700">{event.year4}</h3>
-                        <h4 className="font-semibold text-xl text-gray-700">{event.title4}</h4>
-                        <p className="font-notoSansJP text-center text-lg text-gray-700">{event.description4}</p>
+                        <h3 className="font-bold text-2xl text-orange-700">
+                          {event.year4}
+                        </h3>
+                        <h4 className="font-semibold text-xl text-gray-700">
+                          {event.title4}
+                        </h4>
+                        <p className="font-notoSansJP text-center text-lg text-gray-700">
+                          {event.description4}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -75,7 +99,6 @@ const Benefit = () => {
           </div>
 
           {/* Mobile Layout */}
-
         </div>
       </div>
     </div>

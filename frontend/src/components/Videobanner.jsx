@@ -3,11 +3,12 @@ import ReactPlayer from "react-player";
 
 const VideoBanner = () => {
   return (
-    <div className="relative w-full h-117 md:h-[117vh] overflow-hidden">
+    <div className="relative w-full h-[100vh] md:h-[117vh] overflow-hidden">
       {/* Video */}
+
       <ReactPlayer
-        url="https://youtu.be/yR6tVxgDWLk?si=RQ0ysbGxL2W9L59l"
-        className="absolute top-0 left-0 w-full h-full z-0 object-cover"
+        url="https://youtu.be/3rtYoSighWI?si=8__D_21iPeFpyTOa"
+        className="absolute top-0 left-0 w-full h-full z-0 object-cover object-top"
         playing={true}
         muted={true}
         loop={true}
