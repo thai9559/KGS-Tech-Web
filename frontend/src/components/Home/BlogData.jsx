@@ -48,7 +48,7 @@ const BlogList = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8 shadow-lg">
+    <div className="max-w-6xl mx-auto py-8 px-4 mb-10 sm:px-6 lg:px-8 shadow-lg">
       <Helmet>
         <title>{"KGS Tech"}</title>
         <meta name="description" content={t("seo.blogSlider.description")} />
@@ -64,40 +64,62 @@ const BlogList = () => {
         <meta property="og:type" content="website" />
       </Helmet>
 
-      <h2 className="text-2xl text-primary font-bold font-notoSansJP text-center mb-4">
+      <h2 className="text-3xl text-black font-bold font-notoSansJP text-center mb-4">
         {t("blogData.latest_posts")}
       </h2>
 
-      <div className="space-y-4">
-        {BlogData.map((blog, index) => (
-          <div
-            key={blog.id}
-            className={`bg-white cursor-pointer overflow-hidden rounded-lg ${
-              index !== BlogData.length - 1 ? "border-b" : ""
-            }`}
-          >
-            <div className="flex flex-col lg:flex-row items-center p-3">
-              {/* Phần ảnh chiếm 35% chiều rộng */}
-              <div className="lg:w-2/5 w-full">
+      <div className="flex flex-col lg:flex-row space-y-4 lg:space-x-4">
+        {/* Main Blog (Image on Top) */}
+        <div className="w-full lg:w-7/10">
+          <div className="bg-white cursor-pointer overflow-hidden rounded-lg">
+            <div className="flex flex-col items-center p-3">
+              <div className="w-full">
                 <img
-                  className="w-full h-40 object-cover"
-                  src={blog.imageUrl}
-                  alt={blog.title}
+                  className="w-full h-60 object-cover"
+                  src={BlogData[0].imageUrl}
+                  alt={BlogData[0].title}
                 />
               </div>
-              {/* Phần văn bản chiếm 65% chiều rộng và nằm bên phải ảnh */}
-              <div className="lg:w-3/5 w-full p-3 flex flex-col justify-between">
-                <h3 className="text-xl font-bold text-gray-900 font-beVietnam hover:text-indigo-600 transition duration-300">
-                  {t(blog.titleKey)}
+              <div className="w-full p-3 flex flex-col justify-between">
+                <h3 className="text-2xl font-bold text-gray-900 font-beVietnam hover:text-indigo-600 transition duration-300">
+                  {t(BlogData[0].titleKey)}
                 </h3>
-                <p className="mt-2 text-gray-600">{t(blog.descriptionKey)}</p>
+                <p className="mt-2 text-gray-600">{t(BlogData[0].descriptionKey)}</p>
                 <p className="mt-2 text-sm text-gray-500 italic">
-                  {t("blogData.date_label")} {formatDate(blog.date)}
+                  {t("blogData.date_label")} {formatDate(BlogData[0].date)}
                 </p>
               </div>
             </div>
           </div>
-        ))}
+        </div>
+
+        {/* Blog List (Full Width on Mobile, 30% on Large Screens) */}
+        <div className="w-full lg:w-3/10 flex flex-col space-y-4">
+          {BlogData.slice(1).map((blog) => (
+            <div
+              key={blog.id}
+              className="bg-white cursor-pointer overflow-hidden rounded-lg p-3"
+            >
+              <div className="flex flex-row space-x-3">
+                <div className="w-1/4">
+                  <img
+                    className="w-full h-20 object-cover"
+                    src={blog.imageUrl}
+                    alt={blog.title}
+                  />
+                </div>
+                <div className="w-3/4">
+                  <h3 className="text-lg font-bold text-gray-900 font-beVietnam hover:text-indigo-600 transition duration-300">
+                    {t(blog.titleKey)}
+                  </h3>
+                  <p className="mt-2 text-sm text-gray-500 italic">
+                    {t("blogData.date_label")} {formatDate(blog.date)}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

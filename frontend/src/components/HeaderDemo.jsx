@@ -54,34 +54,40 @@ const HeaderDemo = ({ home, company, business, blog }) => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full flex justify-between items-center p-4 z-50 transition-all duration-300 ${
-        menuOpen
-          ? "bg-white text-black shadow-md"
-          : scrolled
+      className={`fixed top-0 left-0 w-full flex justify-between items-center p-4 z-50 transition-all duration-300 ${menuOpen
+        ? "bg-white text-black shadow-md"
+        : scrolled
           ? "bg-white text-black shadow-md"
           : "bg-transparent text-white opacity-80"
-      }`}
+        }`}
     >
-      {/* Logo */}
-      <div className="text-2xl cursor-pointer font-bold absolute left-1/2 transform -translate-x-1/2 lg:relative lg:left-0 lg:transform-none z-50">
-        <Link to="/">Logo</Link>
+      <div className="text-2xl cursor-pointer font-bold absolute left-1/2 transform -translate-x-1/2 lg:relative lg:left-0 lg:transform-none">
+        <Link to="/">
+          {/* <img
+            src={scrolled
+              ? "https://res.cloudinary.com/dtnuj2les/image/upload/v1736500878/logo3-removebg-preview_fgtwi9.png" // Logo thay đổi khi cuộn
+              : "https://res.cloudinary.com/dtnuj2les/image/upload/v1736483767/logo1-removebg-preview_bhpsme.png" // Logo mặc định
+            }
+            alt="Company Logo"
+            className="w-18 h-16 lg:w-10 lg:h-8" 
+          /> */}
+          LOGO
+        </Link>
       </div>
 
-      {/* Navigation */}
+
       <nav
-        className={`fixed top-0 left-0 w-full h-screen bg-white flex flex-col items-center justify-center transform ${
-          menuOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
-        } transition-all duration-300 ease-in-out z-50 lg:static lg:transform-none lg:translate-y-0 lg:opacity-100 lg:h-auto lg:flex-row lg:bg-transparent`}
+        className={`fixed top-0 left-0 w-full h-screen bg-white flex flex-col items-center justify-center transform ${menuOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+          } transition-all duration-300 ease-in-out z-50 lg:static lg:transform-none lg:translate-y-0 lg:opacity-100 lg:h-auto lg:flex-row lg:bg-transparent`}
       >
         <ul className="flex flex-col lg:flex-row gap-8 cursor-pointer lg:w-auto">
           <li
-            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-base text-center z-50 ${
-              menuOpen || scrolled
-                ? isActive("/")
-                  ? "text-black"
-                  : "text-black"
-                : "text-white"
-            }`}
+            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-xl text-center z-50 ${menuOpen || scrolled
+              ? isActive("/")
+                ? "text-black"
+                : "text-black"
+              : "text-white"
+              }`}
           >
             <Link to="/">{home}</Link>
             {isActive("/") && (
@@ -89,13 +95,12 @@ const HeaderDemo = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-base text-center z-50 ${
-              menuOpen || scrolled
-                ? isActive("/company")
-                  ? "text-black"
-                  : "text-black"
-                : "text-white"
-            }`}
+            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-xl text-center z-50 ${menuOpen || scrolled
+              ? isActive("/company")
+                ? "text-black"
+                : "text-black"
+              : "text-white"
+              }`}
           >
             <Link to="/company">{company}</Link>
             {isActive("/company") && (
@@ -103,13 +108,12 @@ const HeaderDemo = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-base text-center z-50 ${
-              menuOpen || scrolled
-                ? isActive("/business")
-                  ? "text-black"
-                  : "text-black"
-                : "text-white"
-            }`}
+            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-xl text-center z-50 ${menuOpen || scrolled
+              ? isActive("/business")
+                ? "text-black"
+                : "text-black"
+              : "text-white"
+              }`}
           >
             <Link to="/business">{business}</Link>
             {isActive("/business") && (
@@ -117,13 +121,12 @@ const HeaderDemo = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-base text-center z-50 ${
-              menuOpen || scrolled
-                ? isActive("/blog")
-                  ? "text-black"
-                  : "text-black"
-                : "text-white"
-            }`}
+            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-xl text-center z-50 ${menuOpen || scrolled
+              ? isActive("/blog")
+                ? "text-black"
+                : "text-black"
+              : "text-white"
+              }`}
           >
             <Link to="/blog">{blog}</Link>
             {isActive("/blog") && (
@@ -133,21 +136,17 @@ const HeaderDemo = ({ home, company, business, blog }) => {
         </ul>
       </nav>
 
-      {/* Language Selector */}
-      <div className="items-center gap-4 z-50 lg:absolute lg:right-4 lg:top-1/2 lg:transform lg:-translate-y-1/2">
-        <Select
-          value={language}
-          onChange={handleLanguageChange}
-          className="text-black bg-transparent focus:outline-none shadow-none border-none p-0"
-          bordered={false}
-          dropdownStyle={{ background: "#f9fafb" }}
-          style={{ width: 110, padding: 0, boxShadow: "none", border: "none" }}
-        >
-          <Option value="vi">Tiếng Việt</Option>
-          <Option value="en">English</Option>
-          <Option value="ja">日本語</Option>
-        </Select>
-      </div>
+      {/* Language Select (for mobile only) */}
+      <select
+        value={language}
+        onChange={(e) => handleLanguageChange(e.target.value)}
+        className={`bg-transparent p-2 rounded-md cursor-pointer focus:outline-none focus:ring-0 ${scrolled ? 'bg-white text-black border-none' : 'bg-transparent text-white border-none'} order-last lg:order-none`}
+      >
+        <option value="vi" className="bg-gray-800 text-white px-4 py-2">Tiếng Việt</option>
+        <option value="en" className="bg-gray-800 text-white px-4 py-2">English</option>
+        <option value="ja" className="bg-gray-800 text-white px-4 py-2">日本語</option>
+      </select>
+
 
       {/* Menu toggle for mobile */}
       <div className="lg:hidden z-50">
@@ -190,6 +189,7 @@ const HeaderDemo = ({ home, company, business, blog }) => {
         </button>
       </div>
     </header>
+
   );
 };
 

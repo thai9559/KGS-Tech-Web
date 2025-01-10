@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BlogList from "./BlogList";
 import SuggestedBlogs from "./SuggestedBlogs";
-import { Input, Select, Button } from "antd";
+import { Input, Select, Button, Spin } from "antd";
 import { SearchOutlined, ReloadOutlined } from "@ant-design/icons";
 import moment from "moment";
 import TagList from "./TagList"; // Import TagList component
@@ -16,7 +16,8 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
-  const blogsPerPage = 6;
+  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const blogsPerPage = 8;
 
   // Lắng nghe sự thay đổi của hash trong URL và cập nhật searchTerm
   useEffect(() => {
@@ -49,7 +50,7 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
   // Reset all filters
   const handleResetFilters = () => {
     setSearchTerm("");
-    setSelectedCategory("");
+    setSelectedCategory(null);
     setSelectedDate(null);
     setSortOrder("asc");
   };
@@ -57,8 +58,8 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
   // Handle tag click (update search term and URL)
   const handleTagClick = (tag) => {
     const tagWithoutHash = tag.replace("#", "").trim();
-    setSearchTerm(tagWithoutHash); // Set search term as tag without '#'
-    window.location.hash = tag; // Set URL fragment as tag (e.g., #React)
+    setSearchTerm(tagWithoutHash); 
+    window.location.hash = tag; 
   };
 
   // Filtering the blogs
@@ -98,9 +99,15 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
 
   // Handling page change
   const handlePageChange = (page) => {
+    setIsLoading(true); // Set loading to true
     setCurrentPage(page);
     const scrollOffset = window.innerWidth < 768 ? 200 : 0; // Adjust scroll offset for mobile
     window.scrollTo({ top: scrollOffset, behavior: "smooth" }); // Smooth scroll to adjusted position
+
+    // Simulate an API call delay or fetching data (for demonstration purposes)
+    setTimeout(() => {
+      setIsLoading(false); // Set loading to false after loading
+    }, 500); // Simulated loading delay
   };
 
   const tags = [
@@ -119,9 +126,6 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
     <div className="container mx-auto p-6 scroll-smooth">
       {/* Search bar */}
       <div className="mb-6 w-full lg:w-3/4">
-        {/* Display selected tag as link */}
-
-
         <Input
           placeholder={t("blogPage.search.placeholder")}
           value={searchTerm}
@@ -176,18 +180,24 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
         </div>
       </div>
 
-      {/* TagList - Visible on mobile, hidden on PC */}
       <div className="lg:hidden mb-6">
         <TagList tags={tags} onTagClick={handleTagClick} />
       </div>
 
-      {/* Blog List */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <div className="lg:col-span-3">
           <h2 className="text-2xl text-primary font-bold mb-6">
             {t("blogList.title")}
           </h2>
-          <BlogList blogs={currentBlogs} />
+
+          {/* Show loading spinner if data is loading */}
+          {isLoading ? (
+            <div className="flex justify-center items-center h-64">
+              <Spin size="large" />
+            </div>
+          ) : (
+            <BlogList blogs={currentBlogs} />
+          )}
         </div>
 
         <div>

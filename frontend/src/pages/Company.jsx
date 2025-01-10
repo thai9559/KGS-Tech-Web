@@ -58,7 +58,6 @@ const Company = () => {
   ];
 
   const sections = [
-    { id: "companyOverview", label: t("companyOverview.title"), active: false },
     {
       id: "developerTimeline",
       label: t("developerTimeline.title"),
@@ -128,20 +127,16 @@ const Company = () => {
       />
 
       <div className="bg-gray-50 ">
-        <div id="companyOverview" className="min-h-[40vh] ">
-          <div className="bg-[#B6CBBD] p-4 h-[200px] flex flex-col justify-center items-center ">
-            <h1 className="text-xl text-primary font-notoSansJP md:text-3xl font-bold">
-              {t("companyOverview.title")}
-            </h1>
-            <p className="text-sm text-gray-700 font-notoSansJP font-medium md:text-lg mt-2">
-              {t("companyOverview.description")}
-            </p>
-          </div>
-          <Banner
-            title={t("companyOverview.title")}
-            description={t("companyOverview.description")}
-          />
-        </div>
+      <div id="companyOverview" >
+  <div className="bg-[#B6CBBD] p-4 h-[200px] flex flex-col justify-center items-center  md:hidden">
+    <h1 className="text-xl text-primary font-notoSansJP md:text-3xl font-bold">
+      {t("companyOverview.title")}
+    </h1>
+    <p className="text-sm text-gray-700 font-notoSansJP font-medium md:text-lg mt-2">
+      {t("companyOverview.description")}
+    </p>
+  </div>
+</div>
 
         <div id="developerTimeline" className=" min-h-[30vh]">
           <DevelopmentTimeline />

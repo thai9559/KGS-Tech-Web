@@ -17,6 +17,18 @@
     "technology": "Technologies Used",
     "certifications": "Certifications"
   },
+  "banner":{
+    "title":"Welcome to KGS Tech",
+    "slogan":"Innovating solutions, empowering businesses with cutting-edge technology.",
+    "description":"Our Services"
+  },
+  "message": {
+    "title": "Message from the Representative",
+    "slogan": "A Word from Our Leadership",
+    "message1": "\"At KGS Tech, we understand that the digital landscape is constantly evolving. As a company, we are driven by the desire to help businesses not only keep up with the changes but to lead the way in their respective industries. Our commitment to innovation and excellence has enabled us to create cutting-edge solutions that simplify complex processes, enhance productivity, and provide our clients with the tools they need to succeed in this fast-paced world. By focusing on agility and efficiency, we empower our clients to adapt to new challenges with confidence, ensuring long-term success and sustainable growth. Together, we are building a future where technology is a true enabler of progress and transformation.\"",
+    "name1": "Yamada Tarou",
+    "position": "CEO of KGS Tech"
+  },
   "benefits": {
     "technology": "Advanced Technology",
     "technology_description": "We use the latest technology to deliver optimal solutions that enhance work efficiency and reduce costs.",
@@ -32,18 +44,17 @@
     "strategic_advice_description": "We provide technology and business strategies to help you optimize processes and save costs."
   },
   "imageBanner": {
-  "title1": "Management Consulting & Supplier Matching",
-  "description1": "We provide management consulting services to optimize corporate strategies and improve operational efficiency. Additionally, we support sustainable growth by connecting businesses with reliable suppliers to secure stable resources.",
-  "title2": "Food & Beverage Consulting and Operations",
-  "description2": "With extensive experience and expertise in the food and beverage industry, we assist in developing business strategies, improving operational processes, and delivering unique dining experiences. Our goal is to enhance brand value and provide services tailored to our clients' needs.",
-  "title3": "System Development",
-  "description3": "We offer system development services that leverage the latest technologies to meet our clients' needs. Our solutions ensure high efficiency, security, and scalability, supporting businesses in achieving growth and competitiveness.",
-  "title4": "Advanced Talent Recruitment",
-  "description4": "We connect companies with experienced and highly skilled professionals through our talent recruitment services. Our goal is to help businesses build strong teams capable of addressing market challenges and driving success."
-}
-,
+    "title1": "Management Consulting & Supplier Matching",
+    "description1": "We provide management consulting services to optimize corporate strategies and improve operational efficiency. Additionally, we support sustainable growth by connecting businesses with reliable suppliers to secure stable resources.",
+    "title2": "Food & Beverage Consulting and Operations",
+    "description2": "With extensive experience and expertise in the food and beverage industry, we assist in developing business strategies, improving operational processes, and delivering unique dining experiences. Our goal is to enhance brand value and provide services tailored to our clients' needs.",
+    "title3": "System Development",
+    "description3": "We offer system development services that leverage the latest technologies to meet our clients' needs. Our solutions ensure high efficiency, security, and scalability, supporting businesses in achieving growth and competitiveness.",
+    "title4": "Advanced Talent Recruitment",
+    "description4": "We connect companies with experienced and highly skilled professionals through our talent recruitment services. Our goal is to help businesses build strong teams capable of addressing market challenges and driving success."
+  },
   "blogData": {
-    "latest_posts": "Latest Posts",
+    "latest_posts": "News",
     "post1": {
       "title": "Post 1",
       "description": "This is the description for Post 1"
@@ -184,20 +195,19 @@
   "Collabs": {
     "title": "Collaborating Brands"
   },
-"TimeLine": {
-  "title": "Company Milestones",
-  "title1": "Company Establishment",
-  "description1": "Our company was founded with the aim of driving innovation and leading the technology industry. From the very first step, we committed to passion and delivering value.",
-  "title2": "Launch of the First Major Product",
-  "description2": "We launched our first major product, achieving great success. This product strengthened our position in the market and opened a new chapter of growth.",
-  "title3": "Global Expansion",
-  "description3": "We expanded to international markets, meeting diverse customer needs and achieving global growth. This step broadened our company’s international footprint.",
-  "title4": "Technological Milestone",
-  "description4": "We achieved a significant technological breakthrough, reaching new heights in innovation. This milestone demonstrated our commitment to research and development.",
-  "title5": "Launch of a New AI Product Line",
-  "description5": "We introduced a new AI-powered product line, solidifying our position in the tech industry. This provided smarter and more efficient solutions for our customers."
-}
-,
+  "TimeLine": {
+    "title": "Company Milestones",
+    "title1": "Company Establishment",
+    "description1": "Our company was founded with the aim of driving innovation and leading the technology industry. From the very first step, we committed to passion and delivering value.",
+    "title2": "Launch of the First Major Product",
+    "description2": "We launched our first major product, achieving great success. This product strengthened our position in the market and opened a new chapter of growth.",
+    "title3": "Global Expansion",
+    "description3": "We expanded to international markets, meeting diverse customer needs and achieving global growth. This step broadened our company’s international footprint.",
+    "title4": "Technological Milestone",
+    "description4": "We achieved a significant technological breakthrough, reaching new heights in innovation. This milestone demonstrated our commitment to research and development.",
+    "title5": "Launch of a New AI Product Line",
+    "description5": "We introduced a new AI-powered product line, solidifying our position in the tech industry. This provided smarter and more efficient solutions for our customers."
+  },
   "companyOverview": {
     "title": "About KGS - Tech",
     "description": "KGS - Tech is a leading technology company providing innovative software solutions, technology consulting services, and trusted IT services globally."

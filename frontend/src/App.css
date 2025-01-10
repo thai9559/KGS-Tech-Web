@@ -19,6 +19,11 @@ body {
   margin-left: auto; /* Căn trái */
   margin-right: auto; /* Căn phải */
 }
+.bannerImage {
+  max-width: 1200px; /* Giới hạn chiều rộng của phần nội dung */
+  margin-left: auto; /* Căn trái */
+  margin-right: auto; /* Căn phải */
+}
 .blog {
   max-width: 1400px; /* Giới hạn chiều rộng của phần nội dung */
   margin-left: auto; /* Căn trái */

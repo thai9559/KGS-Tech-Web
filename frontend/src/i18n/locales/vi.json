@@ -17,6 +17,11 @@
     "technology": "Công nghệ sử dụng",
     "certifications": "Chứng nhận"
   },
+  "banner": {
+    "title": "Chào mừng đến với KGS Tech",
+    "slogan": "Đổi mới giải pháp, thúc đẩy doanh nghiệp với công nghệ tiên tiến.",
+    "description": "Dịch vụ của chúng tôi"
+  },
   "benefits": {
     "technology": "Công nghệ tiên tiến",
     "technology_description": "Chúng tôi sử dụng công nghệ mới nhất để mang lại giải pháp tối ưu, giúp nâng cao hiệu suất công việc và giảm chi phí.",
@@ -31,19 +36,25 @@
     "strategic_advice": "Tư vấn chiến lược",
     "strategic_advice_description": "Chúng tôi cung cấp các chiến lược công nghệ và kinh doanh để giúp bạn tối ưu hóa các quy trình và tiết kiệm chi phí."
   },
+  "message": {
+    "title": "Thông điệp từ Đại diện",
+    "slogan": "Lời nói từ Lãnh đạo của chúng tôi",
+    "message1": "\"Tại KGS Tech, chúng tôi hiểu rằng cảnh quan kỹ thuật số đang phát triển không ngừng. Là một công ty, chúng tôi được thúc đẩy bởi mong muốn giúp các doanh nghiệp không chỉ theo kịp những thay đổi mà còn dẫn đầu trong ngành của họ. Cam kết của chúng tôi với đổi mới và xuất sắc đã giúp chúng tôi tạo ra những giải pháp tiên tiến giúp đơn giản hóa các quy trình phức tạp, nâng cao năng suất và cung cấp cho khách hàng các công cụ cần thiết để thành công trong thế giới phát triển nhanh chóng này. Bằng cách tập trung vào tính linh hoạt và hiệu quả, chúng tôi trao quyền cho khách hàng để họ có thể thích ứng với những thách thức mới một cách tự tin, đảm bảo thành công lâu dài và sự phát triển bền vững. Cùng nhau, chúng tôi đang xây dựng một tương lai mà công nghệ thực sự là động lực cho sự tiến bộ và chuyển mình.\"",
+    "name1": "Yamada Tarou",
+    "position": "CEO của KGS Tech"
+  },
   "imageBanner": {
-  "title1": "Tư vấn Quản lý & Kết nối Nhà cung cấp",
-  "description1": "Chúng tôi cung cấp dịch vụ tư vấn quản lý nhằm tối ưu hóa chiến lược kinh doanh và cải thiện hiệu quả vận hành. Ngoài ra, chúng tôi hỗ trợ kết nối doanh nghiệp với các nhà cung cấp đáng tin cậy, đảm bảo nguồn lực ổn định để phát triển bền vững.",
-  "title2": "Tư vấn và Vận hành Ẩm thực",
-  "description2": "Với kinh nghiệm sâu rộng và chuyên môn cao trong ngành ẩm thực, chúng tôi hỗ trợ xây dựng chiến lược kinh doanh, cải thiện quy trình vận hành và mang lại trải nghiệm ẩm thực độc đáo. Mục tiêu của chúng tôi là nâng cao giá trị thương hiệu và đáp ứng nhu cầu của khách hàng.",
-  "title3": "Phát triển Hệ thống",
-  "description3": "Chúng tôi cung cấp dịch vụ phát triển hệ thống dựa trên công nghệ hiện đại, đáp ứng nhu cầu cụ thể của khách hàng. Giải pháp của chúng tôi đảm bảo hiệu quả cao, bảo mật và khả năng mở rộng, hỗ trợ doanh nghiệp phát triển và tăng cường năng lực cạnh tranh.",
-  "title4": "Giới thiệu Nhân tài Cao cấp",
-  "description4": "Chúng tôi cung cấp dịch vụ kết nối doanh nghiệp với nguồn nhân lực giàu kinh nghiệm và chuyên môn cao. Mục tiêu là hỗ trợ xây dựng đội ngũ mạnh mẽ, đáp ứng thách thức của thị trường và thúc đẩy sự phát triển của doanh nghiệp."
-}
-,
+    "title1": "Tư vấn Quản lý & Kết nối Nhà cung cấp",
+    "description1": "Chúng tôi cung cấp dịch vụ tư vấn quản lý nhằm tối ưu hóa chiến lược kinh doanh và cải thiện hiệu quả vận hành. Ngoài ra, chúng tôi hỗ trợ kết nối doanh nghiệp với các nhà cung cấp đáng tin cậy, đảm bảo nguồn lực ổn định để phát triển bền vững.",
+    "title2": "Tư vấn và Vận hành Ẩm thực",
+    "description2": "Với kinh nghiệm sâu rộng và chuyên môn cao trong ngành ẩm thực, chúng tôi hỗ trợ xây dựng chiến lược kinh doanh, cải thiện quy trình vận hành và mang lại trải nghiệm ẩm thực độc đáo. Mục tiêu của chúng tôi là nâng cao giá trị thương hiệu và đáp ứng nhu cầu của khách hàng.",
+    "title3": "Phát triển Hệ thống",
+    "description3": "Chúng tôi cung cấp dịch vụ phát triển hệ thống dựa trên công nghệ hiện đại, đáp ứng nhu cầu cụ thể của khách hàng. Giải pháp của chúng tôi đảm bảo hiệu quả cao, bảo mật và khả năng mở rộng, hỗ trợ doanh nghiệp phát triển và tăng cường năng lực cạnh tranh.",
+    "title4": "Giới thiệu Nhân tài Cao cấp",
+    "description4": "Chúng tôi cung cấp dịch vụ kết nối doanh nghiệp với nguồn nhân lực giàu kinh nghiệm và chuyên môn cao. Mục tiêu là hỗ trợ xây dựng đội ngũ mạnh mẽ, đáp ứng thách thức của thị trường và thúc đẩy sự phát triển của doanh nghiệp."
+  },
   "blogData": {
-    "latest_posts": "Bài viết mới nhất",
+    "latest_posts": "Tin tức",
     "post1": {
       "title": "Bài viết 1",
       "description": "Đây là mô tả cho bài viết 1"
@@ -183,20 +194,19 @@
   "Collabs": {
     "title": "Thương hiệu đối tác"
   },
-"TimeLine": {
-  "title": "Các Cột Mốc Của Công Ty",
-  "title1": "Thành Lập Công Ty",
-  "description1": "Công ty chúng tôi được thành lập với mục tiêu thúc đẩy sự đổi mới và dẫn đầu ngành công nghệ. Ngay từ bước đi đầu tiên, chúng tôi đã cam kết với niềm đam mê và việc cung cấp giá trị.",
-  "title2": "Ra Mắt Sản Phẩm Chủ Lực Đầu Tiên",
-  "description2": "Chúng tôi ra mắt sản phẩm chủ lực đầu tiên, đạt được thành công lớn. Sản phẩm này củng cố vị thế của chúng tôi trên thị trường và mở ra một chương phát triển mới.",
-  "title3": "Mở Rộng Toàn Cầu",
-  "description3": "Chúng tôi mở rộng ra thị trường quốc tế, đáp ứng nhu cầu đa dạng của khách hàng và đạt được sự phát triển toàn cầu. Bước tiến này đã mở rộng dấu ấn quốc tế của công ty.",
-  "title4": "Cột Mốc Công Nghệ",
-  "description4": "Chúng tôi đạt được bước đột phá quan trọng về công nghệ, nâng cao sự đổi mới lên một tầm cao mới. Cột mốc này thể hiện cam kết của chúng tôi đối với nghiên cứu và phát triển.",
-  "title5": "Ra Mắt Dòng Sản Phẩm AI Mới",
-  "description5": "Chúng tôi đã giới thiệu dòng sản phẩm mới tích hợp công nghệ AI, củng cố vị thế của mình trong ngành công nghệ. Điều này mang đến các giải pháp thông minh và hiệu quả hơn cho khách hàng."
-}
-,
+  "TimeLine": {
+    "title": "Các Cột Mốc Của Công Ty",
+    "title1": "Thành Lập Công Ty",
+    "description1": "Công ty chúng tôi được thành lập với mục tiêu thúc đẩy sự đổi mới và dẫn đầu ngành công nghệ. Ngay từ bước đi đầu tiên, chúng tôi đã cam kết với niềm đam mê và việc cung cấp giá trị.",
+    "title2": "Ra Mắt Sản Phẩm Chủ Lực Đầu Tiên",
+    "description2": "Chúng tôi ra mắt sản phẩm chủ lực đầu tiên, đạt được thành công lớn. Sản phẩm này củng cố vị thế của chúng tôi trên thị trường và mở ra một chương phát triển mới.",
+    "title3": "Mở Rộng Toàn Cầu",
+    "description3": "Chúng tôi mở rộng ra thị trường quốc tế, đáp ứng nhu cầu đa dạng của khách hàng và đạt được sự phát triển toàn cầu. Bước tiến này đã mở rộng dấu ấn quốc tế của công ty.",
+    "title4": "Cột Mốc Công Nghệ",
+    "description4": "Chúng tôi đạt được bước đột phá quan trọng về công nghệ, nâng cao sự đổi mới lên một tầm cao mới. Cột mốc này thể hiện cam kết của chúng tôi đối với nghiên cứu và phát triển.",
+    "title5": "Ra Mắt Dòng Sản Phẩm AI Mới",
+    "description5": "Chúng tôi đã giới thiệu dòng sản phẩm mới tích hợp công nghệ AI, củng cố vị thế của mình trong ngành công nghệ. Điều này mang đến các giải pháp thông minh và hiệu quả hơn cho khách hàng."
+  },
   "companyOverview": {
     "title": "Giới thiệu về Công ty KGS - Tech",
     "description": "KGS - Tech là công ty công nghệ hàng đầu chuyên cung cấp các giải pháp phần mềm sáng tạo, dịch vụ tư vấn công nghệ và các dịch vụ IT uy tín cho khách hàng toàn cầu."

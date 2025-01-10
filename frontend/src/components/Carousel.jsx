@@ -4,12 +4,12 @@ const VerticalCarousel = ({ sections, onSectionClick }) => {
   const handleScroll = (id) => {
     const section = document.getElementById(id);
     if (section) {
-      const headerHeight = 50;
+      const headerHeight = 60; // Điều chỉnh chiều cao header nếu cần
       window.scrollTo({
-        top: section.offsetTop - headerHeight,
-        behavior: "smooth",
+        top: section.offsetTop - headerHeight, // Cuộn đến vị trí phần tử
+        behavior: "smooth", // Hiệu ứng cuộn mượt mà
       });
-      onSectionClick(id);
+      onSectionClick(id); // Cập nhật phần tử active
     }
   };
 
@@ -24,7 +24,7 @@ const VerticalCarousel = ({ sections, onSectionClick }) => {
               ? "bg-white scale-125 border-2 border-[#1ea0ff]"
               : "bg-blue-500 hover:bg-blue-600 scale-90 border-2 border-[#1ea0ff]"
           }`}
-          style={{ zIndex: 100 }}
+          style={{ zIndex: 100 }} // Đảm bảo các button có zIndex cao hơn các phần tử khác
         ></button>
       ))}
     </div>

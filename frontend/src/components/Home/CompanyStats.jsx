@@ -15,9 +15,9 @@ import {
 
 const StatsCard = ({ icon, title, number }) => (
   <div className="flex flex-col items-center text-center space-y-2">
-    <div className="text-primary text-2xl">{icon}</div>
-    <p className="text-black font-semibold text-base">{number}</p>
-    <p className="text-black text-base font-beVietnam font-semibold">{title}</p>
+    <div className="text-primary text-4xl">{icon}</div>
+    <p className="text-black font-notoSansJP font-medium text-lg">{number}</p>
+    <p className="text-black text-base font-notoSansJP font-medium">{title}</p>
   </div>
 );
 

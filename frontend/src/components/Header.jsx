@@ -70,9 +70,15 @@ const Header = ({ home, company, business, blog }) => {
         </button>
       </div>
 
-      {/* Logo */}
+      {/* Logo Section */}
       <div className="text-2xl cursor-pointer font-bold absolute left-1/2 transform -translate-x-1/2 lg:relative lg:left-0 lg:transform-none">
-        <Link to="/">Logo</Link>
+        <Link to="/">
+          <img 
+            src="https://res.cloudinary.com/dtnuj2les/image/upload/v1736481849/logo-removebg-preview_drvtbj.png" 
+            alt="Logo" 
+            className="h-10" // Adjust the size as needed
+          />
+        </Link>
       </div>
 
       {/* Navigation */}

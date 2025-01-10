@@ -8,7 +8,7 @@ const SuggestedBlogs = ({ blogs }) => {
   }
 
   return (
-    <div className="bg-gray-50 p-6 shadow-lg rounded-lg">
+    <div className="bg-white p-6  rounded-lg">
       <h3 className="text-lg font-bold text-black mb-4">Blog Gợi Ý</h3>
       <ul className="space-y-4">
         {blogs.map((blog, index) => (

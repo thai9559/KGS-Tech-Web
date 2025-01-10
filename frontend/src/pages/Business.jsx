@@ -5,7 +5,7 @@ import AboutUs from "../components/Bussiness/AboutUs";
 import Services from "../components/Bussiness/Services";
 import Testimonials from "../components/Bussiness/Testimonials";
 import Contact from "../components/Bussiness/Contact";
-
+import Service from "../components/Bussiness/Service";
 import VerticalCarousel from "../components/Carousel";
 import { FaLaptopCode, FaMobileAlt, FaGlobe } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
@@ -17,25 +17,17 @@ function Business() {
 
   const testimonials = [
     {
-      quote: t("BusinessPage.whatClientsSay.testimony1"),
-      name: t("BusinessPage.whatClientsSay.name1"),
-      position: t("BusinessPage.whatClientsSay.position1"),
-    },
-    {
       quote: t("BusinessPage.whatClientsSay.testimony2"),
+      image:"https://res.cloudinary.com/dtnuj2les/image/upload/v1736306406/medium-shot-smiley-colleagues-working-together-min_ahrn7i.jpg",
       name: t("BusinessPage.whatClientsSay.name2"),
       position: t("BusinessPage.whatClientsSay.position2"),
     },
     {
-      quote: t("BusinessPage.whatClientsSay.testimony3"),
-      name: t("BusinessPage.whatClientsSay.name3"),
-      position: t("BusinessPage.whatClientsSay.position3"),
-    },
-    {
-      quote: t("BusinessPage.whatClientsSay.testimony4"),
-      name: t("BusinessPage.whatClientsSay.name4"),
-      position: t("BusinessPage.whatClientsSay.position4"),
-    },
+      quote: t("BusinessPage.whatClientsSay.testimony1"),
+      image:"https://res.cloudinary.com/dtnuj2les/image/upload/v1736306405/labor-union-members-working-together-min_gadspn.jpg",
+      name: t("BusinessPage.whatClientsSay.name1"),
+      position: t("BusinessPage.whatClientsSay.position1"),
+    }
   ];
 
   const sections = [
@@ -108,7 +100,7 @@ function Business() {
         sections={enhancedSections} 
         onSectionClick={handleSectionClick} 
       />
-      <div className="bg-gray-50 py-16 px-4">
+      <div className=" py-6 px-4">
         <div id="aboutUs" className="container">
           <AboutUs
             title={t("BusinessPage.aboutUs.title")}
@@ -117,6 +109,9 @@ function Business() {
           />
         </div>
         <div id="services" className="container">
+          <Service/>
+        </div>
+        {/* <div id="services" className="container">
           <Services
             title={t("BusinessPage.services.title")}
             services={[
@@ -137,7 +132,7 @@ function Business() {
               },
             ]}
           />
-        </div>
+        </div> */}
         <div id="testimonials" className="container">
           <Testimonials
             title={t("BusinessPage.whatClientsSay.title")}
