@@ -58,8 +58,8 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
   // Handle tag click (update search term and URL)
   const handleTagClick = (tag) => {
     const tagWithoutHash = tag.replace("#", "").trim();
-    setSearchTerm(tagWithoutHash); 
-    window.location.hash = tag; 
+    setSearchTerm(tagWithoutHash);
+    window.location.hash = tag;
   };
 
   // Filtering the blogs
@@ -134,7 +134,6 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
           className="w-full h-10 py-2 text-base"
         />
       </div>
-
       {/* Filters and sorting */}
       <div className="mb-6 flex flex-col lg:flex-row items-center justify-between w-full lg:w-3/4">
         <div className="flex flex-col lg:flex-row w-full lg:w-3/4 mb-4 lg:mb-0">
@@ -179,14 +178,12 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
           />
         </div>
       </div>
-
       <div className="lg:hidden mb-6">
         <TagList tags={tags} onTagClick={handleTagClick} />
       </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <div className="lg:col-span-3">
-          <h2 className="text-2xl text-primary font-bold mb-6">
+          <h2 className="text-2xl text-black font-bold mb-6">
             {t("blogList.title")}
           </h2>
 
@@ -209,23 +206,49 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
           </div>
         </div>
       </div>
-
       {/* Pagination */}
       <div className="flex justify-center mt-6 mb-12">
-        <div className="flex space-x-2">
+        <div className="flex items-center space-x-2">
+          {/* Previous Button */}
+          <Button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 rounded-full ${
+              currentPage === 1
+                ? "bg-gray-200 text-gray-500"
+                : "bg-blue-500 text-white"
+            }`}
+          >
+            {t("blogPage.previous")}
+          </Button>
+
+          {/* Page Number Buttons */}
           {[...Array(totalPages)].map((_, index) => (
             <Button
               key={index + 1}
               onClick={() => handlePageChange(index + 1)}
-              className={`px-4 py-2 ${
+              className={`w-8 h-8 flex items-center justify-center rounded-full text-sm ${
                 currentPage === index + 1
                   ? "bg-blue-500 text-white"
                   : "bg-gray-200"
-              } rounded-full`}
+              }`}
             >
               {index + 1}
             </Button>
           ))}
+
+          {/* Next Button */}
+          <Button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-2 rounded-full ${
+              currentPage === totalPages
+                ? "bg-gray-200 text-gray-500"
+                : "bg-blue-500 text-white"
+            }`}
+          >
+            {t("blogPage.next")}
+          </Button>
         </div>
       </div>
     </div>

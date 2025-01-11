@@ -78,6 +78,10 @@
     "search": {
       "placeholder": "ブログ記事を検索..."
     },
+
+    "previous": "前へ",
+    "next": "次へ",
+
     "filter": {
       "category": "カテゴリを選択",
       "time": "期間を選択",

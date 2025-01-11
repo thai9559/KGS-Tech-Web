@@ -26,32 +26,31 @@ export default function Home() {
 
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
-    const headerHeight = 60;  // Điều chỉnh chiều cao của header nếu cần
+    const headerHeight = 60; // Điều chỉnh chiều cao của header nếu cần
     const updatedSections = sections.map((section) => {
       const element = document.getElementById(section.id);
       const offsetTop = element?.offsetTop || 0;
       const offsetHeight = element?.offsetHeight || 0;
-  
+
       if (
-        scrollPosition >= (offsetTop - headerHeight) &&
-        scrollPosition < (offsetTop + offsetHeight - headerHeight)
+        scrollPosition >= offsetTop - headerHeight &&
+        scrollPosition < offsetTop + offsetHeight - headerHeight
       ) {
         setActiveSection(section.id);
         return { ...section, active: true };
       }
       return { ...section, active: false };
     });
-  
+
     return updatedSections;
   };
-  
 
   const handleSectionClick = (id) => {
     const element = document.getElementById(id);
     if (element) {
-      const headerHeight = 60;  // Điều chỉnh độ cao của header nếu cần
+      const headerHeight = 60; // Điều chỉnh độ cao của header nếu cần
       const offsetTop = element.offsetTop;
-      
+
       // Cuộn đến vị trí phần tử, trừ đi độ cao của header
       window.scrollTo({
         top: offsetTop - headerHeight,
@@ -60,7 +59,7 @@ export default function Home() {
       setActiveSection(id);
     }
   };
-  
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -88,7 +87,8 @@ export default function Home() {
   const message = [
     {
       quote: t("message.message1"),
-      image: "https://res.cloudinary.com/dtnuj2les/image/upload/v1736487629/b_hnlxy0.jpg",
+      image:
+        "https://res.cloudinary.com/dtnuj2les/image/upload/v1736487629/b_hnlxy0.jpg",
       name: t("message.name1"),
       position: t("message.position"),
     },
@@ -101,8 +101,21 @@ export default function Home() {
         onSectionClick={handleSectionClick}
       />
       <div className="flex flex-col overflow-hidden">
+        <div id="companyOverview">
+          <div className="bg-[#B6CBBD] p-4 h-[200px] flex flex-col justify-center items-center sm:hidden">
+            <h1 className="text-xl text-primary font-notoSansJP font-bold">
+              {t("banner.title")}
+            </h1>
+            <p className="text-sm text-gray-700 font-notoSansJP font-medium ">
+              {t("banner.slogan")}
+            </p>
+            <button className="mt-6 px-6 py-3 text-black font-notoSansJP font-medium rounded-lg hover:text-white hover:bg-primary focus:outline">
+              {t("banner.description")}
+            </button>
+          </div>
+        </div>
         <div id="companyStats" className="container">
-          <h2 className="text-black text-3xl text-center font-beVietnam font-semibold mt-10">
+          <h2 className="text-black text-3xl text-center font-notoSansJP font-semibold mt-10">
             {t("stats.ask")}
           </h2>
           <CompanyStats />
