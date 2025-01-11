@@ -78,6 +78,10 @@
     "search": {
       "placeholder": "Tìm kiếm bài viết..."
     },
+
+    "previous": "Trước",
+    "next": "Tiếp theo",
+
     "filter": {
       "category": "Chọn chủ đề",
       "time": "Chọn mốc thời gian",

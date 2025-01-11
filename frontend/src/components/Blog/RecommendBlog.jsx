@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const RecommendBlog = ({ blogs }) => {
   const navigate = useNavigate(); // Hàm điều hướng
@@ -10,7 +10,9 @@ const RecommendBlog = ({ blogs }) => {
 
   return (
     <div className="mt-12">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-6">Các bài viết liên quan</h2>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+        Các bài viết liên quan
+      </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {blogs.map((blog) => (
           <div
@@ -24,8 +26,14 @@ const RecommendBlog = ({ blogs }) => {
               className="w-full h-48 object-cover"
             />
             <div className="p-4">
-              <h3 className="text-xl font-semibold text-gray-800">{blog.title}</h3>
-              <p className="text-gray-600 mt-2">{blog.description}</p>
+              <h3 className="text-xl font-semibold text-gray-800 truncate">
+                {blog.title}
+              </h3>{" "}
+              {/* Thêm truncate */}
+              <p className="text-gray-600 mt-2 line-clamp-5">
+                {blog.description}
+              </p>{" "}
+              {/* Thêm line-clamp */}
               <a
                 href="#"
                 className="mt-4 inline-block text-blue-500 hover:text-blue-600"

@@ -54,12 +54,13 @@ const HeaderDemo = ({ home, company, business, blog }) => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full flex justify-between items-center p-4 z-50 transition-all duration-300 ${menuOpen
-        ? "bg-white text-black shadow-md"
-        : scrolled
+      className={`fixed top-0 left-0 w-full flex justify-between items-center p-4 z-50 transition-all duration-300 ${
+        menuOpen
+          ? "bg-white text-black shadow-md"
+          : scrolled
           ? "bg-white text-black shadow-md"
           : "bg-transparent text-white opacity-80"
-        }`}
+      }`}
     >
       <div className="text-2xl cursor-pointer font-bold absolute left-1/2 transform -translate-x-1/2 lg:relative lg:left-0 lg:transform-none">
         <Link to="/">
@@ -75,19 +76,20 @@ const HeaderDemo = ({ home, company, business, blog }) => {
         </Link>
       </div>
 
-
       <nav
-        className={`fixed top-0 left-0 w-full h-screen bg-white flex flex-col items-center justify-center transform ${menuOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
-          } transition-all duration-300 ease-in-out z-50 lg:static lg:transform-none lg:translate-y-0 lg:opacity-100 lg:h-auto lg:flex-row lg:bg-transparent`}
+        className={`fixed top-0 left-0 w-full h-screen bg-white flex flex-col items-center justify-center transform ${
+          menuOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+        } transition-all duration-300 ease-in-out z-50 lg:static lg:transform-none lg:translate-y-0 lg:opacity-100 lg:h-auto lg:flex-row lg:bg-transparent`}
       >
         <ul className="flex flex-col lg:flex-row gap-8 cursor-pointer lg:w-auto">
           <li
-            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-xl text-center z-50 ${menuOpen || scrolled
-              ? isActive("/")
-                ? "text-black"
-                : "text-black"
-              : "text-white"
-              }`}
+            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-lg text-center z-50 ${
+              menuOpen || scrolled
+                ? isActive("/")
+                  ? "text-black"
+                  : "text-black"
+                : "text-white"
+            }`}
           >
             <Link to="/">{home}</Link>
             {isActive("/") && (
@@ -95,12 +97,13 @@ const HeaderDemo = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-xl text-center z-50 ${menuOpen || scrolled
-              ? isActive("/company")
-                ? "text-black"
-                : "text-black"
-              : "text-white"
-              }`}
+            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-lg text-center z-50 ${
+              menuOpen || scrolled
+                ? isActive("/company")
+                  ? "text-black"
+                  : "text-black"
+                : "text-white"
+            }`}
           >
             <Link to="/company">{company}</Link>
             {isActive("/company") && (
@@ -108,12 +111,13 @@ const HeaderDemo = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-xl text-center z-50 ${menuOpen || scrolled
-              ? isActive("/business")
-                ? "text-black"
-                : "text-black"
-              : "text-white"
-              }`}
+            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-lg text-center z-50 ${
+              menuOpen || scrolled
+                ? isActive("/business")
+                  ? "text-black"
+                  : "text-black"
+                : "text-white"
+            }`}
           >
             <Link to="/business">{business}</Link>
             {isActive("/business") && (
@@ -121,12 +125,13 @@ const HeaderDemo = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-xl text-center z-50 ${menuOpen || scrolled
-              ? isActive("/blog")
-                ? "text-black"
-                : "text-black"
-              : "text-white"
-              }`}
+            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-lg text-center z-50 ${
+              menuOpen || scrolled
+                ? isActive("/blog")
+                  ? "text-black"
+                  : "text-black"
+                : "text-white"
+            }`}
           >
             <Link to="/blog">{blog}</Link>
             {isActive("/blog") && (
@@ -140,14 +145,24 @@ const HeaderDemo = ({ home, company, business, blog }) => {
       <select
         value={language}
         onChange={(e) => handleLanguageChange(e.target.value)}
-        className={`bg-transparent p-2 rounded-md cursor-pointer focus:outline-none focus:ring-0 ${scrolled ? 'bg-white text-black border-none' : 'bg-transparent text-white border-none'} order-last lg:order-none`}
+        className={`bg-transparent p-2 rounded-md cursor-pointer focus:outline-none focus:ring-0 ${
+          scrolled
+            ? "bg-white text-black border-none"
+            : "bg-transparent text-white border-none"
+        } order-last lg:order-none`}
       >
-        <option value="vi" className="bg-gray-800 text-white px-4 py-2">Tiếng Việt</option>
-        <option value="en" className="bg-gray-800 text-white px-4 py-2">English</option>
-        <option value="ja" className="bg-gray-800 text-white px-4 py-2">日本語</option>
+        <option value="vi" className="bg-gray-800 text-white px-4 py-2">
+          Tiếng Việt
+        </option>
+        <option value="en" className="bg-gray-800 text-white px-4 py-2">
+          English
+        </option>
+        <option value="ja" className="bg-gray-800 text-white px-4 py-2">
+          日本語
+        </option>
       </select>
 
-
+      {/* Menu toggle for mobile */}
       {/* Menu toggle for mobile */}
       <div className="lg:hidden z-50">
         <button
@@ -162,7 +177,7 @@ const HeaderDemo = ({ home, company, business, blog }) => {
               viewBox="0 0 24 24"
               strokeWidth="3"
               stroke="currentColor"
-              className="w-6 h-6 text-black"
+              className={"w-6 h-6 text-black"}
             >
               <path
                 strokeLinecap="round"
@@ -177,7 +192,7 @@ const HeaderDemo = ({ home, company, business, blog }) => {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="w-6 h-6 text-black"
+              className={`w-6 h-6 ${scrolled ? "text-black" : "text-white"}`}
             >
               <path
                 strokeLinecap="round"
@@ -189,7 +204,6 @@ const HeaderDemo = ({ home, company, business, blog }) => {
         </button>
       </div>
     </header>
-
   );
 };
 

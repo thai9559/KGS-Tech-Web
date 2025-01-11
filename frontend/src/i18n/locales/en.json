@@ -17,10 +17,10 @@
     "technology": "Technologies Used",
     "certifications": "Certifications"
   },
-  "banner":{
-    "title":"Welcome to KGS Tech",
-    "slogan":"Innovating solutions, empowering businesses with cutting-edge technology.",
-    "description":"Our Services"
+  "banner": {
+    "title": "Welcome to KGS Tech",
+    "slogan": "Innovating solutions, empowering businesses with cutting-edge technology.",
+    "description": "Our Services"
   },
   "message": {
     "title": "Message from the Representative",
@@ -78,6 +78,9 @@
     "search": {
       "placeholder": "Search for blog posts..."
     },
+    "previous": "Previous",
+    "next": "Next",
+
     "filter": {
       "category": "Select category",
       "time": "Select time frame",
