@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 import LayoutHeader from "../components/LayoutHeader";
-import CompanyStats from "../components/Home/CompanyStats";
-import Benefit from "../components/Home/Benefit";
-import BlogSlider from "../components/Home/BlogData";
+import { Link } from "react-router-dom";
 import VerticalCarousel from "../components/Carousel";
-import LogoGrid from "../components/Company/LogoSlider";
-import Message from "../components/Home/message";
-import ImageBanner from "../components/Home/ImageBanner";
+import ScrollToTop from "../components/ScrollToTop";
+
+// Lazy load các component
+const CompanyStats = React.lazy(() =>
+  import("../components/Home/CompanyStats")
+);
+const Benefit = React.lazy(() => import("../components/Home/Benefit"));
+const BlogSlider = React.lazy(() => import("../components/Home/BlogData"));
+const LogoGrid = React.lazy(() => import("../components/Company/LogoSlider"));
+const Message = React.lazy(() => import("../components/Home/message"));
+const ImageBanner = React.lazy(() => import("../components/Home/ImageBanner"));
 
 export default function Home() {
   const { t } = useTranslation();
@@ -18,7 +24,6 @@ export default function Home() {
     { id: "images", label: "Images", active: false },
     { id: "logos", label: "Logos", active: false },
     { id: "message", label: "Message", active: false },
-
     { id: "blogSlider", label: "Blog Slider", active: false },
   ];
 
@@ -109,33 +114,39 @@ export default function Home() {
             <p className="text-sm text-gray-700 font-notoSansJP font-medium ">
               {t("banner.slogan")}
             </p>
-            <button className="mt-6 px-6 py-3 text-black font-notoSansJP font-medium rounded-lg hover:text-white hover:bg-primary focus:outline">
-              {t("banner.description")}
+            <button className="mt-6 px-6 py-3 text-black font-notoSansJP font-medium rounded-lg border-2 border-white bg-transparent hover:text-white hover:bg-primary focus:outline-none">
+              <Link to="business/#services">{t("banner.description")}</Link>
             </button>
           </div>
         </div>
-        <div id="companyStats" className="container">
-          <h2 className="text-black text-3xl text-center font-notoSansJP font-semibold mt-10">
-            {t("stats.ask")}
-          </h2>
-          <CompanyStats />
-        </div>
-        <div id="benefits">
-          <Benefit />
-        </div>
-        <div id="images" className="bannerImage">
-          <ImageBanner />
-        </div>
-        <div id="logos" className="container ">
-          <LogoGrid logos={logos} />
-        </div>
-        <div id="message" className="bannerImage">
-          <Message slogan={slogan} title={title} message={message} />
-        </div>
-        <div id="blogSlider" className="container">
-          <BlogSlider />
-        </div>
+
+        <Suspense fallback={<div>Loading...</div>}>
+          <div id="companyStats" className="container">
+            <h2 className="text-black text-3xl text-center font-notoSansJP font-semibold mt-10">
+              {t("stats.ask")}
+            </h2>
+            <CompanyStats />
+          </div>
+          <div id="benefits">
+            <Benefit />
+          </div>
+          <div id="images" className="bannerImage">
+            <ImageBanner />
+          </div>
+          <div id="logos" className="container ">
+            <LogoGrid logos={logos} />
+          </div>
+          <div id="message" className="bannerImage">
+            <Message slogan={slogan} title={title} message={message} />
+          </div>
+          <div id="blogSlider" className="container">
+            <BlogSlider />
+          </div>
+        </Suspense>
       </div>
+
+      {/* Gọi component ScrollToTop ở đây */}
+      <ScrollToTop />
     </LayoutHeader>
   );
 }

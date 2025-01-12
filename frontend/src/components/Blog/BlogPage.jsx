@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
-import BlogList from "./BlogList";
-import SuggestedBlogs from "./SuggestedBlogs";
+import React, { useState, useEffect, Suspense } from "react";
 import { Input, Select, Button, Spin } from "antd";
 import { SearchOutlined, ReloadOutlined } from "@ant-design/icons";
 import moment from "moment";
-import TagList from "./TagList"; // Import TagList component
 import { useTranslation } from "react-i18next";
+
+// Lazy load components
+const BlogList = React.lazy(() => import("./BlogList"));
+const SuggestedBlogs = React.lazy(() => import("./SuggestedBlogs"));
+const TagList = React.lazy(() => import("./TagList")); // TagList component
 
 const { Option } = Select;
 
@@ -179,7 +181,9 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
         </div>
       </div>
       <div className="lg:hidden mb-6">
-        <TagList tags={tags} onTagClick={handleTagClick} />
+        <Suspense fallback={<Spin size="large" />}>
+          <TagList tags={tags} onTagClick={handleTagClick} />
+        </Suspense>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <div className="lg:col-span-3">
@@ -193,16 +197,22 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
               <Spin size="large" />
             </div>
           ) : (
-            <BlogList blogs={currentBlogs} />
+            <Suspense fallback={<Spin size="large" />}>
+              <BlogList blogs={currentBlogs} />
+            </Suspense>
           )}
         </div>
 
         <div>
-          <SuggestedBlogs blogs={suggestedBlogs} />
+          <Suspense fallback={<Spin size="large" />}>
+            <SuggestedBlogs blogs={suggestedBlogs} />
+          </Suspense>
 
           {/* TagList - Visible on PC, hidden on mobile */}
           <div className="hidden lg:block mt-6">
-            <TagList tags={tags} onTagClick={handleTagClick} />
+            <Suspense fallback={<Spin size="large" />}>
+              <TagList tags={tags} onTagClick={handleTagClick} />
+            </Suspense>
           </div>
         </div>
       </div>

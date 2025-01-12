@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import Animation from "./Animation";
 const BannerHome = () => {
   const { t } = useTranslation();
   return (
@@ -11,13 +12,17 @@ const BannerHome = () => {
       }}
     >
       {/* Overlay */}
-      <div className="absolute p-8 top-0 left-0 w-full h-full bg-black bg-opacity-40 flex flex-col justify-center items-center z-10 hidden md:flex">
-        <h2 className="text-white text-4xl md:text-6xl font-bold text-center">
-          {t("companyOverview.title")}
-        </h2>
-        <p className="text-sm text-white font-notoSansJP font-medium md:text-lg mt-2">
-          {t("companyOverview.description")}
-        </p>
+      <div className="absolute p-8 top-0 left-0 w-full h-full bg-black bg-opacity-40  flex-col justify-center items-center z-10 hidden md:flex">
+        <Animation animationType="fade-left">
+          <h2 className="text-white text-4xl md:text-6xl font-bold text-center">
+            {t("companyOverview.title")}
+          </h2>
+        </Animation>
+        <Animation>
+          <p className="text-sm text-white font-notoSansJP font-medium md:text-lg mt-2">
+            {t("companyOverview.description")}
+          </p>
+        </Animation>
       </div>
     </div>
   );

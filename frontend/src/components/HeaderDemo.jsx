@@ -83,7 +83,7 @@ const HeaderDemo = ({ home, company, business, blog }) => {
       >
         <ul className="flex flex-col lg:flex-row gap-8 cursor-pointer lg:w-auto">
           <li
-            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-lg text-center z-50 ${
+            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-base text-center z-50 ${
               menuOpen || scrolled
                 ? isActive("/")
                   ? "text-black"
@@ -97,7 +97,7 @@ const HeaderDemo = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-lg text-center z-50 ${
+            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-base text-center z-50 ${
               menuOpen || scrolled
                 ? isActive("/company")
                   ? "text-black"
@@ -111,7 +111,7 @@ const HeaderDemo = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-lg text-center z-50 ${
+            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-base text-center z-50 ${
               menuOpen || scrolled
                 ? isActive("/business")
                   ? "text-black"
@@ -125,7 +125,7 @@ const HeaderDemo = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-lg text-center z-50 ${
+            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-base text-center z-50 ${
               menuOpen || scrolled
                 ? isActive("/blog")
                   ? "text-black"
@@ -147,7 +147,7 @@ const HeaderDemo = ({ home, company, business, blog }) => {
         onChange={(e) => handleLanguageChange(e.target.value)}
         className={`bg-transparent p-2 rounded-md cursor-pointer focus:outline-none focus:ring-0 ${
           scrolled
-            ? "bg-white text-black border-none"
+            ? "bg-white text-black border-none transition-all duration-300 ease-in-out"
             : "bg-transparent text-white border-none"
         } order-last lg:order-none`}
       >

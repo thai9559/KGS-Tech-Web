@@ -9,7 +9,7 @@ const CoreValues = ({ values }) => {
   return (
     <section className="py-16 bg-gray-50">
       {/* Tiêu đề phần CoreValues */}
-      <h2 className="text-4xl font-semibold text-center text-black mb-12">
+      <h2 className="text-3xl font-semibold text-center text-black mb-12">
         {t("coreValues.title")}
       </h2>
 
