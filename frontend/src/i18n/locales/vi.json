@@ -219,5 +219,23 @@
     "contact": "Liên hệ",
     "title": "Sứ mệnh",
     "description": "Sứ mệnh của chúng tôi là mang lại những giải pháp sáng tạo, giúp doanh nghiệp phát triển mạnh mẽ trong kỷ nguyên số. Chúng tôi cam kết cung cấp các sản phẩm và dịch vụ không chỉ đáp ứng nhu cầu hiện tại mà còn giúp khách hàng vươn lên dẫn đầu trong ngành."
+  },
+  "login": {
+    "username": "Tên người dùng",
+    "password": "Mật khẩu",
+    "login": "Đăng nhập",
+    "requireUS": "Nhập tên người dùng của bạn",
+    "requirePW": "Nhập mật khẩu của bạn",
+    "invalid": "Tên người dùng hoặc mật khẩu không hợp lệ",
+    "error": "Có lỗi xảy ra. Vui lòng thử lại.",
+    "success": "Đăng nhập thành công!"
+  },
+  "dashboard": {
+    "company_info": "Quản lý thông tin công ty",
+    "account_management": "Quản lý tài khoản và quyền",
+    "blog_management": "Quản lý blog",
+    "company_info_desc": "Cập nhật các thông tin cơ bản của công ty.",
+    "account_management_desc": "Thiết lập quyền và tài khoản người dùng.",
+    "blog_management_desc": "Quản lý các bài đăng và nội dung blog."
   }
 }

@@ -24,12 +24,11 @@ const Benefit = () => {
 
   return (
     <div className="flex flex-col items-center  bg-white overflow-hidden">
-      <div className="w-full px-4 mx-auto">
+      <div className="w-full mx-auto">
         <div>
           {/* PC Layout */}
           <div className="hidden lg:block">
             {events.map((event, index) => (
-
               <div className="relative w-full h-[100vh] flex flex-col bg-white overflow-hidden mb-12">
                 <div
                   className="w-full h-full bg-cover bg-center"
@@ -88,14 +87,12 @@ const Benefit = () => {
                   </div>
                 </div>
               </div>
-
             ))}
           </div>
 
           {/* Mobile Layout */}
           <div className="block lg:hidden">
             {events.map((event, index) => (
-
               <div className="relative w-full flex flex-col bg-white overflow-hidden mb-12">
                 <div className="w-full flex flex-col items-center space-y-4">
                   <div
@@ -153,7 +150,6 @@ const Benefit = () => {
                   </div>
                 </div>
               </div>
-
             ))}
           </div>
         </div>

@@ -135,7 +135,7 @@
       }
     },
     "whatClientsSay": {
-      "title": "お問い合わせ",
+      "title": "お客様の声",
       "testimony1": "\"この会社は素晴らしいサービスを提供しており、私たちの業務に大きな改善が見られました。非常にお勧めします！\"",
       "name1": "John Doe",
       "position1": "CEO、TechCorp",
@@ -219,5 +219,23 @@
     "contact": "お問い合わせ",
     "title": "使命",
     "description": "私たちの使命は、ビジネスがデジタル時代において成長するための革新的な解決策を提供することです。現在のニーズを満たすだけでなく、顧客が業界をリードできるよう支援する製品とサービスを提供します。"
+  },
+  "login": {
+    "username": "ユーザー名",
+    "password": "パスワード",
+    "login": "ログイン",
+    "requireUS": "ユーザー名を入力してください",
+    "requirePW": "パスワードを入力してください",
+    "invalid": "ユーザー名またはパスワードが無効です",
+    "error": "何か問題が発生しました。もう一度試してください。",
+    "success": "ログインに成功しました！"
+  },
+  "dashboard": {
+    "company_info": "会社情報",
+    "account_management": "アカウント管理",
+    "blog_management": "ブログ管理",
+    "company_info_desc": "会社の基本情報を更新します。",
+    "account_management_desc": "ユーザーアカウントと権限を設定します。",
+    "blog_management_desc": "ブログ記事とコンテンツを管理します。"
   }
 }

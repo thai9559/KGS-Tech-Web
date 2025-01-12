@@ -51,9 +51,13 @@ const Header = ({ home, company, business, blog }) => {
               viewBox="0 0 24 24"
               strokeWidth="3"
               stroke="currentColor"
-              className="w-6 h-6 text-white"
+              className="w-6 h-6 text-black"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           ) : (
             <svg
@@ -64,7 +68,11 @@ const Header = ({ home, company, business, blog }) => {
               stroke="currentColor"
               className="w-6 h-6 text-black"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 5.25h16.5M3.75 12h16.5M3.75 18.75h16.5" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3.75 5.25h16.5M3.75 12h16.5M3.75 18.75h16.5"
+              />
             </svg>
           )}
         </button>
@@ -73,9 +81,9 @@ const Header = ({ home, company, business, blog }) => {
       {/* Logo Section */}
       <div className="text-2xl cursor-pointer font-bold absolute left-1/2 transform -translate-x-1/2 lg:relative lg:left-0 lg:transform-none">
         <Link to="/">
-          <img 
-            src="https://res.cloudinary.com/dtnuj2les/image/upload/v1736481849/logo-removebg-preview_drvtbj.png" 
-            alt="Logo" 
+          <img
+            src="https://res.cloudinary.com/dtnuj2les/image/upload/v1736481849/logo-removebg-preview_drvtbj.png"
+            alt="Logo"
             className="h-10" // Adjust the size as needed
           />
         </Link>
@@ -83,15 +91,15 @@ const Header = ({ home, company, business, blog }) => {
 
       {/* Navigation */}
       <nav
-        className={`fixed top-0 left-0 w-full h-full bg-gray-800 flex flex-col items-center justify-center transform ${
+        className={`fixed top-0 left-0 w-full h-full bg-white flex flex-col items-center justify-center transform ${
           menuOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
         } transition-all duration-300 ease-in-out z-50 lg:static lg:transform-none lg:translate-y-0 lg:opacity-100 lg:h-auto lg:flex-row lg:bg-white`}
       >
-        <ul className="flex flex-col lg:flex-row gap-8 cursor-pointer text-white lg:text-black w-full lg:w-auto">
+        <ul className="flex flex-col lg:flex-row gap-8 cursor-pointer text-black lg:text-black w-full lg:w-auto">
           <li
-            className={`relative hover:text-gray-400 font-medium text-base font-notoSansJP text-center ${
-              isActive("/") ? "text-primary" : ""
-            }`}
+            className={`relative hover:text-gray-400 font-medium text-base font-notoSansJP text-center ${isActive(
+              "/"
+            )}`}
           >
             <Link to="/">{home}</Link>
             {isActive("/") && (
@@ -99,9 +107,9 @@ const Header = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-medium text-base font-notoSansJP text-center ${
-              isActive("/company") ? "text-primary" : ""
-            }`}
+            className={`relative hover:text-gray-400 font-medium text-base font-notoSansJP text-center ${isActive(
+              "/company"
+            )}`}
           >
             <Link to="/company">{company}</Link>
             {isActive("/company") && (
@@ -109,9 +117,9 @@ const Header = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-medium text-base font-notoSansJP text-center ${
-              isActive("/business") ? "text-primary" : ""
-            }`}
+            className={`relative hover:text-gray-400 font-medium text-base font-notoSansJP text-center ${isActive(
+              "/business"
+            )}`}
           >
             <Link to="/business">{business}</Link>
             {isActive("/business") && (
@@ -119,9 +127,9 @@ const Header = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-medium text-base font-notoSansJP text-center ${
-              isActive("/blog") ? "text-primary" : ""
-            }`}
+            className={`relative hover:text-gray-400 font-medium text-base font-notoSansJP text-center ${isActive(
+              "/blog"
+            )}`}
           >
             <Link to="/blog">{blog}</Link>
             {isActive("/blog") && (

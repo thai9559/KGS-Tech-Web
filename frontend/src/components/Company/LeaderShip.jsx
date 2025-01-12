@@ -7,7 +7,7 @@ const Leadership = ({ leaders }) => {
 
   return (
     <section className="py-16 bg-white">
-      <h2 className="text-2xl font-semibold text-center text-blue-600 mb-8">
+      <h2 className="text-3xl font-semibold text-center text-black mb-8">
         {t("leadership.title")}
       </h2>
       <div className="flex flex-wrap justify-center gap-8">

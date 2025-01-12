@@ -1,15 +1,24 @@
-import React, { useState, useEffect } from "react";
-import CoreValues from "../components/Company/CoreValues";
-import CompanyOverview from "../components/Company/CompanyOverview";
-import Leadership from "../components/Company/LeaderShip";
-import Mission from "../components/Company/Misson";
+import React, { useState, useEffect, Suspense, lazy } from "react";
 import { useTranslation } from "react-i18next";
-import VerticalCarousel from "../components/Carousel";
-import Banner from "../components/Company/Banner";
-import DevelopmentTimeline from "../components/Company/DevelopmentTimeline";
+import { useLocation } from "react-router-dom";
 import LayoutCompany from "../components/LayoutCompanyt";
+
+// Lazy load components
+const CoreValues = lazy(() => import("../components/Company/CoreValues"));
+const CompanyOverview = lazy(() =>
+  import("../components/Company/CompanyOverview")
+);
+const Leadership = lazy(() => import("../components/Company/LeaderShip"));
+const Mission = lazy(() => import("../components/Company/Misson"));
+const VerticalCarousel = lazy(() => import("../components/Carousel"));
+const Banner = lazy(() => import("../components/Company/Banner"));
+const DevelopmentTimeline = lazy(() =>
+  import("../components/Company/DevelopmentTimeline")
+);
+
 const Company = () => {
   const { t } = useTranslation();
+  const location = useLocation();
 
   const coreValues = [
     {
@@ -25,16 +34,6 @@ const Company = () => {
       description: t("coreValues.collaborationDescription"),
     },
   ];
-
-  // const logos = [
-  //   "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886228/kmslogo_l2fx2y.png",
-  //   "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886295/viettel-removebg-preview_brfhlc.png",
-  //   "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886393/LG-removebg-preview_dmc3t5.png",
-  //   "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/fpt-removebg-preview_dlhdq6.png",
-  //   "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/hitachi-removebg-preview_geekow.png",
-  //   "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/vng-removebg-preview_sokbcl.png",
-  //   "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886519/itel-mobile-logo-vector-removebg-preview_miveta.png",
-  // ];
 
   const leaders = [
     {
@@ -120,40 +119,42 @@ const Company = () => {
 
   return (
     <LayoutCompany>
-      <VerticalCarousel
-        sections={enhancedSections}
-        onSectionClick={handleSectionClick}
-        activeSection={activeSection}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <VerticalCarousel
+          sections={enhancedSections}
+          onSectionClick={handleSectionClick}
+          activeSection={activeSection}
+        />
 
-      <div className="bg-gray-50 ">
-        <div id="companyOverview">
-          <div className="bg-[#B6CBBD] p-4 h-[200px] flex flex-col justify-center items-center  md:hidden">
-            <h1 className="text-xl text-primary font-notoSansJP md:text-3xl font-bold">
-              {t("companyOverview.title")}
-            </h1>
-            <p className="text-sm text-gray-700 font-notoSansJP font-medium md:text-lg mt-2">
-              {t("companyOverview.description")}
-            </p>
+        <div className="bg-gray-50 ">
+          <div id="companyOverview">
+            <div className="bg-[#B6CBBD] p-4 h-[200px] flex flex-col justify-center items-center  md:hidden">
+              <h1 className="text-xl text-primary font-notoSansJP md:text-3xl font-bold">
+                {t("companyOverview.title")}
+              </h1>
+              <p className="text-sm text-gray-700 font-notoSansJP font-medium md:text-lg mt-2">
+                {t("companyOverview.description")}
+              </p>
+            </div>
+          </div>
+
+          <div id="developerTimeline" className=" min-h-[30vh]">
+            <DevelopmentTimeline />
+          </div>
+
+          <div id="coreValues" className="container min-h-[30vh] ">
+            <CoreValues values={coreValues} />
+          </div>
+
+          <div id="mission" className="container min-h-[40vh]">
+            <Mission mission={t("mission.description")} />
+          </div>
+
+          <div id="leadership" className="container">
+            <Leadership leaders={leaders} />
           </div>
         </div>
-
-        <div id="developerTimeline" className=" min-h-[30vh]">
-          <DevelopmentTimeline />
-        </div>
-
-        <div id="coreValues" className="container min-h-[30vh] ">
-          <CoreValues values={coreValues} />
-        </div>
-
-        <div id="mission" className="container min-h-[40vh]">
-          <Mission mission={t("mission.description")} />
-        </div>
-
-        <div id="leadership" className="container">
-          <Leadership leaders={leaders} />
-        </div>
-      </div>
+      </Suspense>
     </LayoutCompany>
   );
 };

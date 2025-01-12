@@ -6,6 +6,7 @@ import {
   Navigate,
   useLocation,
 } from "react-router-dom";
+import Loading from "./components/Loading";
 
 // Lazy load các trang
 const Home = lazy(() => import("./pages/Home"));
@@ -13,14 +14,11 @@ const Company = lazy(() => import("./pages/Company"));
 const Business = lazy(() => import("./pages/Business"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogDetailPage = lazy(() => import("./pages/BlogDetailPage"));
-
-// Component loading
-const Loading = () => (
-  <div className="h-screen flex items-center justify-center bg-white">
-    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
-  </div>
-);
-
+const Login = lazy(() => import("./pages/admin/Login"));
+const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
+const CompanyAdmin = lazy(() => import("./pages/admin/CompanyAdmin"));
+const UserAdmin = lazy(() => import("./pages/admin/UserAdmin"));
+const Menu = lazy(() => import("./components/Admin/MenuNavigate"));
 // Hook xử lý loading với tiêu đề và favicon
 const usePageLoading = () => {
   const [loading, setLoading] = useState(false);
@@ -67,9 +65,17 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/company" element={<Company />} />
             <Route path="/business" element={<Business />} />
-
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogDetailPage />} />
+            <Route path="/admin/login" element={<Login />} />
+            <Route path="/admin/dashboard" element={<Dashboard />} />
+            {/* Layout chung cho các trang quản lý */}
+            <Route path="/admin" element={<Menu />}>
+              <Route path="company" element={<CompanyAdmin />} />
+              <Route path="user" element={<UserAdmin />} />
+              {/* Các route quản lý khác */}
+            </Route>
+
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </PageLoader>
