@@ -160,7 +160,7 @@ const Login = () => {
             type="primary"
             block
             onClick={handleSubmit}
-            className="mt-6 bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg text-xl"
+            className="mt-6 bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg text-lg"
           >
             {t("login.login")}
           </Button>

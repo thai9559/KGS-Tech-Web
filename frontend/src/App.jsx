@@ -19,6 +19,7 @@ const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
 const CompanyAdmin = lazy(() => import("./pages/admin/CompanyAdmin"));
 const UserAdmin = lazy(() => import("./pages/admin/UserAdmin"));
 const Menu = lazy(() => import("./components/Admin/MenuNavigate"));
+const TestBlog = lazy(() => import("./pages/Test/BlogList"));
 // Hook xử lý loading với tiêu đề và favicon
 const usePageLoading = () => {
   const [loading, setLoading] = useState(false);
@@ -66,6 +67,7 @@ function App() {
             <Route path="/company" element={<Company />} />
             <Route path="/business" element={<Business />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/test" element={<TestBlog />} />
             <Route path="/blog/:id" element={<BlogDetailPage />} />
             <Route path="/admin/login" element={<Login />} />
             <Route path="/admin/dashboard" element={<Dashboard />} />

@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import Animation from "../Animation";
+
 const LogoGrid = ({ logos }) => {
   const { t } = useTranslation();
 
@@ -21,7 +22,7 @@ const LogoGrid = ({ logos }) => {
               <img
                 src={logo}
                 alt={`Company Logo ${index + 1}`}
-                className="w-auto h-32 object-contain"
+                className="w-auto h-32 object-contain transform transition-transform duration-300 ease-in-out hover:scale-125"
               />
             </div>
           ))}

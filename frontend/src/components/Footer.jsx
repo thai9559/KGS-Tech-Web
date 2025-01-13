@@ -186,22 +186,23 @@ const Footer = () => {
             </div>
 
             {/* Subscribe Section */}
-            <div className="flex flex-col sm:w-1/2 sm:items-center mt-4 sm:mt-0 space-y-4 sm:space-y-0 sm:flex-row sm:justify-between w-full">
-              <div className="w-full sm:w-2/3 mr-3">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="p-2 w-full bg-gray-700 text-white rounded-md "
-                />
+            <div className="flex flex-col sm:w-1/2 sm:items-center mt-4 sm:mt-0 space-y-4 sm:space-y-0 sm:flex-col sm:justify-between w-full">
+              <div className="w-full flex flex-row">
+                <div className="w-full sm:w-2/3 mr-3">
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    className="p-2 w-full bg-gray-700 text-white rounded-md "
+                  />
+                </div>
+                <div className="w-full sm:w-1/3">
+                  <button className="p-2 bg-blue-600 text-white rounded-md hover:bg-blue-500 w-full">
+                    Subscribe
+                  </button>
+                </div>
               </div>
-              <div className="w-full sm:w-1/3">
-                <button className="p-2 bg-blue-600 text-white rounded-md hover:bg-blue-500 w-full">
-                  Subscribe
-                </button>
-              </div>
-
               {/* Social Media Icons */}
-              <div className="flex justify-center space-x-3 mt-4 sm:mt-0 w-full sm:w-auto">
+              <div className="flex justify-center sm:justify-center md:justify-end items-center space-x-3 mt-4 sm:mt-0 w-full sm:w-auto">
                 <a
                   href="#"
                   className="text-white hover:bg-gray-500 p-2 rounded-full"
