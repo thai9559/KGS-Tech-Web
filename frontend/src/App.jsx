@@ -17,8 +17,12 @@ const BlogDetailPage = lazy(() => import("./pages/BlogDetailPage"));
 const Login = lazy(() => import("./pages/admin/Login"));
 const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
 const CompanyAdmin = lazy(() => import("./pages/admin/CompanyAdmin"));
-const UserAdmin = lazy(() => import("./pages/admin/UserAdmin"));
 const Menu = lazy(() => import("./components/Admin/MenuNavigate"));
+const UserManagement = lazy(() => import("./pages/admin/UserManagement"));
+
+
+
+
 const TestBlog = lazy(() => import("./pages/Test/BlogList"));
 // Hook xử lý loading với tiêu đề và favicon
 const usePageLoading = () => {
@@ -74,7 +78,7 @@ function App() {
             {/* Layout chung cho các trang quản lý */}
             <Route path="/admin" element={<Menu />}>
               <Route path="company" element={<CompanyAdmin />} />
-              <Route path="user" element={<UserAdmin />} />
+              <Route path="user" element={<UserManagement />} />
               {/* Các route quản lý khác */}
             </Route>
 
