@@ -2,30 +2,24 @@ import React, { useState, useEffect } from "react";
 import "tailwindcss/tailwind.css";
 import { Input, Button, message, Select } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../../redux/api/authApi";
 import Loading from "../../components/Loading";
 import { useTranslation } from "react-i18next";
+
 const { Option } = Select;
 
 const Login = () => {
-  // Hardcoded credentials for testing
-  const hardcodedCredentials = {
-    username: "admin",
-    password: "123456",
-  };
-
-  const [form, setForm] = useState({ username: "", password: "" });
-  const [errors, setErrors] = useState({ username: "", password: "" });
-  const [loading, setLoading] = useState(false);
-  const { t, i18n } = useTranslation(); // Import i18n for changing languages
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({ email: "", password: "" });
+  const [login, { isLoading }] = useLoginMutation(); // Hook for login mutation
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
-  // Set initial language from localStorage if available
   const [language, setLanguage] = useState(
     localStorage.getItem("lang") || "vi"
   );
 
   useEffect(() => {
-    // Update the language in i18n when the component loads
     i18n.changeLanguage(language);
   }, [language, i18n]);
 
@@ -37,10 +31,10 @@ const Login = () => {
 
   const validateForm = () => {
     let valid = true;
-    const newErrors = { username: "", password: "" };
+    const newErrors = { email: "", password: "" };
 
-    if (!form.username) {
-      newErrors.username = t("login.requireUS");
+    if (!form.email) {
+      newErrors.email = t("login.requireUS");
       valid = false;
     }
 
@@ -56,30 +50,24 @@ const Login = () => {
   const handleSubmit = async () => {
     if (!validateForm()) return;
 
-    setLoading(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await login(form).unwrap(); // Call the login API and unwrap the response
+      const { access_token, user } = response;
 
-      if (
-        form.username === hardcodedCredentials.username &&
-        form.password === hardcodedCredentials.password
-      ) {
-        message.success(t("login.login") + " " + t("login.success"));
-        navigate("/admin/dashboard");
-      } else {
-        message.error(t("login.invalid"));
-      }
+      // Store the token in localStorage
+      localStorage.setItem("access_token", access_token);
+
+      message.success(`${t("login.success")}! Welcome ${user.name}`);
+      navigate("/admin/dashboard");
     } catch (error) {
-      message.error(t("login.error"));
-    } finally {
-      setLoading(false);
+      message.error(error.data?.message || t("login.invalid"));
     }
   };
 
   const handleLanguageChange = (value) => {
-    setLanguage(value); // Update language state
-    localStorage.setItem("lang", value); // Store the language in localStorage
-    i18n.changeLanguage(value); // Change language in i18n
+    setLanguage(value);
+    localStorage.setItem("lang", value);
+    i18n.changeLanguage(value);
   };
 
   return (
@@ -104,7 +92,7 @@ const Login = () => {
         </Select>
       </div>
 
-      {loading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <div className="bg-white p-8 sm:p-10 md:p-12 rounded-xl shadow-xl w-full max-w-md sm:max-w-lg">
@@ -115,22 +103,22 @@ const Login = () => {
           <div className="mb-6">
             <label
               className="block text-gray-700 text-sm font-medium mb-2"
-              htmlFor="username"
+              htmlFor="email"
             >
-              {t("login.username")}
+              {t("login.email")}
             </label>
             <Input
-              id="username"
-              name="username"
-              value={form.username}
+              id="email"
+              name="email"
+              value={form.email}
               onChange={handleInputChange}
               placeholder={t("login.requireUS")}
               className={`border ${
-                errors.username ? "border-red-500" : "border-gray-300"
+                errors.email ? "border-red-500" : "border-gray-300"
               } rounded-lg px-5 py-3 w-full`}
             />
-            {errors.username && (
-              <p className="text-red-500 text-sm mt-1">{errors.username}</p>
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
             )}
           </div>
 

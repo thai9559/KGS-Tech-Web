@@ -13,7 +13,7 @@ const VerticalCarousel = lazy(() => import("../components/Carousel"));
 
 function Business() {
   const { t } = useTranslation();
-  const location = useLocation(); // Lấy thông tin URL
+  const location = useLocation();
   const [activeSection, setActiveSection] = useState("aboutUs");
 
   const testimonials = [
@@ -98,7 +98,7 @@ function Business() {
       const targetSection = document.getElementById(targetId);
       if (targetSection) {
         window.scrollTo({
-          top: targetSection.offsetTop - 50, // Điều chỉnh khoảng cách
+          top: targetSection.offsetTop - 50,
           behavior: "smooth",
         });
       }

@@ -25,8 +25,8 @@ const Footer = () => {
               <h3 className="text-xl font-bold mb-4">Product</h3>
               <ul>
                 <li>
-                  <a href="#" className="text-sm hover:underline">
-                    Features
+                  <a href="/admin/login" className="text-sm hover:underline">
+                    Admin
                   </a>
                 </li>
                 <li>

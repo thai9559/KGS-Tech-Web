@@ -55,7 +55,7 @@ function Contact() {
   };
 
   return (
-    <section className="text-center py-12 bg-primary text-white">
+    <section className="text-center py-12 bg-[#1ea0ff] text-white">
       <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-white">
         {t("BusinessPage.contact.title")}
       </h2>
@@ -65,7 +65,7 @@ function Contact() {
 
       <div className="flex flex-col lg:flex-row flex-wrap gap-12 justify-center items-center lg:items-start">
         {/* Left section: Reasons to contact */}
-        <div className="w-full sm:w-10/12 lg:w-5/12 p-4 sm:p-6 lg:p-8 mb-8 lg:mb-0 bg-primary">
+        <div className="w-full sm:w-10/12 lg:w-5/12 p-4 sm:p-6 lg:p-8 mb-8 lg:mb-0 bg-[#1ea0ff]">
           <h3 className="text-xl font-notoSansJP md:text-3xl lg:text-3xl font-semibold text-white mb-6">
             {t("BusinessPage.contact.reasonsTitle")}
           </h3>
@@ -187,7 +187,7 @@ function Contact() {
 
             <button
               type="submit"
-              className="w-full bg-primary text-white py-3 px-8 rounded-lg hover:bg-blue-700 transition duration-300 text-lg"
+              className="w-full bg-[#1ea0ff] text-white py-3 px-8 rounded-lg hover:bg-blue-700 transition duration-300 text-lg"
             >
               {t("BusinessPage.contact.submit")}
             </button>

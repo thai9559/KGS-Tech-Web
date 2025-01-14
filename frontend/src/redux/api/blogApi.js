@@ -5,12 +5,10 @@ export const blogApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://127.0.0.1:8000/api" }),
   tagTypes: ["Blog"],
   endpoints: (builder) => ({
-    // Lấy danh sách bài viết
     getBlogs: builder.query({
       query: () => "/blogs",
       providesTags: ["Blog"],
     }),
-    // Tạo bài viết mới
     createBlog: builder.mutation({
       query: (newBlog) => ({
         url: "/blogs",
@@ -19,7 +17,6 @@ export const blogApi = createApi({
       }),
       invalidatesTags: ["Blog"],
     }),
-    // Cập nhật bài viết
     updateBlog: builder.mutation({
       query: ({ id, ...updatedBlog }) => ({
         url: `/blogs/${id}`,
@@ -28,7 +25,6 @@ export const blogApi = createApi({
       }),
       invalidatesTags: ["Blog"],
     }),
-    // Xóa bài viết
     deleteBlog: builder.mutation({
       query: (id) => ({
         url: `/blogs/${id}`,

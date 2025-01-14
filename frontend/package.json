@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tinymce/tinymce-react": "^5.1.1",
     "antd": "^5.22.7",
     "aos": "^2.3.4",
     "autoprefixer": "^10.4.0",

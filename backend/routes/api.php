@@ -9,12 +9,19 @@ use App\Http\Controllers\UserPermissionController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BlogController;
-Route::get('users', [UserController::class, 'index']);
 
-Route::post('/register', [UserController::class, 'register']);
-Route::post('/login', [UserController::class, 'login']);
-Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
 
+
+Route::middleware([])->group(function () {
+    Route::get('/users', [UserController::class, 'index']); // Danh sách người dùng
+    Route::get('/users/{id}', [UserController::class, 'show']); // Xem chi tiết người dùng
+    Route::put('/users/{id}', [UserController::class, 'update']);
+
+    Route::delete('/users/{id}', [UserController::class, 'destroy']); // Xóa người dùng
+    Route::post('/register', [UserController::class, 'register']);
+    Route::post('/login', [UserController::class, 'login']);
+    Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
+});
 
 Route::middleware([])->group(function () {
     Route::get('/roles', [RoleController::class, 'index']);
@@ -45,6 +52,9 @@ Route::middleware([])->group(function () {
     Route::post('/company', [CompanyController::class, 'createCompany']); // Tạo công ty
     Route::put('/company', [CompanyController::class, 'updateCompany']); // Cập nhật công ty
     Route::delete('/company', [CompanyController::class, 'deleteCompany']); // Xóa công ty
+
+    
+    Route::delete('/company/logo', [CompanyController::class, 'deleteLogo']); // Xóa logo
 });
 
 

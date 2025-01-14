@@ -18,7 +18,7 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [isLoading, setIsLoading] = useState(false);
   const blogsPerPage = 8;
 
   // Lắng nghe sự thay đổi của hash trong URL và cập nhật searchTerm

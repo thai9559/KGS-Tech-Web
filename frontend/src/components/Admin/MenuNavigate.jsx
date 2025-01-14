@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import { Layout, Menu, Button, Tooltip } from "antd";
 import {
   HomeOutlined,
@@ -16,6 +16,7 @@ const { Sider, Content } = Layout;
 const MenuNavigate = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const location = useLocation(); // Lấy thông tin đường dẫn hiện tại
 
   useEffect(() => {
     const handleResize = () => {
@@ -32,12 +33,12 @@ const MenuNavigate = () => {
 
   const menuItems = [
     {
-      key: "dashboard",
+      key: "/admin/dashboard",
       icon: <HomeOutlined />,
       label: <Link to="/admin/dashboard">Dashboard</Link>,
     },
     {
-      key: "company",
+      key: "/admin/company",
       icon: <FileTextOutlined />,
       label: <Link to="/admin/company">Quản lý thông tin công ty</Link>,
     },
@@ -46,8 +47,11 @@ const MenuNavigate = () => {
       icon: <UserOutlined />,
       label: "Quản lý tài khoản",
       children: [
-        { key: "users", label: <Link to="/admin/users">Người dùng</Link> },
-        { key: "roles", label: <Link to="/admin/roles">Vai trò</Link> },
+        {
+          key: "/admin/users",
+          label: <Link to="/admin/users">Người dùng</Link>,
+        },
+        { key: "/admin/roles", label: <Link to="/admin/roles">Vai trò</Link> },
       ],
     },
     {
@@ -55,8 +59,14 @@ const MenuNavigate = () => {
       icon: <AppstoreAddOutlined />,
       label: "Quản lý Blog",
       children: [
-        { key: "blog-posts", label: <Link to="/admin/blog-posts">Bài viết</Link> },
-        { key: "categories", label: <Link to="/admin/categories">Danh mục</Link> },
+        {
+          key: "/admin/blog-posts",
+          label: <Link to="/admin/blog-posts">Bài viết</Link>,
+        },
+        {
+          key: "/admin/categories",
+          label: <Link to="/admin/categories">Danh mục</Link>,
+        },
       ],
     },
     {
@@ -64,16 +74,28 @@ const MenuNavigate = () => {
       icon: <SettingOutlined />,
       label: "Cài đặt",
       children: [
-        { key: "general-settings", label: <Link to="/admin/general-settings">Cài đặt chung</Link> },
-        { key: "branch-settings", label: <Link to="/admin/branch-settings">Cài đặt chi nhánh</Link> },
+        {
+          key: "/admin/general-settings",
+          label: <Link to="/admin/general-settings">Cài đặt chung</Link>,
+        },
+        {
+          key: "/admin/branch-settings",
+          label: <Link to="/admin/branch-settings">Cài đặt chi nhánh</Link>,
+        },
       ],
     },
     {
-      key: "team",
+      key: "/admin/team",
       icon: <TeamOutlined />,
       label: <Link to="/admin/team">Quản lý đội ngũ</Link>,
     },
   ];
+
+  // Xác định `defaultOpenKeys` và `selectedKeys`
+  const selectedKey = location.pathname; // Đường dẫn hiện tại
+  const defaultOpenKeys = menuItems
+    .filter((item) => item.children?.some((child) => child.key === selectedKey))
+    .map((item) => item.key); // Mở menu cha nếu có mục con được chọn
 
   const handleLogout = () => {
     console.log("User logged out");
@@ -114,8 +136,9 @@ const MenuNavigate = () => {
           theme="dark"
           mode="inline"
           items={menuItems}
-          defaultOpenKeys={["dashboard"]}
-          style={{ flex: 1, overflowY: "auto" }} // Menu có thể cuộn
+          selectedKeys={[selectedKey]} // Đánh dấu mục menu hiện tại
+          defaultOpenKeys={defaultOpenKeys} // Mở menu cha chứa mục con
+          style={{ flex: 1, overflowY: "auto" }}
         />
 
         {/* Logout Button */}

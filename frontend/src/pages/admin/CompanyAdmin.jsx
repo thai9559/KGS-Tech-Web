@@ -7,126 +7,185 @@ import {
   Button,
   Select,
   Typography,
-  Space,
   message,
+  Upload,
 } from "antd";
 import {
   EditOutlined,
   SaveOutlined,
   PlusOutlined,
   DeleteOutlined,
+  UploadOutlined,
 } from "@ant-design/icons";
 import {
-  FacebookOutlined,
-  TwitterOutlined,
-  YoutubeOutlined,
-  InstagramOutlined,
-  LinkedinOutlined,
-} from "@ant-design/icons";
+  useGetCompanyQuery,
+  useUpdateCompanyMutation,
+  useDeleteLogoMutation,
+} from "../../redux/api/CompanyApi";
 
 const { Title } = Typography;
 const { Option } = Select;
 
 const SOCIAL_OPTIONS = [
-  { key: "facebook", label: "Facebook", icon: <FacebookOutlined /> },
-  { key: "twitter", label: "Twitter", icon: <TwitterOutlined /> },
-  { key: "youtube", label: "YouTube", icon: <YoutubeOutlined /> },
-  { key: "instagram", label: "Instagram", icon: <InstagramOutlined /> },
-  { key: "linkedin", label: "LinkedIn", icon: <LinkedinOutlined /> },
+  { key: "facebook", label: "Facebook" },
+  { key: "twitter", label: "Twitter" },
+  { key: "youtube", label: "YouTube" },
+  { key: "instagram", label: "Instagram" },
+  { key: "linkedin", label: "LinkedIn" },
 ];
 
 const CompanyAdmin = () => {
-  const [company, setCompany] = useState(null); // Thông tin công ty
-  const [editingField, setEditingField] = useState(null); // Mục đang chỉnh sửa
-  const [tempData, setTempData] = useState({}); // Dữ liệu tạm thời khi chỉnh sửa
-  const [newSocial, setNewSocial] = useState(""); // Mạng xã hội mới được chọn
+  const { data: companyData, isLoading } = useGetCompanyQuery();
+  const [updateCompany] = useUpdateCompanyMutation();
+  const [deleteLogo] = useDeleteLogoMutation();
 
-  // Giả lập API fetch thông tin công ty
-  const fetchCompany = () => {
-    setTimeout(() => {
-      setCompany({
-        name: "Công ty TNHH ABC",
-        email: "contact@abccompany.com",
-        phone: "0123456789",
-        address: "123 Đường ABC, Quận 1, TP.HCM",
-        website: "https://abccompany.com",
-        social_links: [
-          { key: "facebook", url: "https://facebook.com/abccompany" },
-          { key: "twitter", url: "https://twitter.com/abccompany" },
-        ],
-      });
-      setTempData({
-        name: "Công ty TNHH ABC",
-        email: "contact@abccompany.com",
-        phone: "0123456789",
-        address: "123 Đường ABC, Quận 1, TP.HCM",
-        website: "https://abccompany.com",
-        social_links: [
-          { key: "facebook", url: "https://facebook.com/abccompany" },
-          { key: "twitter", url: "https://twitter.com/abccompany" },
-        ],
-      });
-    }, 500);
-  };
+  const [tempData, setTempData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    website: "",
+    description: "",
+    logo: null,
+    social_links: [],
+  });
+  const [isDirty, setIsDirty] = useState(false); // Trạng thái theo dõi thay đổi
+  const [editingField, setEditingField] = useState(null);
+  const [newSocial, setNewSocial] = useState("");
 
   useEffect(() => {
-    fetchCompany();
-  }, []);
+    if (companyData?.success) {
+      const company = companyData.data;
 
-  // Bắt đầu chỉnh sửa một mục
+      const socialLinksArray = company.social_links
+        ? Object.entries(company.social_links).map(([key, url]) => ({
+            key,
+            url,
+          }))
+        : [];
+
+      setTempData({
+        ...company,
+        social_links: socialLinksArray,
+      });
+    }
+  }, [companyData]);
+
+  useEffect(() => {
+    if (companyData?.success) {
+      const company = companyData.data;
+
+      // Kiểm tra nếu `social_links` hoặc các trường khác thay đổi
+      const socialLinksChanged =
+        JSON.stringify(
+          tempData.social_links.reduce((acc, { key, url }) => {
+            acc[key] = url;
+            return acc;
+          }, {})
+        ) !== JSON.stringify(company.social_links || {});
+
+      const otherFieldsChanged =
+        tempData.name !== company.name ||
+        tempData.email !== company.email ||
+        tempData.phone !== company.phone ||
+        tempData.address !== company.address ||
+        tempData.website !== company.website ||
+        tempData.description !== company.description ||
+        tempData.logo !== company.logo;
+
+      setIsDirty(socialLinksChanged || otherFieldsChanged);
+    }
+  }, [tempData, companyData]);
+
   const startEditing = (field) => {
     setEditingField(field);
   };
 
-  // Lưu chỉnh sửa vào tempData
   const handleInputChange = (field, value) => {
-    setTempData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+    setTempData((prev) => ({ ...prev, [field]: value }));
   };
 
-  // Lưu toàn bộ thay đổi
-  const saveChanges = () => {
-    setCompany(tempData); // Cập nhật thông tin hiển thị
-    message.success("Thông tin công ty đã được lưu!");
-    setEditingField(null);
+  const saveChanges = async () => {
+    try {
+      const updatedSocialLinks = tempData.social_links.reduce(
+        (acc, { key, url }) => {
+          acc[key] = url;
+          return acc;
+        },
+        {}
+      );
+
+      const payload = {
+        name: tempData.name,
+        email: tempData.email,
+        phone: tempData.phone,
+        address: tempData.address,
+        website: tempData.website,
+        description: tempData.description,
+        social_links: updatedSocialLinks,
+      };
+
+      if (tempData.logo instanceof File) {
+        const formData = new FormData();
+        Object.keys(payload).forEach((key) => {
+          if (key === "social_links") {
+            formData.append(key, JSON.stringify(payload[key]));
+          } else {
+            formData.append(key, payload[key]);
+          }
+        });
+        formData.append("logo", tempData.logo);
+        await updateCompany(formData).unwrap();
+      } else {
+        await updateCompany(payload).unwrap();
+      }
+
+      message.success("Thông tin công ty đã được lưu!");
+      setIsDirty(false);
+    } catch (error) {
+      message.error("Lưu thông tin thất bại!");
+    }
   };
 
-  // Thêm mạng xã hội mới
   const handleAddSocial = () => {
-    if (
-      newSocial &&
-      !tempData.social_links.find((s) => s.key === newSocial)
-    ) {
+    if (newSocial && !tempData.social_links.some((s) => s.key === newSocial)) {
       setTempData((prev) => ({
         ...prev,
         social_links: [...prev.social_links, { key: newSocial, url: "" }],
       }));
-      setNewSocial(""); // Reset lựa chọn
+      setNewSocial("");
     } else {
       message.warning("Mạng xã hội này đã được thêm hoặc chưa được chọn!");
     }
   };
 
-  // Cập nhật URL mạng xã hội
-  const handleSocialChange = (index, value) => {
-    const updatedLinks = [...tempData.social_links];
-    updatedLinks[index].url = value;
-    setTempData((prev) => ({
-      ...prev,
-      social_links: updatedLinks,
-    }));
-  };
-
-  // Xóa mạng xã hội
   const handleDeleteSocial = (index) => {
     const updatedLinks = [...tempData.social_links];
     updatedLinks.splice(index, 1);
-    setTempData((prev) => ({
-      ...prev,
-      social_links: updatedLinks,
-    }));
+    setTempData((prev) => ({ ...prev, social_links: updatedLinks }));
+  };
+
+  const handleDeleteLogo = async () => {
+    try {
+      await deleteLogo().unwrap();
+      setTempData((prev) => ({ ...prev, logo: null }));
+      message.success("Logo đã được xóa!");
+    } catch (error) {
+      message.error("Xóa logo thất bại!");
+    }
+  };
+
+  const handleUploadLogo = async ({ file }) => {
+    const formData = new FormData();
+    formData.append("logo", file);
+
+    try {
+      const response = await updateCompany(formData).unwrap();
+      setTempData((prev) => ({ ...prev, logo: response.logo }));
+      message.success("Logo đã được cập nhật!");
+    } catch (error) {
+      message.error("Tải lên logo thất bại!");
+    }
   };
 
   const renderField = (label, field) => (
@@ -141,7 +200,7 @@ const CompanyAdmin = () => {
             onChange={(e) => handleInputChange(field, e.target.value)}
           />
         ) : (
-          <span>{company && company[field]}</span>
+          <span>{tempData[field]}</span>
         )}
       </Col>
       <Col xs={24} md={6} style={{ textAlign: "right" }}>
@@ -164,21 +223,59 @@ const CompanyAdmin = () => {
           type="primary"
           icon={<SaveOutlined />}
           onClick={saveChanges}
-          disabled={!editingField}
+          disabled={!isDirty}
         >
           Lưu thay đổi
         </Button>
       }
     >
-      {company ? (
+      {isLoading ? (
+        <p>Đang tải thông tin công ty...</p>
+      ) : (
         <>
           {renderField("Tên công ty", "name")}
           {renderField("Email", "email")}
           {renderField("Số điện thoại", "phone")}
           {renderField("Địa chỉ", "address")}
           {renderField("Website", "website")}
+          {renderField("Mô tả", "description")}
 
-          {/* Mạng xã hội */}
+          <Row gutter={[16, 16]} align="middle" style={{ marginBottom: 16 }}>
+            <Col xs={24} md={6}>
+              <strong>Logo</strong>
+            </Col>
+            <Col xs={24} md={12}>
+              {tempData.logo ? (
+                <img
+                  src={tempData.logo}
+                  alt="Company Logo"
+                  style={{ maxHeight: "100px", maxWidth: "100px" }}
+                />
+              ) : (
+                <p>Chưa có logo</p>
+              )}
+            </Col>
+            <Col xs={24} md={6} style={{ textAlign: "right" }}>
+              <Upload
+                accept="image/*"
+                customRequest={handleUploadLogo}
+                showUploadList={false}
+              >
+                <Button icon={<UploadOutlined />}>Tải lên Logo</Button>
+              </Upload>
+              {tempData.logo && (
+                <Button
+                  type="text"
+                  danger
+                  icon={<DeleteOutlined />}
+                  onClick={handleDeleteLogo}
+                >
+                  Xóa Logo
+                </Button>
+              )}
+            </Col>
+          </Row>
+
           <Row>
             <Col span={24}>
               <Title level={5}>Mạng Xã Hội</Title>
@@ -189,22 +286,25 @@ const CompanyAdmin = () => {
               key={social.key}
               gutter={[16, 16]}
               align="middle"
-              style={{ marginBottom: 16 }}
+              style={{ marginBottom: "16px" }}
             >
               <Col xs={24} md={6}>
-                {SOCIAL_OPTIONS.find((s) => s.key === social.key)?.icon}{" "}
-                <strong>
-                  {SOCIAL_OPTIONS.find((s) => s.key === social.key)?.label}
-                </strong>
+                {SOCIAL_OPTIONS.find((s) => s.key === social.key)?.label}
               </Col>
               <Col xs={24} md={12}>
                 <Input
-                  placeholder="Nhập liên kết"
                   value={social.url}
-                  onChange={(e) => handleSocialChange(index, e.target.value)}
+                  onChange={(e) => {
+                    const updatedLinks = [...tempData.social_links];
+                    updatedLinks[index].url = e.target.value;
+                    setTempData((prev) => ({
+                      ...prev,
+                      social_links: updatedLinks,
+                    }));
+                  }}
                 />
               </Col>
-              <Col xs={24} md={6} style={{ textAlign: "right" }}>
+              <Col xs={24} md={6}>
                 <Button
                   type="text"
                   danger
@@ -227,10 +327,12 @@ const CompanyAdmin = () => {
               >
                 {SOCIAL_OPTIONS.filter(
                   (option) =>
-                    !tempData.social_links.some((social) => social.key === option.key)
+                    !tempData.social_links.some(
+                      (social) => social.key === option.key
+                    )
                 ).map((option) => (
                   <Option key={option.key} value={option.key}>
-                    {option.icon} {option.label}
+                    {option.label}
                   </Option>
                 ))}
               </Select>
@@ -247,8 +349,6 @@ const CompanyAdmin = () => {
             </Col>
           </Row>
         </>
-      ) : (
-        <p>Đang tải thông tin công ty...</p>
       )}
     </Card>
   );

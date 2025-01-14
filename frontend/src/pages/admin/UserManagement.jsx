@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Table,
   Button,
@@ -10,51 +10,40 @@ import {
   message,
   Popconfirm,
 } from "antd";
+import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import {
-  EditOutlined,
-  DeleteOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
-import axios from "axios";
+  useGetUsersQuery,
+  useCreateUserMutation,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
+} from "../../redux/api/userApi";
 
 const UserManagement = () => {
-  const [users, setUsers] = useState([]); // Danh sách người dùng
-  const [loading, setLoading] = useState(false); // Trạng thái loading
+  const { data: users = [], isLoading } = useGetUsersQuery(); // Lấy danh sách người dùng
+  const [createUser] = useCreateUserMutation(); // Thêm người dùng mới
+  const [updateUser] = useUpdateUserMutation(); // Cập nhật người dùng
+  const [deleteUser] = useDeleteUserMutation(); // Xóa người dùng
+
   const [isModalOpen, setIsModalOpen] = useState(false); // Hiển thị modal
   const [isEditing, setIsEditing] = useState(false); // Chế độ chỉnh sửa
   const [currentUser, setCurrentUser] = useState(null); // Người dùng hiện tại
 
   const [form] = Form.useForm();
 
-  // Lấy danh sách người dùng từ API
-  const fetchUsers = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get("/api/users");
-      const data = Array.isArray(response.data) ? response.data : []; // Đảm bảo dữ liệu là mảng
-      setUsers(data);
-    } catch (error) {
-      message.error("Không thể lấy danh sách người dùng!");
-      setUsers([]); // Đặt về mảng rỗng nếu lỗi
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Xử lý thêm/sửa người dùng
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
+      const userData = {
+        ...values,
+        password_confirmation: values.password, // Đảm bảo gửi cả password_confirmation
+      };
       if (isEditing) {
-        // Chỉnh sửa người dùng
-        await axios.put(`/api/users/${currentUser.id}`, values);
+        await updateUser({ id: currentUser.id, ...userData });
         message.success("Người dùng đã được cập nhật!");
       } else {
-        // Thêm người dùng mới
-        await axios.post("/api/users", values);
+        await createUser(userData); // Gọi API /register
         message.success("Người dùng mới đã được thêm!");
       }
-      fetchUsers();
       setIsModalOpen(false);
       form.resetFields();
     } catch (error) {
@@ -65,9 +54,8 @@ const UserManagement = () => {
   // Xử lý xóa người dùng
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/users/${id}`);
+      await deleteUser(id);
       message.success("Người dùng đã được xóa!");
-      fetchUsers();
     } catch (error) {
       message.error("Không thể xóa người dùng!");
     }
@@ -91,10 +79,6 @@ const UserManagement = () => {
     setCurrentUser(null);
     form.resetFields();
   };
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
 
   // Cột cho bảng
   const columns = [
@@ -167,14 +151,14 @@ const UserManagement = () => {
       <Table
         columns={columns}
         dataSource={users} // Phải là một mảng
-        loading={loading}
+        loading={isLoading}
         rowKey="id" // `id` là khóa duy nhất cho mỗi bản ghi
       />
 
       {/* Modal thêm/sửa */}
       <Modal
         title={isEditing ? "Chỉnh sửa Người Dùng" : "Thêm Người Dùng"}
-        open={isModalOpen} // Sửa từ `visible` thành `open`
+        open={isModalOpen}
         onOk={handleOk}
         onCancel={closeModal}
         okText={isEditing ? "Cập nhật" : "Thêm"}
@@ -214,7 +198,10 @@ const UserManagement = () => {
             label="Số điện thoại"
             name="phone"
             rules={[
-              { pattern: /^[0-9]{9,15}$/, message: "Số điện thoại không hợp lệ!" },
+              {
+                pattern: /^[0-9]{9,15}$/,
+                message: "Số điện thoại không hợp lệ!",
+              },
             ]}
           >
             <Input />

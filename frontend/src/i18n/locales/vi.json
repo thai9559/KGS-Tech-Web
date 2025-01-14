@@ -78,10 +78,8 @@
     "search": {
       "placeholder": "Tìm kiếm bài viết..."
     },
-
     "previous": "Trước",
     "next": "Tiếp theo",
-
     "filter": {
       "category": "Chọn chủ đề",
       "time": "Chọn mốc thời gian",
@@ -223,6 +221,7 @@
   "login": {
     "username": "Tên người dùng",
     "password": "Mật khẩu",
+    "email": "Email",
     "login": "Đăng nhập",
     "requireUS": "Nhập tên người dùng của bạn",
     "requirePW": "Nhập mật khẩu của bạn",
@@ -231,11 +230,14 @@
     "success": "Đăng nhập thành công!"
   },
   "dashboard": {
-    "company_info": "Quản lý thông tin công ty",
-    "account_management": "Quản lý tài khoản và quyền",
-    "blog_management": "Quản lý blog",
-    "company_info_desc": "Cập nhật các thông tin cơ bản của công ty.",
-    "account_management_desc": "Thiết lập quyền và tài khoản người dùng.",
-    "blog_management_desc": "Quản lý các bài đăng và nội dung blog."
+    "company_info": "Thông Tin Công Ty",
+    "account_management": "Quản Lý Tài Khoản",
+    "blog_management": "Quản Lý Blog",
+    "company_info_desc": "Cập nhật thông tin cơ bản của công ty.",
+    "account_management_desc": "Thiết lập tài khoản và quyền cho người dùng.",
+    "blog_management_desc": "Quản lý bài viết và nội dung blog.",
+    "logout": "Đăng Xuất",
+    "logout_success": "Bạn đã đăng xuất thành công.",
+    "logout_error": "Có lỗi xảy ra khi đăng xuất. Vui lòng thử lại."
   }
 }

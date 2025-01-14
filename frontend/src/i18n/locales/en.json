@@ -80,7 +80,6 @@
     },
     "previous": "Previous",
     "next": "Next",
-
     "filter": {
       "category": "Select category",
       "time": "Select time frame",
@@ -220,10 +219,10 @@
     "title": "Mission",
     "description": "Our mission is to provide innovative solutions that help businesses grow in the digital era. We are committed to providing products and services that not only meet current needs but also help customers lead the industry."
   },
-
   "login": {
     "username": "Username",
     "password": "Password",
+    "email": "Email",
     "login": "Login",
     "requireUS": "Enter your username",
     "requirePW": "Enter your password",
@@ -237,6 +236,9 @@
     "blog_management": "Blog Management",
     "company_info_desc": "Update the basic information of the company.",
     "account_management_desc": "Set up user accounts and permissions.",
-    "blog_management_desc": "Manage blog posts and content."
+    "blog_management_desc": "Manage blog posts and content.",
+    "logout": "Logout",
+    "logout_success": "You have successfully logged out.",
+    "logout_error": "An error occurred during logout. Please try again."
   }
 }
