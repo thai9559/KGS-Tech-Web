@@ -6,4 +6,5 @@ const LOGIN = `${LOCAL}/admin/login`;
 const COMPANYADMIN = `${LOCAL}/admin/company`;
 const USERADMIN = `${LOCAL}/admin/user`;
 const BLOGADMIN = `${LOCAL}/admin/bloglist`;
-export { LOCAL, API_BASE_URL, LOGIN, COMPANYADMIN, USERADMIN, BLOGADMIN };
+const CREATEBLOG = `${LOCAL}/admin/blog/create-blog`;
+export { LOCAL, API_BASE_URL, LOGIN, COMPANYADMIN, USERADMIN, BLOGADMIN,CREATEBLOG };

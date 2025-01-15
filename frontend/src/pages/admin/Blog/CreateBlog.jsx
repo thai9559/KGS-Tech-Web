@@ -115,22 +115,25 @@ const CreateBlog = () => {
           {/* Nội dung bài viết */}
           <Form.Item label="Nội Dung" required>
             <Editor
-              apiKey="9dsiwvmjoqjrozos58bg410o56uilmv29czcut6wjykwcvc1" // Thay bằng API key hợp lệ
+              apiKey="9dsiwvmjoqjrozos58bg410o56uilmv29czcut6wjykwcvc1" // Thay bằng API key TinyMCE hợp lệ
               value={content}
               init={{
-                height: 400,
+                height: 500,
                 menubar: true,
                 plugins: [
                   "advlist autolink lists link image charmap print preview anchor",
                   "searchreplace visualblocks code fullscreen",
                   "insertdatetime media table paste code help wordcount",
+                  "image imagetools",
                 ],
                 toolbar:
                   "undo redo | formatselect | bold italic backcolor | \
-                  alignleft aligncenter alignright alignjustify | \
-                  bullist numlist outdent indent | removeformat | help",
+      alignleft aligncenter alignright alignjustify | \
+      bullist numlist outdent indent | removeformat | help | image",
+                paste_data_images: true, // Cho phép dán ảnh dưới dạng Base64
+                images_dataimg_filter: (img) => true, // Bật tính năng nhúng ảnh Base64
               }}
-              onEditorChange={handleEditorChange}
+              onEditorChange={(value) => setContent(value)}
             />
           </Form.Item>
 
