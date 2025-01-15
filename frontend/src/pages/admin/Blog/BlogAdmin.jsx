@@ -1,16 +1,16 @@
 import React from "react";
 import { Table, Button, Space, Popconfirm, message } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   useGetBlogsQuery,
   useDeleteBlogMutation,
-} from "../../redux/api/blogApi";
+} from "../../../redux/api/blogApi";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { BLOGADMIN, CREATEBLOG } from "../../../utils/config"; // Import đường dẫn từ config
 
 const BlogTable = () => {
   const { data: blogsData, isLoading } = useGetBlogsQuery();
   const [deleteBlog] = useDeleteBlogMutation();
-  const navigate = useNavigate();
 
   const handleDelete = async (id) => {
     try {
@@ -73,13 +73,11 @@ const BlogTable = () => {
       key: "actions",
       render: (_, record) => (
         <Space>
-          <Button
-            type="primary"
-            icon={<EditOutlined />}
-            onClick={() => handleEdit(record)}
-          >
-            Sửa
-          </Button>
+          <Link to={`${BLOGADMIN}/edit/${record.id}`}>
+            <Button type="primary" icon={<EditOutlined />}>
+              Sửa
+            </Button>
+          </Link>
           <Popconfirm
             title="Bạn có chắc chắn muốn xóa bài viết này không?"
             onConfirm={() => handleDelete(record.id)}
@@ -95,25 +93,15 @@ const BlogTable = () => {
     },
   ];
 
-  const handleEdit = (record) => {
-    navigate(`/blogs/edit/${record.id}`); // Điều hướng tới trang sửa blog
-  };
-
-  const handleCreateBlog = () => {
-    navigate("/blogs/create"); // Điều hướng tới trang tạo blog
-  };
-
   return (
     <div className="p-4">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Quản lý Blogs</h1>
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          onClick={handleCreateBlog}
-        >
-          Tạo Blog
-        </Button>
+        <Link to={CREATEBLOG}>
+          <Button type="primary" icon={<PlusOutlined />}>
+            Tạo Blog
+          </Button>
+        </Link>
       </div>
       <Table
         columns={columns}

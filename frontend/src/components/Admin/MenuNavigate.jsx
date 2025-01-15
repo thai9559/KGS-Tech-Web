@@ -10,6 +10,7 @@ import {
   SettingOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
+import { LOGIN } from "../../utils/config";
 
 const { Sider, Content } = Layout;
 
@@ -51,7 +52,10 @@ const MenuNavigate = () => {
           key: "/admin/users",
           label: <Link to="/admin/users">Người dùng</Link>,
         },
-        { key: "/admin/roles", label: <Link to="/admin/roles">Vai trò</Link> },
+        {
+          key: "/admin/users/roles",
+          label: <Link to="/admin/users/roles">Vai trò</Link>,
+        },
       ],
     },
     {
@@ -60,12 +64,12 @@ const MenuNavigate = () => {
       label: "Quản lý Blog",
       children: [
         {
-          key: "/admin/blog-posts",
-          label: <Link to="/admin/blog-posts">Bài viết</Link>,
+          key: "/admin/bloglist",
+          label: <Link to="/admin/bloglist">Bài viết</Link>,
         },
         {
-          key: "/admin/categories",
-          label: <Link to="/admin/categories">Danh mục</Link>,
+          key: "admin/blog/categories",
+          label: <Link to="/admin/blog/categories">Danh mục</Link>,
         },
       ],
     },
@@ -91,14 +95,17 @@ const MenuNavigate = () => {
     },
   ];
 
-  // Xác định `defaultOpenKeys` và `selectedKeys`
-  const selectedKey = location.pathname; // Đường dẫn hiện tại
+  // Xác định key của menu đang được chọn
+  const selectedKey = location.pathname;
+
+  // Xác định menu cha cần mở dựa trên key đang được chọn
   const defaultOpenKeys = menuItems
     .filter((item) => item.children?.some((child) => child.key === selectedKey))
-    .map((item) => item.key); // Mở menu cha nếu có mục con được chọn
+    .map((item) => item.key);
 
   const handleLogout = () => {
-    console.log("User logged out");
+    // Xóa access_token và điều hướng về trang đăng nhập
+    localStorage.removeItem("access_token");
   };
 
   return (
@@ -145,24 +152,26 @@ const MenuNavigate = () => {
         <div style={{ padding: "16px", textAlign: "center" }}>
           {collapsed ? (
             <Tooltip title="Logout">
+              <Link to="/admin/login" onClick={handleLogout}>
+                <Button
+                  type="primary"
+                  danger
+                  icon={<LogoutOutlined />}
+                  shape="circle"
+                />
+              </Link>
+            </Tooltip>
+          ) : (
+            <Link to="/admin/login" onClick={handleLogout}>
               <Button
                 type="primary"
                 danger
                 icon={<LogoutOutlined />}
-                shape="circle"
-                onClick={handleLogout}
-              />
-            </Tooltip>
-          ) : (
-            <Button
-              type="primary"
-              danger
-              icon={<LogoutOutlined />}
-              onClick={handleLogout}
-              style={{ width: "100%" }}
-            >
-              Logout
-            </Button>
+                style={{ width: "100%" }}
+              >
+                Logout
+              </Button>
+            </Link>
           )}
         </div>
       </Sider>

@@ -21,7 +21,7 @@ import {
   useGetCompanyQuery,
   useUpdateCompanyMutation,
   useDeleteLogoMutation,
-} from "../../redux/api/CompanyApi";
+} from "../../../redux/api/CompanyApi";
 
 const { Title } = Typography;
 const { Option } = Select;

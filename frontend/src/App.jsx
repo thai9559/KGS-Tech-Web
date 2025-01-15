@@ -15,11 +15,16 @@ const Blog = lazy(() => import("./pages/Blog"));
 const BlogDetailPage = lazy(() => import("./pages/BlogDetailPage"));
 const Login = lazy(() => import("./pages/admin/Login"));
 const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
-const CompanyAdmin = lazy(() => import("./pages/admin/CompanyAdmin"));
+const CompanyAdmin = lazy(() => import("./pages/admin/Company/CompanyAdmin"));
 const Menu = lazy(() => import("./components/Admin/MenuNavigate"));
-const UserManagement = lazy(() => import("./pages/admin/UserManagement"));
-const BlogAdmin = lazy(() => import("./pages/admin/BlogAdmin"));
-const TestBlog = lazy(() => import("./pages/admin/CreateBlog"));
+const UserManagement = lazy(() => import("./pages/admin/Users/UserManagement"));
+const BlogAdmin = lazy(() => import("./pages/admin/Blog/BlogAdmin"));
+const RoleAdmin = lazy(() => import("./pages/admin/Users/RoleManagement"));
+const CategoryAdmin = lazy(() =>
+  import("./pages/admin/Category/CategoryManagement")
+);
+
+const TestBlog = lazy(() => import("./pages/admin/Blog/CreateBlog"));
 
 function App() {
   return (
@@ -69,10 +74,18 @@ function App() {
               }
             />
             <Route
-              path="create-blog"
+              path="blog/create-blog"
               element={
                 <PrivateRoute>
                   <TestBlog />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="blog/categories"
+              element={
+                <PrivateRoute>
+                  <CategoryAdmin />
                 </PrivateRoute>
               }
             />
@@ -81,6 +94,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <UserManagement />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="users/roles"
+              element={
+                <PrivateRoute>
+                  <RoleAdmin />
                 </PrivateRoute>
               }
             />
