@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Layout, Row, Col, Form, Input, Button, Select, message } from "antd";
 import { Editor } from "@tinymce/tinymce-react";
-import { useCreateBlogMutation } from "../../redux/api/blogApi";
 
+import { useCreateBlogMutation } from "../../../redux/api/blogApi";
 const { Header, Content, Footer } = Layout;
 const { Option } = Select;
 

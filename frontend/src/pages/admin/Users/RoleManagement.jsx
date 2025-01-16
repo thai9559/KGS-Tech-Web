@@ -18,10 +18,13 @@ import {
 } from "../../../redux/api/roleApi";
 
 const RoleManagement = () => {
-  const { data: roles = [], isLoading } = useGetRolesQuery();
+  const { data: rolesData, isLoading, error } = useGetRolesQuery();
   const [createRole] = useCreateRoleMutation();
   const [updateRole] = useUpdateRoleMutation();
   const [deleteRole] = useDeleteRoleMutation();
+
+  // Xử lý dữ liệu roles
+  const roles = Array.isArray(rolesData?.data) ? rolesData.data : [];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -58,6 +61,7 @@ const RoleManagement = () => {
       }
       closeModal();
     } catch (error) {
+      console.error("Error handling form submission:", error);
       message.error("Có lỗi xảy ra!");
     }
   };
@@ -67,6 +71,7 @@ const RoleManagement = () => {
       await deleteRole(id);
       message.success("Vai trò đã được xóa!");
     } catch (error) {
+      console.error("Error deleting role:", error);
       message.error("Không thể xóa vai trò!");
     }
   };
@@ -113,6 +118,12 @@ const RoleManagement = () => {
       ),
     },
   ];
+
+  // Xử lý lỗi từ API
+  if (error) {
+    console.error("Error fetching roles:", error);
+    message.error("Không thể tải danh sách vai trò. Vui lòng thử lại sau.");
+  }
 
   return (
     <div>

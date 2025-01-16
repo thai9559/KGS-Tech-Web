@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://127.0.0.1:8000/api" }),
+
   tagTypes: ["User", "Role", "Permission"],
   endpoints: (builder) => ({
     // Lấy danh sách người dùng
@@ -20,7 +21,7 @@ export const userApi = createApi({
       query: (newUser) => ({
         url: "/register",
         method: "POST",
-        body: newUser,
+        body: newUser, // Bao gồm role_id
       }),
       invalidatesTags: ["User"],
     }),
@@ -29,7 +30,7 @@ export const userApi = createApi({
       query: ({ id, ...updatedUser }) => ({
         url: `/users/${id}`,
         method: "PUT",
-        body: updatedUser,
+        body: updatedUser, // Bao gồm role_id
       }),
       invalidatesTags: ["User"],
     }),
@@ -44,48 +45,81 @@ export const userApi = createApi({
     // Lấy danh sách vai trò
     getRoles: builder.query({
       query: () => "/roles",
+      transformResponse: (response) => response.data,
       providesTags: ["Role"],
+    }),
+
+    getAllPermissions: builder.query({
+      query: () => "/permissions",
+      transformResponse: (response) => response.data,
+      providesTags: ["Permission"],
     }),
     // Lấy danh sách quyền
     getPermissions: builder.query({
-      query: () => "/permissions",
+      query: (userId) => `/user/${userId}/permissions`,
       providesTags: ["Permission"],
-    }),
-    // Gán vai trò cho người dùng
-    assignRole: builder.mutation({
-      query: (data) => ({
-        url: "/user-role/assign",
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["User"],
-    }),
-    // Xóa vai trò khỏi người dùng
-    removeRole: builder.mutation({
-      query: (data) => ({
-        url: "/user-role/remove",
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["User"],
     }),
     // Gán quyền cho người dùng
     assignPermissions: builder.mutation({
+      query: (data) => {
+        console.log("Dữ liệu gửi đi (assignPermissions) trong query:", data); // Log dữ liệu trong query
+
+        return {
+          url: "/user/assign-permissions",
+          method: "POST",
+          body: data,
+          headers: {
+            "Content-Type": "application/json", // Thêm Content-Type nếu cần
+          },
+        };
+      },
+      invalidatesTags: ["User"],
+    }),
+
+    // Xóa quyền khỏi người dùng
+    removePermissions: builder.mutation({
       query: (data) => ({
-        url: "/user-permission/assign",
+        url: "/user/remove-permissions",
         method: "POST",
         body: data,
       }),
       invalidatesTags: ["User"],
     }),
-    // Xóa quyền khỏi người dùng
-    removePermissions: builder.mutation({
-      query: (data) => ({
-        url: "/user-permission/remove",
+    getRoles: builder.query({
+      query: () => "/roles",
+      transformResponse: (response) => response.data,
+      providesTags: ["Role"],
+    }),
+    // Lấy chi tiết vai trò
+    getRole: builder.query({
+      query: (id) => `/roles/${id}`,
+      providesTags: (result, error, id) => [{ type: "Role", id }],
+    }),
+    // Tạo vai trò mới
+    createRole: builder.mutation({
+      query: (newRole) => ({
+        url: "/roles",
         method: "POST",
-        body: data,
+        body: newRole,
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["Role"],
+    }),
+    // Cập nhật vai trò
+    updateRole: builder.mutation({
+      query: ({ id, ...updatedRole }) => ({
+        url: `/roles/${id}`,
+        method: "PUT",
+        body: updatedRole,
+      }),
+      invalidatesTags: ["Role"],
+    }),
+    // Xóa vai trò
+    deleteRole: builder.mutation({
+      query: (id) => ({
+        url: `/roles/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Role"],
     }),
   }),
 });
@@ -97,9 +131,12 @@ export const {
   useUpdateUserMutation,
   useDeleteUserMutation,
   useGetRolesQuery,
+  useGetAllPermissionsQuery,
   useGetPermissionsQuery,
-  useAssignRoleMutation,
-  useRemoveRoleMutation,
   useAssignPermissionsMutation,
   useRemovePermissionsMutation,
+  useGetRoleQuery,
+  useCreateRoleMutation,
+  useUpdateRoleMutation,
+  useDeleteRoleMutation,
 } = userApi;

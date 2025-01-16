@@ -9,7 +9,7 @@ class Company extends Model
 {
     use HasFactory;
 
-    protected $table = 'company'; // Khai báo tên bảng
+    protected $table = 'company'; // Tên bảng
 
     protected $fillable = [
         'name',
@@ -24,7 +24,7 @@ class Company extends Model
     ];
 
     protected $casts = [
-        'social_links' => 'array',
+        'social_links' => 'array', // Đảm bảo `social_links` luôn được trả về dưới dạng mảng
     ];
 
     public function adminUser()

@@ -68,8 +68,19 @@ const MenuNavigate = () => {
           label: <Link to="/admin/bloglist">Bài viết</Link>,
         },
         {
-          key: "admin/blog/categories",
+          key: "/admin/blog/categories",
           label: <Link to="/admin/blog/categories">Danh mục</Link>,
+        },
+      ],
+    },
+    {
+      key: "feedback",
+      icon: <AppstoreAddOutlined />,
+      label: "Quản lý Feedback",
+      children: [
+        {
+          key: "/admin/feedback",
+          label: <Link to="/admin/feedback">Bài viết</Link>,
         },
       ],
     },

@@ -20,6 +20,9 @@ const Menu = lazy(() => import("./components/Admin/MenuNavigate"));
 const UserManagement = lazy(() => import("./pages/admin/Users/UserManagement"));
 const BlogAdmin = lazy(() => import("./pages/admin/Blog/BlogAdmin"));
 const RoleAdmin = lazy(() => import("./pages/admin/Users/RoleManagement"));
+const FeedbackAdmin = lazy(() =>
+  import("./pages/admin/Feedback/FeedbackManagement")
+);
 const CategoryAdmin = lazy(() =>
   import("./pages/admin/Category/CategoryManagement")
 );
@@ -102,6 +105,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <RoleAdmin />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="feedback"
+              element={
+                <PrivateRoute>
+                  <FeedbackAdmin />
                 </PrivateRoute>
               }
             />

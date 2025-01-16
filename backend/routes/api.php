@@ -3,13 +3,12 @@
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserRoleController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserPermissionController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BlogController;
-
+use App\Http\Controllers\FeedbackController;
 
 
 Route::middleware([])->group(function () {
@@ -34,26 +33,18 @@ Route::middleware([])->group(function () {
 
 
 Route::middleware([])->group(function () {
-    Route::get('/user/{id}/roles', [UserRoleController::class, 'index']); // Lấy danh sách vai trò của user
-    Route::post('/user/assign-role', [UserRoleController::class, 'assignRole']); // Gán vai trò cho user
-    Route::post('/user/remove-role', [UserRoleController::class, 'removeRole']); // Xóa vai trò khỏi user
+    Route::get('/permissions', [UserPermissionController::class, 'index']);
+    Route::get('/user/{id}/permissions', [UserPermissionController::class, 'permissions']);
+    Route::post('/user/assign-permissions', [UserPermissionController::class, 'assignPermissions']);
+    Route::post('/user/remove-permissions', [UserPermissionController::class, 'removePermissions']);
 });
 
-
-
-Route::middleware([])->group(function () {
-    Route::get('/user/{id}/permissions', [UserPermissionController::class, 'index']); // Lấy danh sách quyền của user
-    Route::post('/user/assign-permissions', [UserPermissionController::class, 'assignPermissions']); // Gán nhiều quyền cho user
-    Route::post('/user/remove-permissions', [UserPermissionController::class, 'removePermissions']); // Xóa nhiều quyền khỏi user
-});
 
 Route::middleware([])->group(function () {
     Route::get('/company', [CompanyController::class, 'getCompany']); // Lấy thông tin công ty
     Route::post('/company', [CompanyController::class, 'createCompany']); // Tạo công ty
     Route::put('/company', [CompanyController::class, 'updateCompany']); // Cập nhật công ty
     Route::delete('/company', [CompanyController::class, 'deleteCompany']); // Xóa công ty
-
-    
     Route::delete('/company/logo', [CompanyController::class, 'deleteLogo']); // Xóa logo
 });
 
@@ -74,5 +65,12 @@ Route::middleware([])->group(function () {
     Route::get('/blogs/{id}', [BlogController::class, 'show']); // Lấy thông tin chi tiết bài viết
     Route::put('/blogs/{id}', [BlogController::class, 'update']); // Cập nhật bài viết
     Route::delete('/blogs/{id}', [BlogController::class, 'destroy']); // Xóa bài viết
+});
+
+Route::middleware([])->group(function () {
+    Route::get('/feedback', [FeedbackController::class, 'index']); // Lấy danh sách feedback
+    Route::post('/feedback', [FeedbackController::class, 'store']); // Tạo feedback mới
+    Route::patch('/feedback/{id}/visibility', [FeedbackController::class, 'updateVisibility']);
+
 });
 

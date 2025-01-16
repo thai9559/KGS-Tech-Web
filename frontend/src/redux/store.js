@@ -6,6 +6,7 @@ import { companyApi } from "./api/CompanyApi";
 import blogReducer from "./slices/blogSlice";
 import { roleApi } from "./api/roleApi";
 import { categoryApi } from "./api/categoryApi";
+import { feedbackApi } from "./api/feedbackApi";
 const store = configureStore({
   reducer: {
     [blogApi.reducerPath]: blogApi.reducer, // Reducer của Blog API
@@ -13,6 +14,7 @@ const store = configureStore({
     [userApi.reducerPath]: userApi.reducer, // Reducer của User API
     [companyApi.reducerPath]: companyApi.reducer, // Reducer của Company API
     [categoryApi.reducerPath]: categoryApi.reducer, // Reducer của Company API
+    [feedbackApi.reducerPath]: feedbackApi.reducer, // Reducer của Company API
     [roleApi.reducerPath]: roleApi.reducer,
     blogs: blogReducer, // Reducer khác (nếu có)
   },
@@ -23,7 +25,8 @@ const store = configureStore({
       .concat(userApi.middleware)
       .concat(companyApi.middleware)
       .concat(roleApi.middleware)
-      .concat(categoryApi.middleware),
+      .concat(categoryApi.middleware)
+      .concat(feedbackApi.middleware),
 });
 
 export default store;

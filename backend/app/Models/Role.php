@@ -18,15 +18,19 @@ class Role extends Model
     ];
 
     /**
-     * Quan hệ nhiều-nhiều với bảng users.
+     * Quan hệ một-nhiều với bảng users.
      */
     public function users()
     {
-        return $this->belongsToMany(User::class, 'user_roles', 'role_id', 'user_id');
+        return $this->hasMany(User::class, 'role_id');
     }
+    
+
+    /**
+     * Quan hệ nhiều-nhiều với bảng permissions.
+     */
     public function permissions()
     {
-    return $this->belongsToMany(Permission::class, 'role_permissions', 'role_id', 'permission_id');
+        return $this->belongsToMany(Permission::class, 'role_permissions', 'role_id', 'permission_id');
     }
-
 }

@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('secondary_keywords')->nullable(); // Từ khóa phụ (phân cách bằng dấu phẩy)
             $table->text('tags')->nullable(); // Tags (phân cách bằng dấu phẩy)
             $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null'); // Danh mục bài viết
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Người tạo bài viết
+            $table->unsignedBigInteger('user_id'); // Khóa ngoại user_id
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // Khóa ngoại
             $table->timestamps(); // Thời gian tạo và cập nhật
         });
     }

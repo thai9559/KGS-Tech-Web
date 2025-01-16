@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('password'); // Mật khẩu (hash)
             $table->boolean('is_active')->default(true); // Trạng thái hoạt động
             $table->string('phone', 15)->nullable(); // Số điện thoại
+            $table->unsignedBigInteger('role_id')->nullable(); // Cột role_id
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null'); // Khóa ngoại
             $table->rememberToken(); // Token ghi nhớ (cho đăng nhập)
             $table->timestamps(); // Thời gian tạo và cập nhật
         });

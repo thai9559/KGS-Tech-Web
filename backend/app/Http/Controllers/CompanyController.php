@@ -11,19 +11,19 @@ class CompanyController extends Controller
     public function getCompany()
     {
         $company = Company::first();
-
-        if (!$company) {
+        if ($company) {
             return response()->json([
-                'success' => false,
-                'message' => 'Company not found',
-            ], 404);
+                'success' => true,
+                'data' => $company,
+            ]);
         }
-
+    
         return response()->json([
-            'success' => true,
-            'data' => $company,
-        ], 200);
+            'success' => false,
+            'message' => 'No company data found',
+        ], 404);
     }
+    
 
     public function createCompany(Request $request)
     {

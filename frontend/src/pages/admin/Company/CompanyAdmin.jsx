@@ -49,7 +49,7 @@ const CompanyAdmin = () => {
     logo: null,
     social_links: [],
   });
-  const [isDirty, setIsDirty] = useState(false); // Trạng thái theo dõi thay đổi
+  const [isDirty, setIsDirty] = useState(false);
   const [editingField, setEditingField] = useState(null);
   const [newSocial, setNewSocial] = useState("");
 
@@ -57,11 +57,13 @@ const CompanyAdmin = () => {
     if (companyData?.success) {
       const company = companyData.data;
 
+      // Parse social_links nếu cần
       const socialLinksArray = company.social_links
-        ? Object.entries(company.social_links).map(([key, url]) => ({
-            key,
-            url,
-          }))
+        ? Object.entries(
+            typeof company.social_links === "string"
+              ? JSON.parse(company.social_links)
+              : company.social_links
+          ).map(([key, url]) => ({ key, url }))
         : [];
 
       setTempData({
@@ -75,7 +77,7 @@ const CompanyAdmin = () => {
     if (companyData?.success) {
       const company = companyData.data;
 
-      // Kiểm tra nếu `social_links` hoặc các trường khác thay đổi
+      // Xác định thay đổi trong social_links và các trường khác
       const socialLinksChanged =
         JSON.stringify(
           tempData.social_links.reduce((acc, { key, url }) => {
@@ -283,7 +285,7 @@ const CompanyAdmin = () => {
           </Row>
           {tempData.social_links.map((social, index) => (
             <Row
-              key={social.key}
+              key={social.key || index}
               gutter={[16, 16]}
               align="middle"
               style={{ marginBottom: "16px" }}

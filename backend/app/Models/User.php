@@ -16,6 +16,7 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
+        'role_id',
         'is_active',
     ];
 
@@ -28,12 +29,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * Quan hệ nhiều-nhiều với bảng roles.
-     */
-    public function roles()
+
+    public function role()
     {
-        return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
+        return $this->belongsTo(Role::class, 'role_id');
     }
 
     /**
