@@ -44,6 +44,17 @@ function App() {
           <Route path="/admin/login" element={<Login />} />
 
           {/* Protected Routes */}
+
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/users" element={<UserManagement />} />
+          <Route path="/admin/users/roles" element={<RoleAdmin />} />
+          <Route path="/admin/company" element={<CompanyAdmin />} />
+          <Route path="/admin/bloglist" element={<BlogAdmin />} />
+          <Route path="/admin/blog/categories" element={<CategoryAdmin />} />
+          <Route path="/admin/feedback" element={<FeedbackAdmin />} />
+          <Route path="/admin" element={<Menu />} />
+
+          {/* Protected Routes
           <Route
             path="/admin/dashboard"
             element={
@@ -116,7 +127,7 @@ function App() {
                 </PrivateRoute>
               }
             />
-          </Route>
+          </Route> */}
 
           {/* Redirect unknown routes */}
           <Route path="*" element={<Navigate to="/" replace />} />

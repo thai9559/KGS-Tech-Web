@@ -4,6 +4,18 @@
   "business": "Dịch vụ",
   "blog": "Blog",
   "welcome": "Chào mừng bạn đến với trang web của chúng tôi!",
+  "dashboardAdmin": "Bảng điều khiển",
+  "manageCompany": "Quản lý công ty",
+  "accountManagement": "Quản lý tài khoản",
+  "users": "Người dùng",
+  "roles": "Vai trò",
+  "blogManagement": "Quản lý Blog",
+  "articles": "Bài viết",
+  "categories": "Danh mục",
+  "feedbackManagement": "Quản lý Feedback",
+  "logout": "Đăng xuất",
+  "manage": "Quản lý",
+
   "stats": {
     "ask": "Tại sao chọn KGS Tech?",
     "users": "Người dùng",
@@ -239,5 +251,26 @@
     "logout": "Đăng Xuất",
     "logout_success": "Bạn đã đăng xuất thành công.",
     "logout_error": "Có lỗi xảy ra khi đăng xuất. Vui lòng thử lại."
+  },
+  "companyAdmin": {
+    "companyManagement": "Quản lý Công ty",
+    "saveChanges": "Lưu thay đổi",
+    "loadingCompanyInfo": "Đang tải thông tin công ty...",
+    "companyName": "Tên công ty",
+    "email": "Email",
+    "phone": "Số điện thoại",
+    "address": "Địa chỉ",
+    "website": "Website",
+    "description": "Mô tả",
+    "logo": "Logo",
+    "noLogo": "Chưa có logo",
+    "uploadLogo": "Tải lên Logo",
+    "deleteLogo": "Xóa Logo",
+    "socialNetworks": "Mạng Xã Hội",
+    "add": "Thêm",
+    "delete": "Xóa",
+    "edit": "Chỉnh sửa",
+    "editing": "Đang chỉnh sửa",
+    "selectSocialNetwork": "Chọn mạng xã hội"
   }
 }
