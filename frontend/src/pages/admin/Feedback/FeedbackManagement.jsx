@@ -11,6 +11,7 @@ import {
   Switch,
   Descriptions,
 } from "antd";
+import { useTranslation } from "react-i18next";
 import {
   useGetFeedbacksQuery,
   useCreateFeedbackMutation,
@@ -19,6 +20,7 @@ import {
 } from "../../../redux/api/feedbackApi";
 
 const FeedbackManagement = () => {
+  const { t } = useTranslation(); // Dùng i18n để dịch
   const { data: feedbacksData, isLoading, error } = useGetFeedbacksQuery();
   const [createFeedback] = useCreateFeedbackMutation();
   const [updateFeedbackVisibility] = useUpdateFeedbackVisibilityMutation();
@@ -56,57 +58,77 @@ const FeedbackManagement = () => {
     try {
       const values = await form.validateFields();
       await createFeedback(values);
-      message.success("Feedback mới đã được thêm!");
+      message.success(t("feedbackAdmin.createSuccess"));
       closeModal();
     } catch (error) {
       console.error("Error creating feedback:", error);
-      message.error("Có lỗi xảy ra khi thêm feedback!");
+      message.error(t("feedbackAdmin.createFail"));
     }
   };
 
   const handleDelete = async (id) => {
     try {
       await deleteFeedback(id);
-      message.success("Feedback đã được xóa!");
+      message.success(t("feedbackAdmin.deleteSuccess"));
     } catch (error) {
       console.error("Error deleting feedback:", error);
-      message.error("Không thể xóa feedback!");
+      message.error(t("feedbackAdmin.deleteFail"));
     }
   };
 
   const handleToggleVisibility = async (id, isVisible) => {
     try {
       await updateFeedbackVisibility({ id, is_visible: !isVisible });
-      message.success("Trạng thái feedback đã được cập nhật!");
+      message.success(t("feedbackAdmin.toggleVisibility"));
     } catch (error) {
       console.error("Error updating feedback visibility:", error);
-      message.error("Không thể cập nhật trạng thái feedback!");
+      message.error(t("feedbackAdmin.updateVisibilityFail"));
     }
   };
 
   const columns = [
     {
-      title: "ID",
+      title: (
+        <span className="font-notoSansJP">
+          {t("feedbackAdmin.tableColumns.id")}
+        </span>
+      ),
       dataIndex: "id",
       key: "id",
     },
     {
-      title: "Email",
+      title: (
+        <span className="font-notoSansJP">
+          {t("feedbackAdmin.tableColumns.email")}
+        </span>
+      ),
       dataIndex: "email",
       key: "email",
     },
     {
-      title: "Chủ đề",
+      title: (
+        <span className="font-notoSansJP">
+          {t("feedbackAdmin.tableColumns.subject")}
+        </span>
+      ),
       dataIndex: "subject",
       key: "subject",
     },
     {
-      title: "Ngày gửi",
+      title: (
+        <span className="font-notoSansJP">
+          {t("feedbackAdmin.tableColumns.sentAt")}
+        </span>
+      ),
       dataIndex: "sent_at",
       key: "sent_at",
     },
     {
-      title: "Hiển thị",
+      title: (
+        <span className="font-notoSansJP">
+          {t("feedbackAdmin.tableColumns.isVisible")}
+        </span>
+      ),
       key: "is_visible",
       render: (_, record) => (
         <Switch
@@ -116,20 +138,30 @@ const FeedbackManagement = () => {
       ),
     },
     {
-      title: "Hành động",
+      title: (
+        <span className="font-notoSansJP">
+          {t("feedbackAdmin.tableColumns.actions")}
+        </span>
+      ),
       key: "action",
       render: (_, record) => (
         <Space>
           <Button type="primary" onClick={() => openDetailModal(record)}>
-            Xem chi tiết
+            <span className="font-notoSansJP">
+              {t("feedbackAdmin.viewDetails")}
+            </span>
           </Button>
           <Popconfirm
-            title="Bạn có chắc chắn muốn xóa feedback này?"
+            title={t("feedbackAdmin.deleteConfirm")}
             onConfirm={() => handleDelete(record.id)}
-            okText="Có"
-            cancelText="Không"
+            okText={t("feedbackAdmin.yes")}
+            cancelText={t("feedbackAdmin.no")}
           >
-            <Button type="danger">Xóa</Button>
+            <Button type="danger">
+              <span className="font-notoSansJP">
+                {t("feedbackAdmin.deleteFeedback")}
+              </span>
+            </Button>
           </Popconfirm>
         </Space>
       ),
@@ -138,14 +170,16 @@ const FeedbackManagement = () => {
 
   if (error) {
     console.error("Error fetching feedbacks:", error);
-    message.error("Không thể tải danh sách feedback!");
+    message.error(t("feedbackAdmin.loadingError"));
   }
 
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
         <Button type="primary" onClick={openModal}>
-          Thêm Feedback
+          <span className="font-notoSansJP">
+            {t("feedbackAdmin.addFeedback")}
+          </span>
         </Button>
       </div>
 
@@ -158,32 +192,69 @@ const FeedbackManagement = () => {
 
       {/* Add Feedback Modal */}
       <Modal
-        title="Thêm Feedback"
+        title={
+          <span className="font-notoSansJP">
+            {t("feedbackAdmin.addFeedback")}
+          </span>
+        }
         open={isModalOpen}
         onOk={handleOk}
         onCancel={closeModal}
-        okText="Thêm"
-        cancelText="Hủy"
+        okText={
+          <span className="font-notoSansJP">
+            {t("feedbackAdmin.addFeedback")}
+          </span>
+        }
+        cancelText={
+          <span className="font-notoSansJP">{t("feedbackAdmin.cancel")}</span>
+        }
       >
         <Form form={form} layout="vertical">
           <Form.Item
-            label="Email"
+            label={
+              <span className="font-notoSansJP">
+                {t("feedbackAdmin.tableColumns.email")}
+              </span>
+            }
             name="email"
-            rules={[{ required: true, message: "Vui lòng nhập email!" }]}
+            rules={[
+              {
+                required: true,
+                message: t("feedbackAdmin.formErrors.emailRequired"),
+              },
+            ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            label="Chủ đề"
+            label={
+              <span className="font-notoSansJP">
+                {t("feedbackAdmin.tableColumns.subject")}
+              </span>
+            }
             name="subject"
-            rules={[{ required: true, message: "Vui lòng nhập chủ đề!" }]}
+            rules={[
+              {
+                required: true,
+                message: t("feedbackAdmin.formErrors.subjectRequired"),
+              },
+            ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            label="Nội dung"
+            label={
+              <span className="font-notoSansJP">
+                {t("feedbackAdmin.detailModal.content")}
+              </span>
+            }
             name="content"
-            rules={[{ required: true, message: "Vui lòng nhập nội dung!" }]}
+            rules={[
+              {
+                required: true,
+                message: t("feedbackAdmin.formErrors.contentRequired"),
+              },
+            ]}
           >
             <Input.TextArea />
           </Form.Item>
@@ -192,31 +263,37 @@ const FeedbackManagement = () => {
 
       {/* Feedback Detail Modal */}
       <Modal
-        title="Chi tiết Feedback"
+        title={
+          <span className="font-notoSansJP">
+            {t("feedbackAdmin.detailModal.title")}
+          </span>
+        }
         open={isDetailModalOpen}
         onCancel={closeDetailModal}
         footer={null}
-        width={800} // Đặt chiều rộng lớn cho bảng
+        width={800}
       >
         {selectedFeedback && (
           <Descriptions bordered column={1}>
-            <Descriptions.Item label="ID">
+            <Descriptions.Item label={t("feedbackAdmin.detailModal.id")}>
               {selectedFeedback.id}
             </Descriptions.Item>
-            <Descriptions.Item label="Email">
+            <Descriptions.Item label={t("feedbackAdmin.detailModal.email")}>
               {selectedFeedback.email}
             </Descriptions.Item>
-            <Descriptions.Item label="Chủ đề">
+            <Descriptions.Item label={t("feedbackAdmin.detailModal.subject")}>
               {selectedFeedback.subject}
             </Descriptions.Item>
-            <Descriptions.Item label="Nội dung">
+            <Descriptions.Item label={t("feedbackAdmin.detailModal.content")}>
               {selectedFeedback.content}
             </Descriptions.Item>
-            <Descriptions.Item label="Ngày gửi">
+            <Descriptions.Item label={t("feedbackAdmin.detailModal.sentAt")}>
               {selectedFeedback.sent_at}
             </Descriptions.Item>
-            <Descriptions.Item label="Hiển thị">
-              {selectedFeedback.is_visible ? "Có" : "Không"}
+            <Descriptions.Item label={t("feedbackAdmin.detailModal.isVisible")}>
+              {selectedFeedback.is_visible
+                ? t("feedbackAdmin.yes")
+                : t("feedbackAdmin.no")}
             </Descriptions.Item>
           </Descriptions>
         )}

@@ -21,16 +21,22 @@ const MenuNavigate = () => {
 
   // Lấy ngôn ngữ từ localStorage hoặc thiết lập mặc định
   const [language, setLanguage] = useState(
-    localStorage.getItem("lang") || "vi"
+    localStorage.getItem("language") || "vi"
   );
 
-  // Cập nhật ngôn ngữ
+  // Đồng bộ hóa i18n với ngôn ngữ trong localStorage khi load trang
+  useEffect(() => {
+    i18n.changeLanguage(language);
+  }, [language, i18n]);
+
+  // Cập nhật ngôn ngữ khi người dùng thay đổi trên Select
   const handleChangeLanguage = (value) => {
-    setLanguage(value);
+    setLanguage(value); // Cập nhật state
     i18n.changeLanguage(value); // Đổi ngôn ngữ
-    localStorage.setItem("lang", value); // Lưu vào localStorage
+    localStorage.setItem("language", value); // Lưu vào localStorage
   };
 
+  // Xử lý thay đổi kích thước màn hình
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 1024);

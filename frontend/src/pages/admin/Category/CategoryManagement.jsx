@@ -10,6 +10,7 @@ import {
   Popconfirm,
 } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import {
   useGetCategoriesQuery,
   useCreateCategoryMutation,
@@ -18,6 +19,7 @@ import {
 } from "../../../redux/api/categoryApi";
 
 const CategoryManagement = () => {
+  const { t } = useTranslation(); // Sử dụng i18n
   const { data: categories = [], isLoading } = useGetCategoriesQuery();
   const [createCategory] = useCreateCategoryMutation();
   const [updateCategory] = useUpdateCategoryMutation();
@@ -51,49 +53,50 @@ const CategoryManagement = () => {
       const values = await form.validateFields();
       if (isEditing) {
         await updateCategory({ id: currentCategory.id, ...values });
-        message.success("Danh mục đã được cập nhật!");
+        message.success(t("categoryAdmin.updateSuccess"));
       } else {
         await createCategory(values);
-        message.success("Danh mục mới đã được thêm!");
+        message.success(t("categoryAdmin.createSuccess"));
       }
       closeModal();
     } catch (error) {
-      message.error("Có lỗi xảy ra!");
+      message.error(t("categoryAdmin.error"));
     }
   };
 
   const handleDelete = async (id) => {
     try {
       await deleteCategory(id);
-      message.success("Danh mục đã được xóa!");
+      message.success(t("categoryAdmin.deleteSuccess"));
     } catch (error) {
-      message.error("Không thể xóa danh mục!");
+      message.error(t("categoryAdmin.deleteFail"));
     }
   };
 
   const columns = [
     {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
-      title: "Tên danh mục",
+      title: <span className="font-notoSansJP">{t("categoryAdmin.name")}</span>,
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Slug",
+      title: <span className="font-notoSansJP">{t("categoryAdmin.slug")}</span>,
       dataIndex: "slug",
       key: "slug",
     },
     {
-      title: "Mô tả",
+      title: (
+        <span className="font-notoSansJP">
+          {t("categoryAdmin.description")}
+        </span>
+      ),
       dataIndex: "description",
       key: "description",
     },
     {
-      title: "Hành động",
+      title: (
+        <span className="font-notoSansJP">{t("categoryAdmin.actions")}</span>
+      ),
       key: "action",
       render: (_, category) => (
         <Space>
@@ -102,16 +105,20 @@ const CategoryManagement = () => {
             icon={<EditOutlined />}
             onClick={() => openModal(category)}
           >
-            Sửa
+            <span className="font-notoSansJP">
+              {t("categoryAdmin.editCategory")}
+            </span>
           </Button>
           <Popconfirm
-            title="Bạn có chắc chắn muốn xóa danh mục này?"
+            title={t("categoryAdmin.deleteConfirm")}
             onConfirm={() => handleDelete(category.id)}
-            okText="Có"
-            cancelText="Không"
+            okText={t("categoryAdmin.yes")}
+            cancelText={t("categoryAdmin.no")}
           >
             <Button type="danger" icon={<DeleteOutlined />}>
-              Xóa
+              <span className="font-notoSansJP">
+                {t("categoryAdmin.deleteCategory")}
+              </span>
             </Button>
           </Popconfirm>
         </Space>
@@ -127,7 +134,9 @@ const CategoryManagement = () => {
           icon={<PlusOutlined />}
           onClick={() => openModal()}
         >
-          Thêm Danh Mục
+          <span className="font-notoSansJP">
+            {t("categoryAdmin.addCategory")}
+          </span>
         </Button>
       </div>
       <Table
@@ -137,25 +146,54 @@ const CategoryManagement = () => {
         rowKey="id"
       />
       <Modal
-        title={isEditing ? "Chỉnh sửa Danh Mục" : "Thêm Danh Mục"}
+        title={
+          <span className="font-notoSansJP">
+            {isEditing
+              ? t("categoryAdmin.editCategory")
+              : t("categoryAdmin.addCategory")}
+          </span>
+        }
         open={isModalOpen}
         onOk={handleOk}
         onCancel={closeModal}
-        okText={isEditing ? "Cập nhật" : "Thêm"}
-        cancelText="Hủy"
+        okText={
+          <span className="font-notoSansJP">{t("categoryAdmin.update")}</span>
+        }
+        cancelText={
+          <span className="font-notoSansJP">{t("categoryAdmin.cancel")}</span>
+        }
       >
         <Form form={form} layout="vertical">
           <Form.Item
-            label="Tên danh mục"
+            label={
+              <span className="font-notoSansJP">{t("categoryAdmin.name")}</span>
+            }
             name="name"
-            rules={[{ required: true, message: "Vui lòng nhập tên danh mục!" }]}
+            rules={[
+              {
+                required: true,
+                message: t("categoryAdmin.formErrors.nameRequired"),
+              },
+            ]}
           >
             <Input />
           </Form.Item>
-          <Form.Item label="Slug" name="slug">
-            <Input placeholder="Tự động tạo nếu để trống" />
+          <Form.Item
+            label={
+              <span className="font-notoSansJP">{t("categoryAdmin.slug")}</span>
+            }
+            name="slug"
+          >
+            <Input placeholder={t("categoryAdmin.autoGenerateSlug")} />
           </Form.Item>
-          <Form.Item label="Mô tả" name="description">
+          <Form.Item
+            label={
+              <span className="font-notoSansJP">
+                {t("categoryAdmin.description")}
+              </span>
+            }
+            name="description"
+          >
             <Input.TextArea />
           </Form.Item>
         </Form>

@@ -12,6 +12,7 @@ import {
   Select,
 } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import {
   useGetUsersQuery,
   useGetRolesQuery,
@@ -26,6 +27,8 @@ import TagList from "../../../components/Admin/Taglist";
 const { Option } = Select;
 
 const UserManagement = () => {
+  const { t } = useTranslation();
+
   const { data: usersData = [], isLoading: usersLoading } = useGetUsersQuery();
   const users = Array.isArray(usersData?.data) ? usersData.data : [];
 
@@ -74,10 +77,8 @@ const UserManagement = () => {
   const handleOk = async () => {
     try {
       const values = form.getFieldsValue();
-      console.log("Payload gửi từ FE:", values); // Kiểm tra dữ liệu gửi từ form
 
       if (isEditing) {
-        // Chỉnh sửa người dùng và gán quyền nếu có
         const updatedUser = await updateUser({
           id: currentUser.id,
           ...values,
@@ -85,32 +86,26 @@ const UserManagement = () => {
         }).unwrap();
 
         if (values.permissions?.length) {
-          console.log("Assign permissions:", values.permissions); // Log danh sách quyền
           await assignPermissions({
             user_id: updatedUser.id,
             permission_ids: values.permissions,
           });
         }
 
-        message.success("Cập nhật thông tin thành công!");
+        message.success(t("updateSuccess"));
       } else {
         const { role_id, permissions, ...userData } = values;
 
         if (permissions && permissions.length === 0) {
-          message.error("Vui lòng chọn ít nhất một quyền!");
+          message.error(t("formErrors.permissionsRequired"));
           return;
         }
 
-        console.log("Payload tạo mới:", { ...userData, role_id, permissions });
-
-        // Tạo người dùng mới mà không gán quyền
         const newUser = await createUser({ ...userData, role_id }).unwrap();
 
-        message.success("Thêm người dùng mới thành công!");
+        message.success(t("createSuccess"));
 
-        // Nếu có quyền, gán quyền cho người dùng
         if (permissions?.length) {
-          console.log("Assign permissions:", permissions);
           await assignPermissions({
             user_id: newUser.id,
             permission_ids: permissions,
@@ -121,50 +116,54 @@ const UserManagement = () => {
       closeModal();
     } catch (error) {
       console.error("Error during operation:", error);
-      message.error("Có lỗi xảy ra!");
+      message.error(t("error"));
     }
   };
 
   const handleDelete = async (id) => {
     try {
       await deleteUser(id);
-      message.success("Người dùng đã được xóa!");
+      message.success(t("deleteSuccess"));
     } catch (error) {
       console.error("Error deleting user:", error);
-      message.error("Không thể xóa người dùng!");
+      message.error(t("deleteFail"));
     }
   };
 
   const columns = [
     {
-      title: "ID",
+      title: <span className="font-notoSansJP">{t("ID")}</span>,
       dataIndex: "id",
       key: "id",
     },
     {
-      title: "Tên",
+      title: <span className="font-notoSansJP">{t("userAdmin.name")}</span>,
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Email",
+      title: <span className="font-notoSansJP">{t("email")}</span>,
       dataIndex: "email",
       key: "email",
     },
     {
-      title: "Số điện thoại",
+      title: <span className="font-notoSansJP">{t("phone")}</span>,
       dataIndex: "phone",
       key: "phone",
-      render: (phone) => phone || "Chưa có số điện thoại",
+      render: (phone) => (
+        <span className="font-notoSansJP">{phone || t("noPhone")}</span>
+      ),
     },
     {
-      title: "Vai trò",
+      title: <span className="font-notoSansJP">{t("userAdmin.role")}</span>,
       dataIndex: "role",
       key: "role",
       render: (role) => <TagList items={role ? [role] : []} color="blue" />,
     },
     {
-      title: "Quyền",
+      title: (
+        <span className="font-notoSansJP">{t("userAdmin.permissions")}</span>
+      ),
       dataIndex: "permissions",
       key: "permissions",
       render: (permissions) => (
@@ -172,13 +171,13 @@ const UserManagement = () => {
       ),
     },
     {
-      title: "Trạng thái hoạt động",
+      title: <span className="font-notoSansJP">{t("userAdmin.isActive")}</span>,
       dataIndex: "is_active",
       key: "is_active",
       render: (isActive) => <Switch checked={isActive} disabled />,
     },
     {
-      title: "Hành động",
+      title: <span className="font-notoSansJP">{t("userAdmin.actions")}</span>,
       key: "action",
       render: (_, record) => (
         <Space>
@@ -187,16 +186,16 @@ const UserManagement = () => {
             icon={<EditOutlined />}
             onClick={() => openUserModal(record)}
           >
-            Sửa
+            <span className="font-notoSansJP">{t("userAdmin.editUser")}</span>
           </Button>
           <Popconfirm
-            title="Bạn có chắc chắn muốn xóa người dùng này?"
+            title={t("userAdmin.deleteConfirm")}
             onConfirm={() => handleDelete(record.id)}
-            okText="Có"
-            cancelText="Không"
+            okText={t("yes")}
+            cancelText={t("no")}
           >
             <Button type="danger" icon={<DeleteOutlined />}>
-              Xóa
+              <span className="font-notoSansJP">{t("userAdmin.delete")}</span>
             </Button>
           </Popconfirm>
         </Space>
@@ -206,13 +205,19 @@ const UserManagement = () => {
 
   return (
     <div>
-      <div style={{ marginBottom: 16 }}>
+      <div
+        className="flex justify-between items-center mb-4"
+        style={{ marginBottom: 16 }}
+      >
+        <h1 className="text-2xl text-black font-bold font-notoSansJP">
+          {t("userAdmin.userManagement")}
+        </h1>
         <Button
           type="primary"
           icon={<PlusOutlined />}
           onClick={() => openUserModal()}
         >
-          Thêm Người Dùng
+          <span className="font-notoSansJP">{t("userAdmin.addUser")}</span>
         </Button>
       </div>
       <Table
@@ -222,68 +227,76 @@ const UserManagement = () => {
         rowKey="id"
       />
       <Modal
-        title={isEditing ? "Chỉnh sửa Người Dùng" : "Thêm Người Dùng"}
+        title={
+          <span className="font-notoSansJP">
+            {isEditing ? t("editUser") : t("addUser")}
+          </span>
+        }
         open={isModalOpen}
         onOk={handleOk}
         onCancel={closeModal}
-        okText="Cập nhật"
-        cancelText="Hủy"
+        okText={<span className="font-notoSansJP">{t("update")}</span>}
+        cancelText={<span className="font-notoSansJP">{t("cancel")}</span>}
       >
         <Form form={form} layout="vertical">
           <Form.Item
-            label="Tên"
+            label={<span className="font-notoSansJP">{t("name")}</span>}
             name="name"
-            rules={[{ required: true, message: "Vui lòng nhập tên!" }]}
+            rules={[{ required: true, message: t("formErrors.nameRequired") }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            label="Email"
+            label={<span className="font-notoSansJP">{t("email")}</span>}
             name="email"
             rules={[
-              { required: true, message: "Vui lòng nhập email!" },
-              { type: "email", message: "Email không hợp lệ!" },
+              { required: true, message: t("formErrors.emailRequired") },
+              { type: "email", message: t("formErrors.emailInvalid") },
             ]}
           >
             <Input />
           </Form.Item>
           {!isEditing && (
             <Form.Item
-              label="Mật khẩu"
+              label={<span className="font-notoSansJP">{t("password")}</span>}
               name="password"
               rules={[
-                { required: true, message: "Vui lòng nhập mật khẩu!" },
-                { min: 6, message: "Mật khẩu phải có ít nhất 6 ký tự!" },
+                { required: true, message: t("formErrors.passwordRequired") },
+                { min: 6, message: t("formErrors.passwordMin") },
               ]}
             >
               <Input.Password />
             </Form.Item>
           )}
           <Form.Item
-            label="Số điện thoại"
+            label={<span className="font-notoSansJP">{t("phone")}</span>}
             name="phone"
             rules={[
               {
                 pattern: /^[0-9]{9,15}$/,
-                message: "Số điện thoại không hợp lệ!",
+                message: t("formErrors.phoneInvalid"),
               },
             ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            label="Trạng thái hoạt động"
+            label={<span className="font-notoSansJP">{t("isActive")}</span>}
             name="is_active"
             valuePropName="checked"
           >
             <Switch />
           </Form.Item>
           <Form.Item
-            label="Vai trò"
+            label={<span className="font-notoSansJP">{t("role")}</span>}
             name="role_id"
-            rules={[{ required: true, message: "Vui lòng chọn vai trò!" }]}
+            rules={[{ required: true, message: t("formErrors.roleRequired") }]}
           >
-            <Select placeholder="Chọn vai trò" loading={rolesLoading}>
+            <Select
+              placeholder={t("chooseRole")}
+              loading={rolesLoading}
+              className="font-notoSansJP"
+            >
               {roles.map((role) => (
                 <Option key={role.id} value={role.id}>
                   {role.name}
@@ -292,17 +305,24 @@ const UserManagement = () => {
             </Select>
           </Form.Item>
 
-          {/* Hiển thị phần quyền chỉ khi chỉnh sửa người dùng */}
           {isEditing && (
             <Form.Item
-              label="Quyền"
+              label={
+                <span className="font-notoSansJP">{t("permissions")}</span>
+              }
               name="permissions"
-              rules={[{ required: true, message: "Vui lòng chọn quyền!" }]}
+              rules={[
+                {
+                  required: true,
+                  message: t("formErrors.permissionsRequired"),
+                },
+              ]}
             >
               <Select
                 mode="multiple"
-                placeholder="Chọn quyền"
+                placeholder={t("choosePermissions")}
                 loading={permissionsLoading}
+                className="font-notoSansJP"
               >
                 {permissions.map((perm) => (
                   <Option key={perm.id} value={perm.id}>
