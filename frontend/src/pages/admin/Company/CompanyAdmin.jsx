@@ -22,6 +22,7 @@ import {
   useUpdateCompanyMutation,
   useDeleteLogoMutation,
 } from "../../../redux/api/CompanyApi";
+import { useTranslation } from "react-i18next";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -38,6 +39,7 @@ const CompanyAdmin = () => {
   const { data: companyData, isLoading } = useGetCompanyQuery();
   const [updateCompany] = useUpdateCompanyMutation();
   const [deleteLogo] = useDeleteLogoMutation();
+  const { t } = useTranslation(); // Translation namespace
 
   const [tempData, setTempData] = useState({
     name: "",
@@ -57,7 +59,6 @@ const CompanyAdmin = () => {
     if (companyData?.success) {
       const company = companyData.data;
 
-      // Parse social_links nếu cần
       const socialLinksArray = company.social_links
         ? Object.entries(
             typeof company.social_links === "string"
@@ -77,7 +78,6 @@ const CompanyAdmin = () => {
     if (companyData?.success) {
       const company = companyData.data;
 
-      // Xác định thay đổi trong social_links và các trường khác
       const socialLinksChanged =
         JSON.stringify(
           tempData.social_links.reduce((acc, { key, url }) => {
@@ -142,10 +142,10 @@ const CompanyAdmin = () => {
         await updateCompany(payload).unwrap();
       }
 
-      message.success("Thông tin công ty đã được lưu!");
+      message.success(t("successMessage"));
       setIsDirty(false);
     } catch (error) {
-      message.error("Lưu thông tin thất bại!");
+      message.error(t("errorMessage"));
     }
   };
 
@@ -157,7 +157,7 @@ const CompanyAdmin = () => {
       }));
       setNewSocial("");
     } else {
-      message.warning("Mạng xã hội này đã được thêm hoặc chưa được chọn!");
+      message.warning(t("socialAlreadyAdded"));
     }
   };
 
@@ -171,9 +171,9 @@ const CompanyAdmin = () => {
     try {
       await deleteLogo().unwrap();
       setTempData((prev) => ({ ...prev, logo: null }));
-      message.success("Logo đã được xóa!");
+      message.success(t("logoDeleted"));
     } catch (error) {
-      message.error("Xóa logo thất bại!");
+      message.error(t("logoDeleteFailed"));
     }
   };
 
@@ -184,16 +184,16 @@ const CompanyAdmin = () => {
     try {
       const response = await updateCompany(formData).unwrap();
       setTempData((prev) => ({ ...prev, logo: response.logo }));
-      message.success("Logo đã được cập nhật!");
+      message.success(t("logoUploaded"));
     } catch (error) {
-      message.error("Tải lên logo thất bại!");
+      message.error(t("logoUploadFailed"));
     }
   };
 
   const renderField = (label, field) => (
     <Row gutter={[16, 16]} align="middle" style={{ marginBottom: 16 }}>
       <Col xs={24} md={6}>
-        <strong>{label}</strong>
+        <strong>{t(label)}</strong>
       </Col>
       <Col xs={24} md={12}>
         {editingField === field ? (
@@ -211,7 +211,7 @@ const CompanyAdmin = () => {
           icon={<EditOutlined />}
           onClick={() => startEditing(field)}
         >
-          {editingField === field ? "Đang chỉnh sửa" : "Chỉnh sửa"}
+          {editingField === field ? t("editing") : t("edit")}
         </Button>
       </Col>
     </Row>
@@ -219,7 +219,7 @@ const CompanyAdmin = () => {
 
   return (
     <Card
-      title={<Title level={4}>Quản lý Công ty</Title>}
+      title={<Title level={4}>{t("companyManagement")}</Title>}
       extra={
         <Button
           type="primary"
@@ -227,34 +227,34 @@ const CompanyAdmin = () => {
           onClick={saveChanges}
           disabled={!isDirty}
         >
-          Lưu thay đổi
+          {t("saveChanges")}
         </Button>
       }
     >
       {isLoading ? (
-        <p>Đang tải thông tin công ty...</p>
+        <p>{t("loadingCompanyInfo")}</p>
       ) : (
         <>
-          {renderField("Tên công ty", "name")}
-          {renderField("Email", "email")}
-          {renderField("Số điện thoại", "phone")}
-          {renderField("Địa chỉ", "address")}
-          {renderField("Website", "website")}
-          {renderField("Mô tả", "description")}
+          {renderField("name", "name")}
+          {renderField("email", "email")}
+          {renderField("phone", "phone")}
+          {renderField("address", "address")}
+          {renderField("website", "website")}
+          {renderField("description", "description")}
 
           <Row gutter={[16, 16]} align="middle" style={{ marginBottom: 16 }}>
             <Col xs={24} md={6}>
-              <strong>Logo</strong>
+              <strong>{t("logo")}</strong>
             </Col>
             <Col xs={24} md={12}>
               {tempData.logo ? (
                 <img
                   src={tempData.logo}
-                  alt="Company Logo"
+                  alt={t("logo")}
                   style={{ maxHeight: "100px", maxWidth: "100px" }}
                 />
               ) : (
-                <p>Chưa có logo</p>
+                <p>{t("noLogo")}</p>
               )}
             </Col>
             <Col xs={24} md={6} style={{ textAlign: "right" }}>
@@ -263,7 +263,7 @@ const CompanyAdmin = () => {
                 customRequest={handleUploadLogo}
                 showUploadList={false}
               >
-                <Button icon={<UploadOutlined />}>Tải lên Logo</Button>
+                <Button icon={<UploadOutlined />}>{t("uploadLogo")}</Button>
               </Upload>
               {tempData.logo && (
                 <Button
@@ -272,7 +272,7 @@ const CompanyAdmin = () => {
                   icon={<DeleteOutlined />}
                   onClick={handleDeleteLogo}
                 >
-                  Xóa Logo
+                  {t("deleteLogo")}
                 </Button>
               )}
             </Col>
@@ -280,7 +280,7 @@ const CompanyAdmin = () => {
 
           <Row>
             <Col span={24}>
-              <Title level={5}>Mạng Xã Hội</Title>
+              <Title level={5}>{t("socialNetworks")}</Title>
             </Col>
           </Row>
           {tempData.social_links.map((social, index) => (
@@ -313,7 +313,7 @@ const CompanyAdmin = () => {
                   icon={<DeleteOutlined />}
                   onClick={() => handleDeleteSocial(index)}
                 >
-                  Xóa
+                  {t("delete")}
                 </Button>
               </Col>
             </Row>
@@ -322,7 +322,7 @@ const CompanyAdmin = () => {
           <Row gutter={[16, 16]} align="middle" style={{ marginTop: 16 }}>
             <Col xs={24} md={18}>
               <Select
-                placeholder="Chọn mạng xã hội"
+                placeholder={t("selectSocialNetwork")}
                 value={newSocial}
                 onChange={(value) => setNewSocial(value)}
                 style={{ width: "100%" }}
@@ -346,7 +346,7 @@ const CompanyAdmin = () => {
                 onClick={handleAddSocial}
                 block
               >
-                Thêm
+                {t("add")}
               </Button>
             </Col>
           </Row>

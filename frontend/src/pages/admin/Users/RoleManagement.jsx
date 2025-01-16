@@ -10,6 +10,7 @@ import {
   Popconfirm,
 } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import {
   useGetRolesQuery,
   useCreateRoleMutation,
@@ -18,14 +19,13 @@ import {
 } from "../../../redux/api/roleApi";
 
 const RoleManagement = () => {
+  const { t } = useTranslation(); // Không chỉ định namespace ở đây
   const { data: rolesData, isLoading, error } = useGetRolesQuery();
   const [createRole] = useCreateRoleMutation();
   const [updateRole] = useUpdateRoleMutation();
   const [deleteRole] = useDeleteRoleMutation();
 
-  // Xử lý dữ liệu roles
   const roles = Array.isArray(rolesData?.data) ? rolesData.data : [];
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [currentRole, setCurrentRole] = useState(null);
@@ -54,46 +54,48 @@ const RoleManagement = () => {
       const values = await form.validateFields();
       if (isEditing) {
         await updateRole({ id: currentRole.id, ...values });
-        message.success("Vai trò đã được cập nhật!");
+        message.success(t("roleAdmin.updateSuccess"));
       } else {
         await createRole(values);
-        message.success("Vai trò mới đã được thêm!");
+        message.success(t("roleAdmin.createSuccess"));
       }
       closeModal();
     } catch (error) {
       console.error("Error handling form submission:", error);
-      message.error("Có lỗi xảy ra!");
+      message.error(t("roleAdmin.error"));
     }
   };
 
   const handleDelete = async (id) => {
     try {
       await deleteRole(id);
-      message.success("Vai trò đã được xóa!");
+      message.success(t("roleAdmin.deleteSuccess"));
     } catch (error) {
       console.error("Error deleting role:", error);
-      message.error("Không thể xóa vai trò!");
+      message.error(t("roleAdmin.deleteFail"));
     }
   };
 
   const columns = [
     {
-      title: "ID",
+      title: <span className="font-notoSansJP">ID</span>,
       dataIndex: "id",
       key: "id",
     },
     {
-      title: "Tên vai trò",
+      title: <span className="font-notoSansJP">{t("roleAdmin.name")}</span>,
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Mô tả",
+      title: (
+        <span className="font-notoSansJP">{t("roleAdmin.description")}</span>
+      ),
       dataIndex: "description",
       key: "description",
     },
     {
-      title: "Hành động",
+      title: <span className="font-notoSansJP">{t("roleAdmin.actions")}</span>,
       key: "action",
       render: (_, record) => (
         <Space>
@@ -102,16 +104,16 @@ const RoleManagement = () => {
             icon={<EditOutlined />}
             onClick={() => openModal(record)}
           >
-            Sửa
+            <span className="font-notoSansJP">{t("roleAdmin.editRole")}</span>
           </Button>
           <Popconfirm
-            title="Bạn có chắc chắn muốn xóa vai trò này?"
+            title={t("roleAdmin.deleteConfirm")}
             onConfirm={() => handleDelete(record.id)}
-            okText="Có"
-            cancelText="Không"
+            okText={t("roleAdmin.yes")}
+            cancelText={t("roleAdmin.no")}
           >
             <Button type="danger" icon={<DeleteOutlined />}>
-              Xóa
+              <span className="font-notoSansJP">{t("roleAdmin.delete")}</span>
             </Button>
           </Popconfirm>
         </Space>
@@ -119,10 +121,9 @@ const RoleManagement = () => {
     },
   ];
 
-  // Xử lý lỗi từ API
   if (error) {
     console.error("Error fetching roles:", error);
-    message.error("Không thể tải danh sách vai trò. Vui lòng thử lại sau.");
+    message.error(t("roleAdmin.loadingError"));
   }
 
   return (
@@ -133,7 +134,7 @@ const RoleManagement = () => {
           icon={<PlusOutlined />}
           onClick={() => openModal()}
         >
-          Thêm Vai Trò
+          <span className="font-notoSansJP">{t("roleAdmin.addRole")}</span>
         </Button>
       </div>
 
@@ -145,22 +146,45 @@ const RoleManagement = () => {
       />
 
       <Modal
-        title={isEditing ? "Chỉnh sửa Vai Trò" : "Thêm Vai Trò"}
+        title={
+          <span className="font-notoSansJP">
+            {isEditing ? t("roleAdmin.editRole") : t("roleAdmin.addRole")}
+          </span>
+        }
         open={isModalOpen}
         onOk={handleOk}
         onCancel={closeModal}
-        okText={isEditing ? "Cập nhật" : "Thêm"}
-        cancelText="Hủy"
+        okText={
+          <span className="font-notoSansJP">{t("roleAdmin.update")}</span>
+        }
+        cancelText={
+          <span className="font-notoSansJP">{t("roleAdmin.cancel")}</span>
+        }
       >
         <Form form={form} layout="vertical">
           <Form.Item
-            label="Tên vai trò"
+            label={
+              <span className="font-notoSansJP">{t("roleAdmin.name")}</span>
+            }
             name="name"
-            rules={[{ required: true, message: "Vui lòng nhập tên vai trò!" }]}
+            rules={[
+              {
+                required: true,
+                message: t("roleAdmin.formErrors.nameRequired"),
+                className: "font-notoSansJP",
+              },
+            ]}
           >
             <Input />
           </Form.Item>
-          <Form.Item label="Mô tả" name="description">
+          <Form.Item
+            label={
+              <span className="font-notoSansJP">
+                {t("roleAdmin.description")}
+              </span>
+            }
+            name="description"
+          >
             <Input.TextArea />
           </Form.Item>
         </Form>

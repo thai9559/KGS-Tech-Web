@@ -1,24 +1,42 @@
 import React, { useState, useEffect } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { Layout, Menu, Button, Tooltip } from "antd";
+import { Layout, Menu, Button, Tooltip, Select } from "antd";
 import {
   HomeOutlined,
   FileTextOutlined,
   UserOutlined,
-  TeamOutlined,
   AppstoreAddOutlined,
-  SettingOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
-import { LOGIN } from "../../utils/config";
+import { useTranslation } from "react-i18next";
 
 const { Sider, Content } = Layout;
+const { Option } = Select;
 
 const MenuNavigate = () => {
+  const { t, i18n } = useTranslation();
   const [collapsed, setCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const location = useLocation(); // Lấy thông tin đường dẫn hiện tại
+  const location = useLocation();
 
+  // Lấy ngôn ngữ từ localStorage hoặc thiết lập mặc định
+  const [language, setLanguage] = useState(
+    localStorage.getItem("language") || "vi"
+  );
+
+  // Đồng bộ hóa i18n với ngôn ngữ trong localStorage khi load trang
+  useEffect(() => {
+    i18n.changeLanguage(language);
+  }, [language, i18n]);
+
+  // Cập nhật ngôn ngữ khi người dùng thay đổi trên Select
+  const handleChangeLanguage = (value) => {
+    setLanguage(value); // Cập nhật state
+    i18n.changeLanguage(value); // Đổi ngôn ngữ
+    localStorage.setItem("language", value); // Lưu vào localStorage
+  };
+
+  // Xử lý thay đổi kích thước màn hình
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 1024);
@@ -36,92 +54,64 @@ const MenuNavigate = () => {
     {
       key: "/admin/dashboard",
       icon: <HomeOutlined />,
-      label: <Link to="/admin/dashboard">Dashboard</Link>,
+      label: <Link to="/admin/dashboard">{t("dashboardAdmin")}</Link>,
     },
     {
       key: "/admin/company",
       icon: <FileTextOutlined />,
-      label: <Link to="/admin/company">Quản lý thông tin công ty</Link>,
+      label: <Link to="/admin/company">{t("manageCompany")}</Link>,
     },
     {
       key: "account",
       icon: <UserOutlined />,
-      label: "Quản lý tài khoản",
+      label: t("accountManagement"),
       children: [
         {
           key: "/admin/users",
-          label: <Link to="/admin/users">Người dùng</Link>,
+          label: <Link to="/admin/users">{t("users")}</Link>,
         },
         {
           key: "/admin/users/roles",
-          label: <Link to="/admin/users/roles">Vai trò</Link>,
+          label: <Link to="/admin/users/roles">{t("roles")}</Link>,
         },
       ],
     },
     {
       key: "blog",
       icon: <AppstoreAddOutlined />,
-      label: "Quản lý Blog",
+      label: t("blogManagement"),
       children: [
         {
           key: "/admin/bloglist",
-          label: <Link to="/admin/bloglist">Bài viết</Link>,
+          label: <Link to="/admin/bloglist">{t("articles")}</Link>,
         },
         {
           key: "/admin/blog/categories",
-          label: <Link to="/admin/blog/categories">Danh mục</Link>,
+          label: <Link to="/admin/blog/categories">{t("categories")}</Link>,
         },
       ],
     },
     {
       key: "feedback",
       icon: <AppstoreAddOutlined />,
-      label: "Quản lý Feedback",
+      label: t("feedbackManagement"),
       children: [
         {
           key: "/admin/feedback",
-          label: <Link to="/admin/feedback">Bài viết</Link>,
+          label: <Link to="/admin/feedback">{t("articles")}</Link>,
         },
       ],
-    },
-    {
-      key: "settings",
-      icon: <SettingOutlined />,
-      label: "Cài đặt",
-      children: [
-        {
-          key: "/admin/general-settings",
-          label: <Link to="/admin/general-settings">Cài đặt chung</Link>,
-        },
-        {
-          key: "/admin/branch-settings",
-          label: <Link to="/admin/branch-settings">Cài đặt chi nhánh</Link>,
-        },
-      ],
-    },
-    {
-      key: "/admin/team",
-      icon: <TeamOutlined />,
-      label: <Link to="/admin/team">Quản lý đội ngũ</Link>,
     },
   ];
 
-  // Xác định key của menu đang được chọn
   const selectedKey = location.pathname;
 
-  // Xác định menu cha cần mở dựa trên key đang được chọn
-  const defaultOpenKeys = menuItems
-    .filter((item) => item.children?.some((child) => child.key === selectedKey))
-    .map((item) => item.key);
-
   const handleLogout = () => {
-    // Xóa access_token và điều hướng về trang đăng nhập
     localStorage.removeItem("access_token");
   };
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      {/* Sidebar */}
       <Sider
         collapsible
         collapsed={collapsed}
@@ -136,7 +126,6 @@ const MenuNavigate = () => {
           justifyContent: "space-between",
         }}
       >
-        {/* Menu Header */}
         <div
           style={{
             color: "white",
@@ -146,23 +135,20 @@ const MenuNavigate = () => {
             fontSize: "18px",
           }}
         >
-          {!collapsed && "Quản lý"}
+          {!collapsed && t("manage")}
         </div>
 
-        {/* Menu Items */}
         <Menu
           theme="dark"
           mode="inline"
           items={menuItems}
-          selectedKeys={[selectedKey]} // Đánh dấu mục menu hiện tại
-          defaultOpenKeys={defaultOpenKeys} // Mở menu cha chứa mục con
+          selectedKeys={[selectedKey]}
           style={{ flex: 1, overflowY: "auto" }}
         />
 
-        {/* Logout Button */}
         <div style={{ padding: "16px", textAlign: "center" }}>
           {collapsed ? (
-            <Tooltip title="Logout">
+            <Tooltip title={t("logout")}>
               <Link to="/admin/login" onClick={handleLogout}>
                 <Button
                   type="primary"
@@ -180,21 +166,29 @@ const MenuNavigate = () => {
                 icon={<LogoutOutlined />}
                 style={{ width: "100%" }}
               >
-                Logout
+                {t("logout")}
               </Button>
             </Link>
           )}
         </div>
+
+        {/* Select Language */}
+        <div style={{ padding: "16px", textAlign: "center" }}>
+          <Select
+            value={language}
+            onChange={handleChangeLanguage}
+            style={{ width: collapsed ? "auto" : "100%" }}
+          >
+            <Option value="en">English</Option>
+            <Option value="ja">日本語</Option>
+            <Option value="vi">Tiếng Việt</Option>
+          </Select>
+        </div>
       </Sider>
 
-      {/* Content */}
       <Layout className="site-layout">
         <Content
-          style={{
-            margin: "16px",
-            padding: "24px",
-            background: "#fff",
-          }}
+          style={{ margin: "16px", padding: "24px", background: "#fff" }}
         >
           <Outlet />
         </Content>
