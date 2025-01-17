@@ -92,7 +92,7 @@ const UserManagement = () => {
           });
         }
 
-        message.success(t("updateSuccess"));
+        message.success(t("userAdmin.updateSuccess"));
       } else {
         const { role_id, permissions, ...userData } = values;
 
@@ -123,7 +123,7 @@ const UserManagement = () => {
   const handleDelete = async (id) => {
     try {
       await deleteUser(id);
-      message.success(t("deleteSuccess"));
+      message.success(t("userAdmin.deleteSuccess"));
     } catch (error) {
       console.error("Error deleting user:", error);
       message.error(t("deleteFail"));
@@ -131,11 +131,6 @@ const UserManagement = () => {
   };
 
   const columns = [
-    {
-      title: <span className="font-notoSansJP">{t("ID")}</span>,
-      dataIndex: "id",
-      key: "id",
-    },
     {
       title: <span className="font-notoSansJP">{t("userAdmin.name")}</span>,
       dataIndex: "name",
@@ -174,7 +169,7 @@ const UserManagement = () => {
       title: <span className="font-notoSansJP">{t("userAdmin.isActive")}</span>,
       dataIndex: "is_active",
       key: "is_active",
-      render: (isActive) => <Switch checked={isActive} disabled />,
+      render: (isActive) => <Switch checked={isActive} />,
     },
     {
       title: <span className="font-notoSansJP">{t("userAdmin.actions")}</span>,
@@ -191,8 +186,8 @@ const UserManagement = () => {
           <Popconfirm
             title={t("userAdmin.deleteConfirm")}
             onConfirm={() => handleDelete(record.id)}
-            okText={t("yes")}
-            cancelText={t("no")}
+            okText={t("userAdmin.yes")}
+            cancelText={t("userAdmin.no")}
           >
             <Button danger type="primary" icon={<DeleteOutlined />}>
               <span className="font-notoSansJP">{t("userAdmin.delete")}</span>
@@ -229,7 +224,7 @@ const UserManagement = () => {
       <Modal
         title={
           <span className="font-notoSansJP">
-            {isEditing ? t("editUser") : t("addUser")}
+            {isEditing ? t("userAdmin.editUser") : t("userAdmin.addUser")}
           </span>
         }
         open={isModalOpen}
@@ -244,7 +239,9 @@ const UserManagement = () => {
       >
         <Form form={form} layout="vertical">
           <Form.Item
-            label={<span className="font-notoSansJP">{t("name")}</span>}
+            label={
+              <span className="font-notoSansJP">{t("userAdmin.name")}</span>
+            }
             name="name"
             rules={[
               {
@@ -357,6 +354,7 @@ const UserManagement = () => {
                 mode="multiple"
                 placeholder={t("userAdmin.choosePermissions")}
                 loading={permissionsLoading}
+                av
                 className="font-notoSansJP"
               >
                 {permissions.map((perm) => (

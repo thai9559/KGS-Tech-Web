@@ -25,35 +25,43 @@ class UserController extends Controller
         ], 200);
     }
     public function login(Request $request)
-{
-    try {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-        ]);
-
-        $credentials = $request->only('email', 'password');
-
-        if (!$token = JWTAuth::attempt($credentials)) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
+    {
+        try {
+            $credentials = $request->only('email', 'password');
+            \Log::info('Login Credentials:', $credentials);
+    
+            $user = User::where('email', $credentials['email'])->first();
+            if (!$user) {
+                \Log::error('User Not Found');
+                return response()->json(['message' => 'Invalid credentials'], 401);
+            }
+    
+            // So sánh hash mật khẩu
+            \Log::info('Hashed Password from DB:', ['password' => $user->password]);
+            if (!Hash::check($credentials['password'], $user->password)) {
+                \Log::error('Password Mismatch');
+                return response()->json(['message' => 'Invalid credentials'], 401);
+            }
+    
+            // Tạo token từ thông tin user
+            $token = JWTAuth::fromUser($user);
+            \Log::info('Generated Token:', ['token' => $token]);
+    
+            // Trả cả token và thông tin user trong response
+            return response()->json([
+                'message' => 'Login successful',
+                'access_token' => $token,
+                'user' => $user, // Trả thông tin đầy đủ của user
+            ], 200);
+        } catch (\Exception $e) {
+            \Log::error('Login Error:', ['error' => $e->getMessage()]);
+            return response()->json(['message' => 'Server Error'], 500);
         }
-
-        $user = Auth::user();
-
-        return response()->json([
-            'message' => 'Login successful',
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-            'user' => $user,
-        ], 200);
-    } catch (\Exception $e) {
-        \Log::error('Login Error', ['error' => $e->getMessage()]);
-        return response()->json([
-            'message' => 'An error occurred during login.',
-            'error' => $e->getMessage(),
-        ], 500);
     }
-}
+    
+    
+    
+
 
     // Đăng nhập
     // public function login(Request $request)
@@ -96,22 +104,13 @@ class UserController extends Controller
     public function logout(Request $request)
     {
         try {
-            // Xóa token hiện tại
-            if ($request->user() && $request->user()->currentAccessToken()) {
-                $request->user()->currentAccessToken()->delete();
-            }
-
-            return response()->json([
-                'message' => 'Logout successful',
-            ], 200);
+            JWTAuth::invalidate(JWTAuth::getToken());
+            return response()->json(['message' => 'Logout successful'], 200);
         } catch (\Exception $e) {
-            \Log::error('Logout Error', ['error' => $e->getMessage()]);
-            return response()->json([
-                'message' => 'An error occurred during logout.',
-                'error' => $e->getMessage(),
-            ], 500);
+            return response()->json(['message' => 'Failed to logout'], 500);
         }
     }
+    
 
     // Đăng ký người dùng mới
     public function register(Request $request)
@@ -131,7 +130,8 @@ class UserController extends Controller
     $user = User::create([
         'name' => $request->name,
         'email' => $request->email,
-        'password' => Hash::make('default_password'), // Mật khẩu mặc định
+   'password' => Hash::make($request->password),
+
         'phone' => $request->phone,
         'role_id' => $request->role_id,
     ]);
@@ -146,6 +146,26 @@ class UserController extends Controller
         'user' => $user,
     ], 201);
 }
+
+// public function register(Request $request)
+// {
+//     $validatedData = $request->validate([
+//         'name' => 'required|string|max:255',
+//         'email' => 'required|email|unique:users,email',
+//         'password' => 'required|string|min:6|confirmed', // Yêu cầu mật khẩu xác nhận
+//     ]);
+
+//     $user = User::create([
+//         'name' => $validatedData['name'],
+//         'email' => $validatedData['email'],
+//         'password' => Hash::make($validatedData['password']), // Mã hóa mật khẩu
+//     ]);
+
+//     return response()->json([
+//         'message' => 'User registered successfully',
+//         'user' => $user,
+//     ], 201);
+// }
 
     
     

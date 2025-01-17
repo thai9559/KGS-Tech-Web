@@ -10,6 +10,9 @@ export default defineConfig({
     watch: {
       usePolling: true, // This is needed to work well inside Docker
     },
+    optimizeDeps: {
+      include: ["jwt-decode"], // Đảm bảo Vite xử lý đúng module này
+    },
     proxy: {
       "/api": {
         target: "http://127.0.0.1:8000",

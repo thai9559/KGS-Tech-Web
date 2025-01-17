@@ -11,6 +11,7 @@ export default {
       colors: {
         primary: "#C05621",
         secondary: "#FFC470",
+        temp: "#1ea0ff",
         footer: "#000957",
         accent: "#00bcd4",
         gray700: "#4B5563",

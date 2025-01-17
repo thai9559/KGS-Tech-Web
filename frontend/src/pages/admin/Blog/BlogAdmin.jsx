@@ -11,7 +11,7 @@ import { BLOGADMIN, CREATEBLOG } from "../../../utils/config"; // Import đườ
 const BlogTable = () => {
   const { data: blogsData, isLoading } = useGetBlogsQuery();
   const [deleteBlog] = useDeleteBlogMutation();
-
+  console.log(blogsData);
   const handleDelete = async (id) => {
     try {
       await deleteBlog(id).unwrap();

@@ -6,17 +6,14 @@ import {
   FormOutlined,
   CommentOutlined,
 } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const Dashboard = () => {
   const { t } = useTranslation();
 
-  const handleNavigation = (path) => {
-    console.log("Navigating to:", path);
-  };
-
   return (
-    <div className="p-4 bg-gray-100 min-h-screen">
+    <div className="p-4 min-h-screen">
       <h1 className="text-xl sm:text-2xl font-bold mb-6 text-center sm:text-left">
         {t("dashboard.title")}
       </h1>
@@ -34,12 +31,12 @@ const Dashboard = () => {
             }
             className="shadow-md h-full"
           >
-            <p
+            <Link
+              to="/admin/company"
               className="cursor-pointer text-sm sm:text-base text-blue-500 hover:underline"
-              onClick={() => handleNavigation("/admin/company")}
             >
               {t("dashboard.company_list")}
-            </p>
+            </Link>
           </Card>
         </Col>
 
@@ -56,18 +53,19 @@ const Dashboard = () => {
             }
             className="shadow-md h-full"
           >
-            <p
+            <Link
+              to="/admin/users"
               className="cursor-pointer text-sm sm:text-base text-blue-500 hover:underline"
-              onClick={() => handleNavigation("/admin/users")}
             >
               {t("dashboard.user_list")}
-            </p>
-            <p
+            </Link>
+            <br />
+            <Link
+              to="/admin/users/roles"
               className="cursor-pointer text-sm sm:text-base text-blue-500 hover:underline"
-              onClick={() => handleNavigation("/admin/users/roles")}
             >
               {t("dashboard.role_list")}
-            </p>
+            </Link>
           </Card>
         </Col>
 
@@ -84,18 +82,19 @@ const Dashboard = () => {
             }
             className="shadow-md h-full"
           >
-            <p
+            <Link
+              to="/admin/bloglist"
               className="cursor-pointer text-sm sm:text-base text-blue-500 hover:underline"
-              onClick={() => handleNavigation("/admin/bloglist")}
             >
               {t("dashboard.blog_list")}
-            </p>
-            <p
+            </Link>
+            <br />
+            <Link
+              to="/admin/blog/categories"
               className="cursor-pointer text-sm sm:text-base text-blue-500 hover:underline"
-              onClick={() => handleNavigation("/admin/blog/categories")}
             >
               {t("dashboard.category_list")}
-            </p>
+            </Link>
           </Card>
         </Col>
 
@@ -112,12 +111,12 @@ const Dashboard = () => {
             }
             className="shadow-md h-full"
           >
-            <p
+            <Link
+              to="/admin/feedback"
               className="cursor-pointer text-sm sm:text-base text-blue-500 hover:underline"
-              onClick={() => handleNavigation("/admin/feedback")}
             >
               {t("dashboard.feedback_list")}
-            </p>
+            </Link>
           </Card>
         </Col>
       </Row>
