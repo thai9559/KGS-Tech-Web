@@ -97,13 +97,13 @@ const UserManagement = () => {
         const { role_id, permissions, ...userData } = values;
 
         if (permissions && permissions.length === 0) {
-          message.error(t("formErrors.permissionsRequired"));
+          message.error(t("userAdmin.formErrors.permissionsRequired"));
           return;
         }
 
         const newUser = await createUser({ ...userData, role_id }).unwrap();
 
-        message.success(t("createSuccess"));
+        message.success(t("userAdmin.createSuccess"));
 
         if (permissions?.length) {
           await assignPermissions({
@@ -194,7 +194,7 @@ const UserManagement = () => {
             okText={t("yes")}
             cancelText={t("no")}
           >
-            <Button type="danger" icon={<DeleteOutlined />}>
+            <Button danger type="primary" icon={<DeleteOutlined />}>
               <span className="font-notoSansJP">{t("userAdmin.delete")}</span>
             </Button>
           </Popconfirm>
@@ -204,7 +204,7 @@ const UserManagement = () => {
   ];
 
   return (
-    <div>
+    <section>
       <div
         className="flex justify-between items-center mb-4"
         style={{ marginBottom: 16 }}
@@ -235,14 +235,23 @@ const UserManagement = () => {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={closeModal}
-        okText={<span className="font-notoSansJP">{t("update")}</span>}
-        cancelText={<span className="font-notoSansJP">{t("cancel")}</span>}
+        okText={
+          <span className="font-notoSansJP">{t("userAdmin.update")}</span>
+        }
+        cancelText={
+          <span className="font-notoSansJP">{t("userAdmin.cancel")}</span>
+        }
       >
         <Form form={form} layout="vertical">
           <Form.Item
             label={<span className="font-notoSansJP">{t("name")}</span>}
             name="name"
-            rules={[{ required: true, message: t("formErrors.nameRequired") }]}
+            rules={[
+              {
+                required: true,
+                message: t("userAdmin.formErrors.nameRequired"),
+              },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -250,50 +259,74 @@ const UserManagement = () => {
             label={<span className="font-notoSansJP">{t("email")}</span>}
             name="email"
             rules={[
-              { required: true, message: t("formErrors.emailRequired") },
-              { type: "email", message: t("formErrors.emailInvalid") },
+              {
+                required: true,
+                message: t("userAdmin.formErrors.emailRequired"),
+              },
+              {
+                type: "email",
+                message: t("userAdmin.formErrors.emailInvalid"),
+              },
             ]}
           >
             <Input />
           </Form.Item>
           {!isEditing && (
             <Form.Item
-              label={<span className="font-notoSansJP">{t("password")}</span>}
+              label={
+                <span className="font-notoSansJP">
+                  {t("userAdmin.password")}
+                </span>
+              }
               name="password"
               rules={[
-                { required: true, message: t("formErrors.passwordRequired") },
-                { min: 6, message: t("formErrors.passwordMin") },
+                {
+                  required: true,
+                  message: t("userAdmin.formErrors.passwordRequired"),
+                },
+                { min: 6, message: t("userAdmin.formErrors.passwordMin") },
               ]}
             >
               <Input.Password />
             </Form.Item>
           )}
           <Form.Item
-            label={<span className="font-notoSansJP">{t("phone")}</span>}
+            label={
+              <span className="font-notoSansJP">{t("userAdmin.phone")}</span>
+            }
             name="phone"
             rules={[
               {
                 pattern: /^[0-9]{9,15}$/,
-                message: t("formErrors.phoneInvalid"),
+                message: t("userAdmin.formErrors.phoneInvalid"),
               },
             ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            label={<span className="font-notoSansJP">{t("isActive")}</span>}
+            label={
+              <span className="font-notoSansJP">{t("userAdmin.isActive")}</span>
+            }
             name="is_active"
             valuePropName="checked"
           >
             <Switch />
           </Form.Item>
           <Form.Item
-            label={<span className="font-notoSansJP">{t("role")}</span>}
+            label={
+              <span className="font-notoSansJP">{t("userAdmin.role")}</span>
+            }
             name="role_id"
-            rules={[{ required: true, message: t("formErrors.roleRequired") }]}
+            rules={[
+              {
+                required: true,
+                message: t("userAdmin.formErrors.roleRequired"),
+              },
+            ]}
           >
             <Select
-              placeholder={t("chooseRole")}
+              placeholder={t("userAdmin.chooseRole")}
               loading={rolesLoading}
               className="font-notoSansJP"
             >
@@ -308,19 +341,21 @@ const UserManagement = () => {
           {isEditing && (
             <Form.Item
               label={
-                <span className="font-notoSansJP">{t("permissions")}</span>
+                <span className="font-notoSansJP">
+                  {t("userAdmin.permissions")}
+                </span>
               }
               name="permissions"
               rules={[
                 {
                   required: true,
-                  message: t("formErrors.permissionsRequired"),
+                  message: t("userAdmin.choosePermissions"),
                 },
               ]}
             >
               <Select
                 mode="multiple"
-                placeholder={t("choosePermissions")}
+                placeholder={t("userAdmin.choosePermissions")}
                 loading={permissionsLoading}
                 className="font-notoSansJP"
               >
@@ -334,7 +369,7 @@ const UserManagement = () => {
           )}
         </Form>
       </Modal>
-    </div>
+    </section>
   );
 };
 

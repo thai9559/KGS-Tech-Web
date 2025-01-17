@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 class UserController extends Controller
 {
     // Lấy danh sách người dùng
@@ -22,42 +24,72 @@ class UserController extends Controller
             'data' => $users,
         ], 200);
     }
+    public function login(Request $request)
+{
+    try {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if (!$token = JWTAuth::attempt($credentials)) {
+            return response()->json(['message' => 'Invalid credentials'], 401);
+        }
+
+        $user = Auth::user();
+
+        return response()->json([
+            'message' => 'Login successful',
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'user' => $user,
+        ], 200);
+    } catch (\Exception $e) {
+        \Log::error('Login Error', ['error' => $e->getMessage()]);
+        return response()->json([
+            'message' => 'An error occurred during login.',
+            'error' => $e->getMessage(),
+        ], 500);
+    }
+}
 
     // Đăng nhập
-    public function login(Request $request)
-    {
-        try {
-            // Validate dữ liệu từ frontend
-            $request->validate([
-                'email' => 'required|email',
-                'password' => 'required|min:6',
-            ]);
+    // public function login(Request $request)
+    // {
+    //     try {
+    //         // Validate dữ liệu từ frontend
+    //         $request->validate([
+    //             'email' => 'required|email',
+    //             'password' => 'required|min:6',
+    //         ]);
 
-            // Lấy user bằng email
-            $user = User::where('email', $request->email)->first();
+    //         // Lấy user bằng email
+    //         $user = User::where('email', $request->email)->first();
 
-            // Kiểm tra user và mật khẩu
-            if (!$user || !Hash::check($request->password, $user->password)) {
-                return response()->json(['message' => 'Invalid credentials'], 401);
-            }
+    //         // Kiểm tra user và mật khẩu
+    //         // if (!$user || !Hash::check($request->password, $user->password)) {
+    //         //     return response()->json(['message' => 'Invalid credentials'], 401);
+    //         // }
 
-            // Tạo token
-            $token = $user->createToken('auth_token')->plainTextToken;
+    //         // Tạo token
+    //         $token = $user->createToken('auth_token')->plainTextToken;
 
-            return response()->json([
-                'message' => 'Login successful',
-                'access_token' => $token,
-                'token_type' => 'Bearer',
-                'user' => $user,
-            ], 200);
-        } catch (\Exception $e) {
-            \Log::error('Login Error', ['error' => $e->getMessage()]);
-            return response()->json([
-                'message' => 'An error occurred during login.',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-    }
+    //         return response()->json([
+    //             'message' => 'Login successful',
+    //             'access_token' => $token,
+    //             'token_type' => 'Bearer',
+    //             'user' => $user,
+    //         ], 200);
+    //     } catch (\Exception $e) {
+    //         \Log::error('Login Error', ['error' => $e->getMessage()]);
+    //         return response()->json([
+    //             'message' => 'An error occurred during login.',
+    //             'error' => $e->getMessage(),
+    //         ], 500);
+    //     }
+    // }
 
 
     // Đăng xuất

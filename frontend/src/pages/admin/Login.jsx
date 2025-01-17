@@ -59,7 +59,7 @@ const Login = () => {
       localStorage.setItem("access_token", access_token);
 
       // Hiển thị thông báo thành công và điều hướng
-      message.success(`${t("login.success")}! Welcome ${user.name}`);
+
       navigate("/admin/dashboard");
     } catch (error) {
       // Xử lý lỗi nếu đăng nhập thất bại

@@ -94,7 +94,7 @@ const BlogTable = () => {
   ];
 
   return (
-    <div className="p-4">
+    <div className="">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Quản lý Blogs</h1>
         <Link to={CREATEBLOG}>

@@ -12,6 +12,7 @@ import {
   Descriptions,
 } from "antd";
 import { useTranslation } from "react-i18next";
+import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   useGetFeedbacksQuery,
   useCreateFeedbackMutation,
@@ -123,20 +124,7 @@ const FeedbackManagement = () => {
       dataIndex: "sent_at",
       key: "sent_at",
     },
-    {
-      title: (
-        <span className="font-notoSansJP">
-          {t("feedbackAdmin.tableColumns.isVisible")}
-        </span>
-      ),
-      key: "is_visible",
-      render: (_, record) => (
-        <Switch
-          checked={record.is_visible}
-          onChange={() => handleToggleVisibility(record.id, record.is_visible)}
-        />
-      ),
-    },
+
     {
       title: (
         <span className="font-notoSansJP">
@@ -157,7 +145,7 @@ const FeedbackManagement = () => {
             okText={t("feedbackAdmin.yes")}
             cancelText={t("feedbackAdmin.no")}
           >
-            <Button type="danger">
+            <Button danger type="primary" icon={<DeleteOutlined />}>
               <span className="font-notoSansJP">
                 {t("feedbackAdmin.deleteFeedback")}
               </span>

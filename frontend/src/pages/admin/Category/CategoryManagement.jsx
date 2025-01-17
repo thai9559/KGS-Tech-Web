@@ -115,7 +115,7 @@ const CategoryManagement = () => {
             okText={t("categoryAdmin.yes")}
             cancelText={t("categoryAdmin.no")}
           >
-            <Button type="danger" icon={<DeleteOutlined />}>
+            <Button danger type="primary" icon={<DeleteOutlined />}>
               <span className="font-notoSansJP">
                 {t("categoryAdmin.deleteCategory")}
               </span>
@@ -128,7 +128,14 @@ const CategoryManagement = () => {
 
   return (
     <div>
-      <div style={{ marginBottom: 16 }}>
+      <div
+        className="flex justify-between items-center mb-4"
+        style={{ marginBottom: 16 }}
+      >
+        <h1 className="text-2xl font-bold">
+          {" "}
+          {t("categoryAdmin.categoryManagement")}
+        </h1>
         <Button
           type="primary"
           icon={<PlusOutlined />}

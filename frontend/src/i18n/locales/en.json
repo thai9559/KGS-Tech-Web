@@ -15,7 +15,6 @@
   "feedbackManagement": "Feedback Management",
   "logout": "Logout",
   "manage": "Manage",
-
   "stats": {
     "ask": "Why Choose KGS Tech?",
     "users": "Users",
@@ -243,17 +242,18 @@
     "success": "Login successful!"
   },
   "dashboard": {
-    "company_info": "Company Information",
+    "title": "Dashboard",
+    "company_management": "Company Management",
     "account_management": "Account Management",
     "blog_management": "Blog Management",
-    "company_info_desc": "Update the basic information of the company.",
-    "account_management_desc": "Set up user accounts and permissions.",
-    "blog_management_desc": "Manage blog posts and content.",
-    "logout": "Logout",
-    "logout_success": "You have successfully logged out.",
-    "logout_error": "An error occurred during logout. Please try again."
+    "feedback_management": "Feedback Management",
+    "company_list": "Company infomation",
+    "user_list": "User List",
+    "role_list": "Role List",
+    "blog_list": "Blog List",
+    "category_list": "Category List",
+    "feedback_list": "Feedback List"
   },
-
   "companyManagement": "Company Management",
   "saveChanges": "Save Changes",
   "loadingCompanyInfo": "Loading company information...",
@@ -280,11 +280,11 @@
   "logoUploaded": "Logo uploaded successfully!",
   "logoUploadFailed": "Failed to upload logo.",
   "socialAlreadyAdded": "This social network is already added or not selected!",
-
   "userAdmin": {
     "userManagement": "User Management",
-    "addUser": "Add User",
-    "editUser": "Edit User",
+    "addUser": "Add ",
+    "editUser": "Edit ",
+    "delete": "Delete",
     "update": "Update",
     "cancel": "Cancel",
     "name": "Name",
@@ -316,14 +316,14 @@
       "permissionsRequired": "Please select at least one permission!"
     }
   },
-
   "roleAdmin": {
     "roleManagement": "Role Management",
-    "addRole": "Add Role",
-    "editRole": "Edit Role",
+    "addRole": "Add ",
+    "editRole": "Edit ",
     "update": "Update",
     "add": "Add",
     "cancel": "Cancel",
+    "delete": "Delete",
     "name": "Role Name",
     "description": "Description",
     "actions": "Actions",
@@ -344,12 +344,13 @@
     "feedbackManagement": "Feedback Management",
     "addFeedback": "Add Feedback",
     "viewDetails": "View Details",
-    "deleteFeedback": "Delete Feedback",
+    "deleteFeedback": "Delete",
     "toggleVisibility": "Feedback visibility has been updated!",
     "updateVisibilityFail": "Unable to update feedback visibility!",
     "deleteConfirm": "Are you sure you want to delete this feedback?",
     "yes": "Yes",
     "no": "No",
+    "delete": "Delete",
     "error": "An error occurred!",
     "deleteSuccess": "Feedback has been deleted!",
     "deleteFail": "Unable to delete feedback!",
@@ -387,6 +388,7 @@
     "update": "Update",
     "add": "Add",
     "cancel": "Cancel",
+    "deleteCategory": "Delete",
     "name": "Category Name",
     "slug": "Slug",
     "description": "Description",

@@ -112,7 +112,7 @@ const RoleManagement = () => {
             okText={t("roleAdmin.yes")}
             cancelText={t("roleAdmin.no")}
           >
-            <Button type="danger" icon={<DeleteOutlined />}>
+            <Button danger type="primary" icon={<DeleteOutlined />}>
               <span className="font-notoSansJP">{t("roleAdmin.delete")}</span>
             </Button>
           </Popconfirm>
@@ -128,7 +128,13 @@ const RoleManagement = () => {
 
   return (
     <div>
-      <div style={{ marginBottom: 16 }}>
+      <div
+        className="flex justify-between items-center mb-4"
+        style={{ marginBottom: 16 }}
+      >
+        <h1 className="text-2xl text-black font-bold font-notoSansJP">
+          {t("roleAdmin.roleManagement")}
+        </h1>
         <Button
           type="primary"
           icon={<PlusOutlined />}

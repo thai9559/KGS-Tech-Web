@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { Layout, Menu, Button, Tooltip, Select } from "antd";
+import { Layout, Menu, Button, Tooltip, Select, Avatar, Spin } from "antd";
 import {
   HomeOutlined,
   FileTextOutlined,
@@ -9,7 +9,7 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-
+import { useGetUserQuery } from "../../redux/api/userApi";
 const { Sider, Content } = Layout;
 const { Option } = Select;
 
@@ -19,24 +19,18 @@ const MenuNavigate = () => {
   const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
 
-  // Lấy ngôn ngữ từ localStorage hoặc thiết lập mặc định
   const [language, setLanguage] = useState(
     localStorage.getItem("language") || "vi"
   );
 
-  // Đồng bộ hóa i18n với ngôn ngữ trong localStorage khi load trang
+  // Gọi API để lấy thông tin người dùng
+  const { data: user, isLoading } = useGetUserQuery();
+
+  console.log(user);
   useEffect(() => {
     i18n.changeLanguage(language);
   }, [language, i18n]);
 
-  // Cập nhật ngôn ngữ khi người dùng thay đổi trên Select
-  const handleChangeLanguage = (value) => {
-    setLanguage(value); // Cập nhật state
-    i18n.changeLanguage(value); // Đổi ngôn ngữ
-    localStorage.setItem("language", value); // Lưu vào localStorage
-  };
-
-  // Xử lý thay đổi kích thước màn hình
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 1024);
@@ -49,6 +43,12 @@ const MenuNavigate = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const handleChangeLanguage = (value) => {
+    setLanguage(value);
+    i18n.changeLanguage(value);
+    localStorage.setItem("language", value);
+  };
 
   const menuItems = [
     {
@@ -119,8 +119,8 @@ const MenuNavigate = () => {
         breakpoint="lg"
         collapsedWidth={isMobile ? 0 : 80}
         style={{
-          backgroundColor: "#001529",
-          color: "#fff",
+          backgroundColor: "#f0f2f5",
+          color: "#333",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -128,22 +128,33 @@ const MenuNavigate = () => {
       >
         <div
           style={{
-            color: "white",
             textAlign: "center",
             padding: "16px",
             fontWeight: "bold",
             fontSize: "18px",
+            color: "#333",
           }}
         >
-          {!collapsed && t("manage")}
+          {isLoading ? (
+            <Spin />
+          ) : (
+            <>
+              <Avatar
+                style={{ backgroundColor: "#87d068", marginBottom: "8px" }}
+                size={64}
+              >
+                {user?.name.charAt(0).toUpperCase()}
+              </Avatar>
+              <div>{user?.name || "User"}</div>
+            </>
+          )}
         </div>
 
         <Menu
-          theme="dark"
           mode="inline"
           items={menuItems}
           selectedKeys={[selectedKey]}
-          style={{ flex: 1, overflowY: "auto" }}
+          style={{ flex: 1, overflowY: "auto", backgroundColor: "#f0f2f5" }}
         />
 
         <div style={{ padding: "16px", textAlign: "center" }}>
@@ -172,7 +183,6 @@ const MenuNavigate = () => {
           )}
         </div>
 
-        {/* Select Language */}
         <div style={{ padding: "16px", textAlign: "center" }}>
           <Select
             value={language}

@@ -45,14 +45,15 @@ function App() {
 
           {/* Protected Routes */}
 
-          <Route path="/admin/dashboard" element={<Dashboard />} />
-          <Route path="/admin/users" element={<UserManagement />} />
-          <Route path="/admin/users/roles" element={<RoleAdmin />} />
-          <Route path="/admin/company" element={<CompanyAdmin />} />
-          <Route path="/admin/bloglist" element={<BlogAdmin />} />
-          <Route path="/admin/blog/categories" element={<CategoryAdmin />} />
-          <Route path="/admin/feedback" element={<FeedbackAdmin />} />
-          <Route path="/admin" element={<Menu />} />
+          <Route path="/admin" element={<Menu />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="users" element={<UserManagement />} />
+            <Route path="users/roles" element={<RoleAdmin />} />
+            <Route path="company" element={<CompanyAdmin />} />
+            <Route path="bloglist" element={<BlogAdmin />} />
+            <Route path="blog/categories" element={<CategoryAdmin />} />
+            <Route path="feedback" element={<FeedbackAdmin />} />
+          </Route>
 
           {/* Protected Routes
           <Route

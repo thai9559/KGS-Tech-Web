@@ -18,9 +18,17 @@ Route::middleware([])->group(function () {
 
     Route::delete('/users/{id}', [UserController::class, 'destroy']); // Xóa người dùng
     Route::post('/register', [UserController::class, 'register']);
-    Route::post('/login', [UserController::class, 'login']);
     Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
 });
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return response()->json([
+        'success' => true,
+        'data' => $request->user(),
+    ]);
+});
+
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware([])->group(function () {
     Route::get('/roles', [RoleController::class, 'index']);

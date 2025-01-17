@@ -4,11 +4,14 @@ export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://127.0.0.1:8000/api",
-    prepareHeaders: (headers) => {
+    prepareHeaders: (headers, { endpoint }) => {
+      // Lấy token từ localStorage
       const token = localStorage.getItem("access_token");
-      if (token) {
+      if (token && endpoint !== "login" && endpoint !== "register") {
         headers.set("Authorization", `Bearer ${token}`);
       }
+
+      headers.set("Content-Type", "application/json");
       return headers;
     },
   }),
@@ -21,6 +24,13 @@ export const authApi = createApi({
         body: credentials,
       }),
       invalidatesTags: ["Auth"], // Làm mới dữ liệu liên quan khi đăng nhập thành công
+    }),
+    getUser: builder.query({
+      query: () => ({
+        url: "/user",
+        method: "GET",
+      }),
+      providesTags: ["Auth"],
     }),
     logout: builder.mutation({
       query: () => ({
@@ -40,5 +50,9 @@ export const authApi = createApi({
 });
 
 // Export hooks để sử dụng trong component
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation } =
-  authApi;
+export const {
+  useLoginMutation,
+  useGetUserQuery,
+  useLogoutMutation,
+  useRegisterMutation,
+} = authApi;
