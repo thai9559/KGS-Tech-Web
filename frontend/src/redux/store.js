@@ -2,7 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import { blogApi } from "./api/blogApi";
 import { authApi } from "./api/authApi";
 import { userApi } from "./api/userApi";
-import { companyApi } from "./api/CompanyApi";
+
+import { companyApi } from "./api/companyApi";
 import blogReducer from "./slices/blogSlice";
 import { roleApi } from "./api/roleApi";
 import { categoryApi } from "./api/categoryApi";
