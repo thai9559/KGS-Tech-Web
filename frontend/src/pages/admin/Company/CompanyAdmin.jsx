@@ -17,11 +17,12 @@ import {
   DeleteOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
+
 import {
   useGetCompanyQuery,
   useUpdateCompanyMutation,
   useDeleteLogoMutation,
-} from "../../../redux/api/CompanyApi";
+} from "../../../redux/api/companyApi";
 import { useTranslation } from "react-i18next";
 
 const { Title } = Typography;
