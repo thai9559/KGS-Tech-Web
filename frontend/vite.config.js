@@ -11,7 +11,7 @@ export default defineConfig({
       usePolling: true, // This is needed to work well inside Docker
     },
     optimizeDeps: {
-      include: ["jwt-decode"], // Đảm bảo Vite xử lý đúng module này
+      include: ["jwt-decode,react-quill"], // Đảm bảo Vite xử lý đúng module này
     },
     proxy: {
       "/api": {

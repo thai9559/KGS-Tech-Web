@@ -1,32 +1,22 @@
 import React, { useState } from "react";
 import { Layout, Row, Col, Form, Input, Button, Select, message } from "antd";
-import { Editor } from "@tinymce/tinymce-react";
-
-import { useCreateBlogMutation } from "../../../redux/api/blogApi";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Giao diện
 
 const { Header, Content, Footer } = Layout;
 const { Option } = Select;
 
-const CreateBlog = () => {
-  const [createBlog] = useCreateBlogMutation();
+const Test = () => {
   const [content, setContent] = useState("");
 
-  const handleEditorChange = (value) => {
-    setContent(value);
-  };
-
-  const handleFinish = async (values) => {
-    try {
-      const payload = {
-        ...values,
-        content,
-      };
-
-      await createBlog(payload).unwrap();
-      message.success("Tạo bài viết thành công!");
-    } catch (error) {
-      message.error("Tạo bài viết thất bại!");
-    }
+  const quillModules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }], // Tiêu đề H1, H2, H3
+      ["bold", "italic", "underline", "strike"], // In đậm, nghiêng, gạch chân, gạch ngang
+      [{ list: "ordered" }, { list: "bullet" }], // Danh sách
+      ["link", "image"], // Chèn liên kết và hình ảnh
+      ["clean"], // Xóa định dạng
+    ],
   };
 
   return (
@@ -43,10 +33,11 @@ const CreateBlog = () => {
       </Header>
 
       <Content style={{ padding: "20px" }}>
-        <Form layout="vertical" onFinish={handleFinish}>
+        <Form layout="vertical">
           <Row gutter={[16, 16]}>
             {/* Cột trái */}
             <Col xs={24} md={12}>
+              {/* Tiêu đề bài viết */}
               <Form.Item
                 name="title"
                 label="Tiêu Đề"
@@ -54,6 +45,8 @@ const CreateBlog = () => {
               >
                 <Input placeholder="Nhập tiêu đề bài viết" />
               </Form.Item>
+
+              {/* Từ khóa chính */}
               <Form.Item
                 name="main_keyword"
                 label="Từ Khóa Chính"
@@ -63,6 +56,8 @@ const CreateBlog = () => {
               >
                 <Input placeholder="Nhập từ khóa chính" />
               </Form.Item>
+
+              {/* Tags */}
               <Form.Item
                 name="tags"
                 label="Tags"
@@ -74,6 +69,7 @@ const CreateBlog = () => {
 
             {/* Cột phải */}
             <Col xs={24} md={12}>
+              {/* Slug */}
               <Form.Item
                 name="slug"
                 label="Slug (URL thân thiện SEO)"
@@ -81,6 +77,8 @@ const CreateBlog = () => {
               >
                 <Input placeholder="Nhập slug" />
               </Form.Item>
+
+              {/* Từ khóa phụ */}
               <Form.Item
                 name="secondary_keywords"
                 label="Từ Khóa Phụ"
@@ -90,6 +88,8 @@ const CreateBlog = () => {
               >
                 <Input placeholder="Nhập từ khóa phụ, cách nhau bằng dấu phẩy" />
               </Form.Item>
+
+              {/* Danh mục */}
               <Form.Item
                 name="category_id"
                 label="Danh Mục"
@@ -105,45 +105,11 @@ const CreateBlog = () => {
 
           {/* Nội dung bài viết */}
           <Form.Item label="Nội Dung" required>
-            <Editor
-              apiKey="9dsiwvmjoqjrozos58bg410o56uilmv29czcut6wjykwcvc1" // Thay bằng API key TinyMCE hợp lệ
+            <ReactQuill
               value={content}
-              onEditorChange={(value) => setContent(value)}
-              init={{
-                height: 500,
-                branding: false,
-                menubar: true,
-                plugins: [
-                  "image", // Plugin hỗ trợ chèn ảnh
-                  "imagetools", // Plugin chỉnh sửa ảnh
-                  "advlist autolink lists link charmap preview anchor",
-                  "searchreplace visualblocks code fullscreen",
-                  "insertdatetime media table paste code help wordcount",
-                ],
-                toolbar:
-                  "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help | image",
-                automatic_uploads: true,
-                images_upload_handler: (blobInfo, success, failure) => {
-                  // Xử lý upload ảnh
-                  const file = blobInfo.blob(); // Lấy tệp ảnh
-                  const reader = new FileReader();
-
-                  // Chuyển ảnh thành Base64
-                  reader.onload = () => {
-                    try {
-                      success(reader.result); // Gọi hàm success với Base64 của ảnh
-                    } catch (error) {
-                      failure("Không thể tải ảnh!"); // Gọi failure nếu có lỗi
-                    }
-                  };
-
-                  reader.onerror = () => {
-                    failure("Không thể đọc ảnh!"); // Gọi failure nếu đọc file thất bại
-                  };
-
-                  reader.readAsDataURL(file); // Đọc ảnh dưới dạng Base64
-                },
-              }}
+              modules={quillModules}
+              theme="snow"
+              placeholder="Nhập nội dung bài viết của bạn..."
             />
           </Form.Item>
 
@@ -163,4 +129,4 @@ const CreateBlog = () => {
   );
 };
 
-export default CreateBlog;
+export default Test;

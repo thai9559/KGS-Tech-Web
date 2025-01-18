@@ -1,13 +1,14 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
+  useLocation,
 } from "react-router-dom";
 import Loading from "./components/Loading";
 import PrivateRoute from "./pages/PriviteRoute/PrivateRoute";
-
+import Test from "./pages/admin/Blog/Test";
 // Lazy load các trang
 const Home = lazy(() => import("./pages/Home"));
 const Company = lazy(() => import("./pages/Company"));
@@ -30,51 +31,77 @@ const CategoryAdmin = lazy(() =>
 const TestBlog = lazy(() => import("./pages/admin/Blog/CreateBlog"));
 
 function App() {
+  const [loading, setLoading] = useState(false);
+  const location = useLocation();
+
+  // Danh sách ngoại lệ (không hiển thị loading)
+  const exceptionRoutes = ["/admin/testtest", "/testtest"]; // Thêm đường dẫn cần bỏ qua
+
+  useEffect(() => {
+    // Nếu URL hiện tại nằm trong danh sách ngoại lệ, không hiển thị loading
+    if (exceptionRoutes.includes(location.pathname)) {
+      setLoading(false);
+    } else {
+      setLoading(true);
+      const timeout = setTimeout(() => {
+        setLoading(false);
+      }, 500); // Set thời gian loading (nếu cần)
+
+      return () => clearTimeout(timeout);
+    }
+  }, [location]);
+
   return (
-    <Router>
-      <Suspense fallback={<Loading />}>
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/company" element={<Company />} />
-          <Route path="/business" element={<Business />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:id" element={<BlogDetailPage />} />
-          <Route path="/admin/login" element={<Login />} />
+    <div>
+      {loading ? (
+        <Loading />
+      ) : (
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/company" element={<Company />} />
+            <Route path="/business" element={<Business />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<BlogDetailPage />} />
+            <Route path="/admin/login" element={<Login />} />
 
-          {/* Protected Routes */}
-          <Route
-            path="/admin"
-            element={
-              <PrivateRoute>
-                <MenuNavigate />
-              </PrivateRoute>
-            }
-          >
-            {/* Dashboard */}
-            <Route path="dashboard" element={<Dashboard />} />
-
-            {/* Users Management */}
-            <Route path="users" element={<UserManagement />} />
-            <Route path="users/roles" element={<RoleAdmin />} />
-
-            {/* Company Management */}
-            <Route path="company" element={<CompanyAdmin />} />
-
-            {/* Blog Management */}
-            <Route path="bloglist" element={<BlogAdmin />} />
+            <Route path="test" element={<Test />} />
             <Route path="blog/create-blog" element={<TestBlog />} />
-            <Route path="blog/categories" element={<CategoryAdmin />} />
+            {/* Protected Routes */}
+            <Route
+              path="/admin"
+              element={
+                <PrivateRoute>
+                  <MenuNavigate />
+                </PrivateRoute>
+              }
+            >
+              {/* Dashboard */}
+              <Route path="dashboard" element={<Dashboard />} />
 
-            {/* Feedback Management */}
-            <Route path="feedback" element={<FeedbackAdmin />} />
-          </Route>
+              {/* Users Management */}
+              <Route path="users" element={<UserManagement />} />
+              <Route path="users/roles" element={<RoleAdmin />} />
 
-          {/* Redirect unknown routes */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Suspense>
-    </Router>
+              {/* Company Management */}
+              <Route path="company" element={<CompanyAdmin />} />
+
+              {/* Blog Management */}
+              <Route path="bloglist" element={<BlogAdmin />} />
+              {/* <Route path="blog/create-blog" element={<TestBlog />} /> */}
+              <Route path="blog/categories" element={<CategoryAdmin />} />
+
+              {/* Feedback Management */}
+              <Route path="feedback" element={<FeedbackAdmin />} />
+            </Route>
+
+            {/* Redirect unknown routes */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
+      )}
+    </div>
   );
 }
 
