@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import LayoutCompany from "../components/LayoutCompanyt";
 import Timeline from "../components/Company/TimeLine";
+
 // Lazy load components
 const CoreValues = lazy(() => import("../components/Company/CoreValues"));
 const CompanyOverview = lazy(() =>

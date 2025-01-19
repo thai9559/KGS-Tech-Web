@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
 import Layout from "../components/Layout";
+import LayoutBusiness from "../components/LayoutBusiness";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -111,7 +112,7 @@ function Business() {
   }));
 
   return (
-    <Layout>
+    <LayoutBusiness>
       <Suspense fallback={<div>Loading...</div>}>
         <VerticalCarousel
           sections={enhancedSections}
@@ -142,7 +143,7 @@ function Business() {
           </div>
         </div>
       </Suspense>
-    </Layout>
+    </LayoutBusiness>
   );
 }
 

@@ -83,7 +83,7 @@ const HeaderDemo = ({ home, company, business, blog }) => {
       >
         <ul className="flex flex-col lg:flex-row gap-8 cursor-pointer lg:w-auto">
           <li
-            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-base text-center z-50 ${
+            className={`relative hover:text-gray-400 font-normal  font-notoSansJP text-lg text-center z-50 ${
               menuOpen || scrolled
                 ? isActive("/")
                   ? "text-black"
@@ -97,7 +97,7 @@ const HeaderDemo = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-base text-center z-50 ${
+            className={`relative hover:text-gray-400 font-normal  font-notoSansJP text-lg text-center z-50 ${
               menuOpen || scrolled
                 ? isActive("/company")
                   ? "text-black"
@@ -111,7 +111,7 @@ const HeaderDemo = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-base text-center z-50 ${
+            className={`relative hover:text-gray-400 font-normal font-notoSansJP text-lg text-center z-50 ${
               menuOpen || scrolled
                 ? isActive("/business")
                   ? "text-black"
@@ -125,7 +125,7 @@ const HeaderDemo = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-medium font-notoSansJP text-base text-center z-50 ${
+            className={`relative hover:text-gray-400 font-normal font-notoSansJP text-lg text-center z-50 ${
               menuOpen || scrolled
                 ? isActive("/blog")
                   ? "text-black"

@@ -8,7 +8,9 @@ import {
 } from "react-router-dom";
 import Loading from "./components/Loading";
 import PrivateRoute from "./pages/PriviteRoute/PrivateRoute";
-import Test from "./pages/admin/Blog/Test";
+import BlogTest from "./components/Blog/Blogpage/BlogTest";
+import Homepage from "./components/Home/Homepage/Homepage";
+
 // Lazy load các trang
 const Home = lazy(() => import("./pages/Home"));
 const Company = lazy(() => import("./pages/Company"));
@@ -66,8 +68,11 @@ function App() {
             <Route path="/blog/:id" element={<BlogDetailPage />} />
             <Route path="/admin/login" element={<Login />} />
 
-            <Route path="test" element={<Test />} />
+            {/* test */}
             <Route path="blog/create-blog" element={<TestBlog />} />
+            <Route path="blog/test" element={<BlogTest />} />
+            <Route path="/homepage" element={<Homepage />} />
+
             {/* Protected Routes */}
             <Route
               path="/admin"
