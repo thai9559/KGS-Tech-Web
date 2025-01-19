@@ -2,6 +2,7 @@ import React, { useState, useEffect, Suspense, lazy } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import LayoutCompany from "../components/LayoutCompanyt";
+import Timeline from "../components/Company/TimeLine";
 
 // Lazy load components
 const CoreValues = lazy(() => import("../components/Company/CoreValues"));
@@ -12,6 +13,7 @@ const Leadership = lazy(() => import("../components/Company/LeaderShip"));
 const Mission = lazy(() => import("../components/Company/Misson"));
 const VerticalCarousel = lazy(() => import("../components/Carousel"));
 const Banner = lazy(() => import("../components/Company/Banner"));
+
 const DevelopmentTimeline = lazy(() =>
   import("../components/Company/DevelopmentTimeline")
 );
@@ -137,6 +139,9 @@ const Company = () => {
               </p>
             </div>
           </div>
+          {/* <div>
+            <Timeline />
+          </div> */}
 
           <div id="developerTimeline" className=" min-h-[30vh]">
             <DevelopmentTimeline />

@@ -3,6 +3,7 @@ import { Layout, Row, Col, Form, Input, Button, Select, message } from "antd";
 import { Editor } from "@tinymce/tinymce-react";
 
 import { useCreateBlogMutation } from "../../../redux/api/blogApi";
+
 const { Header, Content, Footer } = Layout;
 const { Option } = Select;
 
@@ -46,7 +47,6 @@ const CreateBlog = () => {
           <Row gutter={[16, 16]}>
             {/* Cột trái */}
             <Col xs={24} md={12}>
-              {/* Tiêu đề bài viết */}
               <Form.Item
                 name="title"
                 label="Tiêu Đề"
@@ -54,8 +54,6 @@ const CreateBlog = () => {
               >
                 <Input placeholder="Nhập tiêu đề bài viết" />
               </Form.Item>
-
-              {/* Từ khóa chính */}
               <Form.Item
                 name="main_keyword"
                 label="Từ Khóa Chính"
@@ -65,8 +63,6 @@ const CreateBlog = () => {
               >
                 <Input placeholder="Nhập từ khóa chính" />
               </Form.Item>
-
-              {/* Tags */}
               <Form.Item
                 name="tags"
                 label="Tags"
@@ -78,7 +74,6 @@ const CreateBlog = () => {
 
             {/* Cột phải */}
             <Col xs={24} md={12}>
-              {/* Slug */}
               <Form.Item
                 name="slug"
                 label="Slug (URL thân thiện SEO)"
@@ -86,8 +81,6 @@ const CreateBlog = () => {
               >
                 <Input placeholder="Nhập slug" />
               </Form.Item>
-
-              {/* Từ khóa phụ */}
               <Form.Item
                 name="secondary_keywords"
                 label="Từ Khóa Phụ"
@@ -97,8 +90,6 @@ const CreateBlog = () => {
               >
                 <Input placeholder="Nhập từ khóa phụ, cách nhau bằng dấu phẩy" />
               </Form.Item>
-
-              {/* Danh mục */}
               <Form.Item
                 name="category_id"
                 label="Danh Mục"
@@ -117,23 +108,42 @@ const CreateBlog = () => {
             <Editor
               apiKey="9dsiwvmjoqjrozos58bg410o56uilmv29czcut6wjykwcvc1" // Thay bằng API key TinyMCE hợp lệ
               value={content}
+              onEditorChange={(value) => setContent(value)}
               init={{
                 height: 500,
+                branding: false,
                 menubar: true,
                 plugins: [
-                  "advlist autolink lists link image charmap print preview anchor",
+                  "image", // Plugin hỗ trợ chèn ảnh
+                  "imagetools", // Plugin chỉnh sửa ảnh
+                  "advlist autolink lists link charmap preview anchor",
                   "searchreplace visualblocks code fullscreen",
                   "insertdatetime media table paste code help wordcount",
-                  "image imagetools",
                 ],
                 toolbar:
-                  "undo redo | formatselect | bold italic backcolor | \
-      alignleft aligncenter alignright alignjustify | \
-      bullist numlist outdent indent | removeformat | help | image",
-                paste_data_images: true, // Cho phép dán ảnh dưới dạng Base64
-                images_dataimg_filter: (img) => true, // Bật tính năng nhúng ảnh Base64
+                  "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help | image",
+                automatic_uploads: true,
+                images_upload_handler: (blobInfo, success, failure) => {
+                  // Xử lý upload ảnh
+                  const file = blobInfo.blob(); // Lấy tệp ảnh
+                  const reader = new FileReader();
+
+                  // Chuyển ảnh thành Base64
+                  reader.onload = () => {
+                    try {
+                      success(reader.result); // Gọi hàm success với Base64 của ảnh
+                    } catch (error) {
+                      failure("Không thể tải ảnh!"); // Gọi failure nếu có lỗi
+                    }
+                  };
+
+                  reader.onerror = () => {
+                    failure("Không thể đọc ảnh!"); // Gọi failure nếu đọc file thất bại
+                  };
+
+                  reader.readAsDataURL(file); // Đọc ảnh dưới dạng Base64
+                },
               }}
-              onEditorChange={(value) => setContent(value)}
             />
           </Form.Item>
 
