@@ -230,6 +230,7 @@
     "description": "私たちの使命は、ビジネスがデジタル時代において成長するための革新的な解決策を提供することです。現在のニーズを満たすだけでなく、顧客が業界をリードできるよう支援する製品とサービスを提供します。"
   },
   "login": {
+    "accountLocked": "アカウントがロックされています。管理者に連絡してください。",
     "username": "ユーザー名",
     "password": "パスワード",
     "email": "メール",
@@ -297,12 +298,24 @@
     "deleteFail": "ユーザーを削除できません！",
     "createSuccess": "新しいユーザーが正常に追加されました！",
     "updateSuccess": "ユーザー情報が正常に更新されました！",
+    "updateIsActiveSuccess": "アクティブ状態が正常に更新されました！",
+    "updateIsActiveError": "アクティブ状態を更新できませんでした。もう一度お試しください。",
+    "filterByName": "名前でフィルタ",
+    "filterByEmail": "メールでフィルタ",
+    "filterByPhone": "電話番号でフィルタ",
+    "filterByRole": "役割でフィルタ",
+    "filterByPermissions": "権限でフィルタ",
+    "filterByStatus": "ステータスでフィルタ",
+    "active": "アクティブ",
+    "inactive": "非アクティブ",
+    "resetFilters": "フィルタをリセット",
     "formErrors": {
       "nameRequired": "名前を入力してください！",
       "emailRequired": "メールアドレスを入力してください！",
       "emailInvalid": "無効なメールアドレスです！",
       "passwordRequired": "パスワードを入力してください！",
       "passwordMin": "パスワードは6文字以上である必要があります！",
+      "newPassword": "新しいパスワードは6文字以上でなければなりません！",
       "phoneInvalid": "無効な電話番号です！",
       "roleRequired": "役割を選択してください！",
       "permissionsRequired": "少なくとも1つの権限を選択してください！"

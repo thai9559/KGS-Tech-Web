@@ -74,6 +74,8 @@ Route::middleware([])->group(function () {
     Route::get('/blogs/{id}', [BlogController::class, 'show']); // Lấy thông tin chi tiết bài viết
     Route::put('/blogs/{id}', [BlogController::class, 'update']); // Cập nhật bài viết
     Route::delete('/blogs/{id}', [BlogController::class, 'destroy']); // Xóa bài viết
+    Route::post('/upload-image', [BlogController::class, 'uploadImage']);
+    
 });
 
 Route::middleware([])->group(function () {

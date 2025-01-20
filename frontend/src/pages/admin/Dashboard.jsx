@@ -1,5 +1,5 @@
-import React from "react";
-import { Card, Row, Col } from "antd";
+import React, { useEffect, useState } from "react";
+import { Card, Row, Col, Typography, Button } from "antd";
 import {
   FileTextOutlined,
   TeamOutlined,
@@ -8,117 +8,171 @@ import {
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { decodeToken } from "../../utils/decodeToken";
+
+const { Title } = Typography;
 
 const Dashboard = () => {
   const { t } = useTranslation();
+  const [permissions, setPermissions] = useState([]);
+
+  useEffect(() => {
+    // Lấy và decode token từ localStorage
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      const decoded = decodeToken(token);
+      setPermissions(decoded.permissions || []);
+    }
+  }, []);
+
+  // Hàm kiểm tra quyền
+  const hasPermission = (requiredPermissions) => {
+    if (permissions.includes("Full admin privileges")) {
+      return true;
+    }
+    return requiredPermissions.some((perm) => permissions.includes(perm));
+  };
+
+  const cardStyles = {
+    borderRadius: "10px",
+    overflow: "hidden",
+    textAlign: "center",
+    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+  };
+
+  const hoverStyles = {
+    transform: "scale(1.05)",
+    boxShadow: "0 4px 15px rgba(0, 0, 0, 0.2)",
+  };
 
   return (
-    <div className="p-4 min-h-screen">
-      <h1 className="text-xl sm:text-2xl font-bold mb-6 text-center sm:text-left">
+    <div className="p-4 min-h-screen ">
+      <Title level={2} className="text-center sm:text-left mb-6">
         {t("dashboard.title")}
-      </h1>
-      <Row gutter={[16, 16]}>
+      </Title>
+      <Row gutter={[24, 24]}>
         {/* Quản lý công ty */}
-        <Col xs={24} md={12} lg={8}>
-          <Card
-            title={
-              <div className="flex items-center">
-                <FileTextOutlined className="mr-2 text-lg sm:text-xl text-blue-500" />
-                <span className="text-base sm:text-lg font-medium">
-                  {t("dashboard.company_management")}
-                </span>
-              </div>
-            }
-            className="shadow-md h-full"
-          >
-            <Link
-              to="/admin/company"
-              className="cursor-pointer text-sm sm:text-base text-blue-500 hover:underline"
+        {hasPermission(["Company"]) && (
+          <Col xs={24} md={12} lg={8}>
+            <Card
+              style={cardStyles}
+              hoverable
+              onHover={(e) => (e.target.style = hoverStyles)}
+              bodyStyle={{
+                backgroundColor: "#e3f2fd",
+                padding: "20px",
+                border: "none",
+              }}
             >
-              {t("dashboard.company_list")}
-            </Link>
-          </Card>
-        </Col>
+              <FileTextOutlined
+                style={{
+                  fontSize: "48px",
+                  color: "#1976d2",
+                  marginBottom: "16px",
+                }}
+              />
+              <Title level={4}>{t("dashboard.company_management")}</Title>
+              <Button type="link">
+                <Link to="/admin/company">{t("dashboard.company_list")}</Link>
+              </Button>
+            </Card>
+          </Col>
+        )}
 
         {/* Quản lý tài khoản */}
-        <Col xs={24} md={12} lg={8}>
-          <Card
-            title={
-              <div className="flex items-center">
-                <TeamOutlined className="mr-2 text-lg sm:text-xl text-green-500" />
-                <span className="text-base sm:text-lg font-medium">
-                  {t("dashboard.account_management")}
-                </span>
-              </div>
-            }
-            className="shadow-md h-full"
-          >
-            <Link
-              to="/admin/users"
-              className="cursor-pointer text-sm sm:text-base text-blue-500 hover:underline"
+        {hasPermission(["Users", "Roles"]) && (
+          <Col xs={24} md={12} lg={8}>
+            <Card
+              style={cardStyles}
+              hoverable
+              bodyStyle={{
+                backgroundColor: "#e8f5e9",
+                padding: "20px",
+                border: "none",
+              }}
             >
-              {t("dashboard.user_list")}
-            </Link>
-            <br />
-            <Link
-              to="/admin/users/roles"
-              className="cursor-pointer text-sm sm:text-base text-blue-500 hover:underline"
-            >
-              {t("dashboard.role_list")}
-            </Link>
-          </Card>
-        </Col>
+              <TeamOutlined
+                style={{
+                  fontSize: "48px",
+                  color: "#43a047",
+                  marginBottom: "16px",
+                }}
+              />
+              <Title level={4}>{t("dashboard.account_management")}</Title>
+              {hasPermission(["Users"]) && (
+                <Button type="link">
+                  <Link to="/admin/users">{t("dashboard.user_list")}</Link>
+                </Button>
+              )}
+              {hasPermission(["Roles"]) && (
+                <Button type="link">
+                  <Link to="/admin/users/roles">
+                    {t("dashboard.role_list")}
+                  </Link>
+                </Button>
+              )}
+            </Card>
+          </Col>
+        )}
 
         {/* Quản lý Blog */}
-        <Col xs={24} md={12} lg={8}>
-          <Card
-            title={
-              <div className="flex items-center">
-                <FormOutlined className="mr-2 text-lg sm:text-xl text-purple-500" />
-                <span className="text-base sm:text-lg font-medium">
-                  {t("dashboard.blog_management")}
-                </span>
-              </div>
-            }
-            className="shadow-md h-full"
-          >
-            <Link
-              to="/admin/bloglist"
-              className="cursor-pointer text-sm sm:text-base text-blue-500 hover:underline"
+        {hasPermission(["Blogs"]) && (
+          <Col xs={24} md={12} lg={8}>
+            <Card
+              style={cardStyles}
+              hoverable
+              bodyStyle={{
+                backgroundColor: "#f3e5f5",
+                padding: "20px",
+                border: "none",
+              }}
             >
-              {t("dashboard.blog_list")}
-            </Link>
-            <br />
-            <Link
-              to="/admin/blog/categories"
-              className="cursor-pointer text-sm sm:text-base text-blue-500 hover:underline"
-            >
-              {t("dashboard.category_list")}
-            </Link>
-          </Card>
-        </Col>
+              <FormOutlined
+                style={{
+                  fontSize: "48px",
+                  color: "#8e24aa",
+                  marginBottom: "16px",
+                }}
+              />
+              <Title level={4}>{t("dashboard.blog_management")}</Title>
+              <Button type="link">
+                <Link to="/admin/bloglist">{t("dashboard.blog_list")}</Link>
+              </Button>
+              <Button type="link">
+                <Link to="/admin/blog/categories">
+                  {t("dashboard.category_list")}
+                </Link>
+              </Button>
+            </Card>
+          </Col>
+        )}
 
         {/* Quản lý Feedback */}
-        <Col xs={24} md={12} lg={8}>
-          <Card
-            title={
-              <div className="flex items-center">
-                <CommentOutlined className="mr-2 text-lg sm:text-xl text-orange-500" />
-                <span className="text-base sm:text-lg font-medium">
-                  {t("dashboard.feedback_management")}
-                </span>
-              </div>
-            }
-            className="shadow-md h-full"
-          >
-            <Link
-              to="/admin/feedback"
-              className="cursor-pointer text-sm sm:text-base text-blue-500 hover:underline"
+        {hasPermission(["Feedback"]) && (
+          <Col xs={24} md={12} lg={8}>
+            <Card
+              style={cardStyles}
+              hoverable
+              bodyStyle={{
+                backgroundColor: "#fff3e0",
+                padding: "20px",
+                border: "none",
+              }}
             >
-              {t("dashboard.feedback_list")}
-            </Link>
-          </Card>
-        </Col>
+              <CommentOutlined
+                style={{
+                  fontSize: "48px",
+                  color: "#ff6f00",
+                  marginBottom: "16px",
+                }}
+              />
+              <Title level={4}>{t("dashboard.feedback_management")}</Title>
+              <Button type="link">
+                <Link to="/admin/feedback">{t("dashboard.feedback_list")}</Link>
+              </Button>
+            </Card>
+          </Col>
+        )}
       </Row>
     </div>
   );

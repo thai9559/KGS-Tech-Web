@@ -9,6 +9,10 @@ export const blogApi = createApi({
       query: () => "/blogs",
       providesTags: ["Blog"],
     }),
+    getBlogById: builder.query({
+      query: (id) => `/blogs/${id}`, // API để lấy thông tin blog theo ID
+      providesTags: (result, error, id) => [{ type: "Blog", id }],
+    }),
     createBlog: builder.mutation({
       query: (newBlog) => ({
         url: "/blogs",
@@ -23,14 +27,27 @@ export const blogApi = createApi({
         method: "PUT",
         body: updatedBlog,
       }),
-      invalidatesTags: ["Blog"],
+      invalidatesTags: (result, error, { id }) => [{ type: "Blog", id }],
     }),
     deleteBlog: builder.mutation({
       query: (id) => ({
         url: `/blogs/${id}`,
         method: "DELETE",
       }),
+      // invalidatesTags: (result, error, id) => [{ type: "Blog", id }],
       invalidatesTags: ["Blog"],
+    }),
+    uploadImage: builder.mutation({
+      query: (image) => {
+        const formData = new FormData();
+        formData.append("image", image);
+
+        return {
+          url: "/upload-image",
+          method: "POST",
+          body: formData,
+        };
+      },
     }),
   }),
 });
@@ -38,7 +55,9 @@ export const blogApi = createApi({
 // Export các hooks
 export const {
   useGetBlogsQuery,
+  useGetBlogByIdQuery, // Hook cho API lấy blog theo ID
   useCreateBlogMutation,
   useUpdateBlogMutation,
   useDeleteBlogMutation,
+  useUploadImageMutation,
 } = blogApi;

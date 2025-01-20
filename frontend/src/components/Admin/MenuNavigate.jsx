@@ -142,10 +142,14 @@ const MenuNavigate = () => {
       return items; // Trả về tất cả menu nếu có quyền này
     }
 
-    // Nếu không có quyền "Full admin privileges", lọc menu theo quyền người dùng có
+    // Lọc menu
     return items
       .filter((item) => {
+        // Cho phép tất cả truy cập Dashboard
+        if (item.key === "/admin/dashboard") return true;
+
         if (!item.requiredPermissions) return true; // Nếu item không yêu cầu quyền, hiển thị luôn
+
         return item.requiredPermissions.some((perm) =>
           permissions.includes(perm)
         ); // Kiểm tra quyền
@@ -159,38 +163,54 @@ const MenuNavigate = () => {
 
   const filteredMenuItems = filterMenuItems(allMenuItems, userPermissions);
 
-  const renderFooter = (isMobile) => (
+  const renderFooter = (isMobile, collapsed) => (
     <div
       style={{
-        padding: "16px",
+        padding: collapsed ? "8px" : "16px",
         textAlign: "center",
         backgroundColor: "#ffffff",
+        display: "flex",
+        flexDirection: "column", // Sử dụng Flexbox để xếp các phần tử theo cột
+        gap: "8px", // Khoảng cách giữa các phần tử
       }}
     >
+      {/* Hiển thị Select với nội dung khác nhau dựa trên trạng thái collapsed */}
       <Select
         value={language}
         onChange={handleChangeLanguage}
         style={{
-          width: "100%",
+          width: collapsed ? "70px" : "100%",
           textAlign: "center",
+          margin: "0 auto", // Giữ Select nằm giữa
         }}
       >
-        <Option value="en">{t("English")}</Option>
-        <Option value="ja">{t("日本語")}</Option>
-        <Option value="vi">{t("Tiếng Việt")}</Option>
+        {collapsed ? (
+          <>
+            <Option value="vi">VI</Option>
+            <Option value="en">EN</Option>
+            <Option value="ja">JA</Option>
+          </>
+        ) : (
+          <>
+            <Option value="vi">{t("Tiếng Việt")}</Option>
+            <Option value="en">{t("English")}</Option>
+            <Option value="ja">{t("日本語")}</Option>
+          </>
+        )}
       </Select>
 
+      {/* Hiển thị Logout */}
       <Button
         type="primary"
         danger
         icon={<LogoutOutlined />}
         onClick={handleLogout}
         style={{
-          width: "100%",
-          marginTop: "8px",
+          width: collapsed ? "70px" : "100%",
+          margin: "0 auto", // Giữ nút nằm giữa
         }}
       >
-        {t("logout")}
+        {!collapsed && t("logout")}
       </Button>
     </div>
   );
@@ -226,19 +246,28 @@ const MenuNavigate = () => {
             backgroundColor: "#ffffff",
           }}
         >
-          <div style={{ textAlign: "center", flex: 1 }}>
-            <Avatar size={48} style={{ backgroundColor: "#1890ff" }}>
-              {userName.charAt(0).toUpperCase()}
-            </Avatar>
-            <Text style={{ fontSize: "16px", fontWeight: "bold" }}>
-              {userName}
-            </Text>
+          <div
+            className="flex flex-row items-center justify-between"
+            style={{ textAlign: "center", flex: 1 }}
+          >
+            <div className="flex flex-col">
+              <Avatar size={48} style={{ backgroundColor: "#1890ff" }}>
+                {userName.charAt(0).toUpperCase()}
+              </Avatar>
+              <Text
+                className="text-center"
+                style={{ fontSize: "16px", fontWeight: "bold" }}
+              >
+                {userName}
+              </Text>
+            </div>
+
+            <Button
+              type="text"
+              icon={<CloseOutlined />}
+              onClick={() => setMenuVisible(false)}
+            />
           </div>
-          <Button
-            type="text"
-            icon={<CloseOutlined />}
-            onClick={() => setMenuVisible(false)}
-          />
         </div>
 
         <Menu
@@ -254,26 +283,45 @@ const MenuNavigate = () => {
         {renderFooter(true)}
       </Drawer>
 
+      {/* Hiển thị Sider trên màn hình lớn */}
       {!isMobile && (
         <Sider
           collapsible
           collapsed={collapsed}
           onCollapse={() => setCollapsed(!collapsed)}
           width={350}
-          collapsedWidth={100}
+          collapsedWidth={110}
           style={{
-            backgroundColor: "#ffffff",
+            backgroundColor: "#f9f9f9",
+            borderRight: "1px solid #e8e8e8",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
           }}
         >
-          <div style={{ textAlign: "center", padding: "16px" }}>
+          <div
+            style={{
+              textAlign: "center",
+              padding: collapsed ? "8px" : "16px",
+            }}
+          >
             <Avatar
               size={collapsed ? 40 : 80}
-              style={{ backgroundColor: "#1890ff" }}
+              style={{
+                backgroundColor: "#1890ff",
+                marginBottom: "8px",
+              }}
             >
-              {userName.charAt(0).toUpperCase()}
+              {userName.charAt(0)}
             </Avatar>
             {!collapsed && (
-              <Text style={{ fontSize: "16px", fontWeight: "bold" }}>
+              <Text
+                style={{
+                  display: "block",
+                  fontWeight: "bold",
+                  fontSize: "16px",
+                }}
+              >
                 {userName}
               </Text>
             )}
@@ -286,7 +334,7 @@ const MenuNavigate = () => {
               backgroundColor: "#ffffff",
             }}
           />
-          {renderFooter(false)}
+          {renderFooter(false, collapsed)}
         </Sider>
       )}
 

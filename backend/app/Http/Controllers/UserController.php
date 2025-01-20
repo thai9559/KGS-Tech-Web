@@ -189,62 +189,67 @@ class UserController extends Controller
     }
 
     public function update(Request $request, $id)
-{
-    $user = User::find($id);
-
-    if (!$user) {
-        return response()->json(['message' => 'User not found'], 404);
+    {
+        // Tìm người dùng
+        $user = User::find($id);
+    
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+    
+        // Xác thực dữ liệu đầu vào
+        $validatedData = $request->validate([
+            'name' => 'nullable|string|max:255',
+            'email' => 'nullable|email|unique:users,email,' . $id,
+            'phone' => 'nullable|string|max:15|regex:/^[0-9]{9,15}$/',
+            'is_active' => 'nullable|boolean',
+            'password' => 'nullable|min:6|confirmed', // Xác thực mật khẩu nếu có
+            'role_id' => 'nullable|exists:roles,id', // Đảm bảo role_id hợp lệ
+            'permissions' => 'nullable|array', // Xác thực danh sách quyền
+            'permissions.*' => 'exists:permissions,id', // Đảm bảo các quyền tồn tại
+        ]);
+    
+        // Cập nhật thông tin người dùng nếu các trường có trong yêu cầu
+        if ($request->has('name')) {
+            $user->name = $validatedData['name'];
+        }
+        if ($request->has('email')) {
+            $user->email = $validatedData['email'];
+        }
+        if ($request->has('phone')) {
+            $user->phone = $validatedData['phone'];
+        }
+        if ($request->has('is_active')) {
+            $user->is_active = $validatedData['is_active'];
+        }
+    
+        // Cập nhật mật khẩu nếu được gửi
+        if ($request->has('password')) {
+            $user->password = Hash::make($validatedData['password']);
+        }
+    
+        // Cập nhật vai trò nếu có
+        if ($request->has('role_id')) {
+            $user->role_id = $validatedData['role_id'];
+        }
+    
+        // Lưu người dùng
+        $user->save();
+    
+        // Cập nhật quyền
+        if ($request->has('permissions')) {
+            $user->permissions()->sync($validatedData['permissions']);
+        }
+    
+        // Tải lại thông tin người dùng với quan hệ
+        $updatedUser = $user->load('role', 'permissions');
+    
+        return response()->json([
+            'message' => 'User updated successfully',
+            'user' => $updatedUser,
+        ], 200);
     }
-
-    // Xác thực chỉ những trường được gửi lên
-    $validatedData = $request->validate([
-        'name' => 'nullable|string|max:255',
-        'email' => 'nullable|email|unique:users,email,' . $id,
-        'phone' => 'nullable|string|max:15|regex:/^[0-9]{9,15}$/',
-        'is_active' => 'nullable|boolean',
-        'password' => 'nullable|min:6|confirmed',
-        'role_id' => 'nullable|exists:roles,id', // Đảm bảo role_id hợp lệ
-        'permissions' => 'nullable|array', // Xác thực danh sách quyền
-        'permissions.*' => 'exists:permissions,id', // Đảm bảo các quyền tồn tại
-    ]);
-
-    // Cập nhật từng trường nếu có trong yêu cầu
-    if ($request->has('name')) {
-        $user->name = $validatedData['name'];
-    }
-    if ($request->has('email')) {
-        $user->email = $validatedData['email'];
-    }
-    if ($request->has('phone')) {
-        $user->phone = $validatedData['phone'];
-    }
-    if ($request->has('is_active')) {
-        $user->is_active = $validatedData['is_active'];
-    }
-    if ($request->has('password')) {
-        $user->password = Hash::make($validatedData['password']);
-    }
-    if ($request->has('role_id')) {
-        $user->role_id = $validatedData['role_id'];
-    }
-
-    // Lưu thông tin người dùng
-    $user->save();
-
-    // Gán lại quyền nếu có trong yêu cầu
-    if ($request->has('permissions')) {
-        $user->permissions()->sync($validatedData['permissions']);
-    }
-
-    // Lấy lại thông tin người dùng với vai trò và quyền
-    $updatedUser = $user->load('role', 'permissions');
-
-    return response()->json([
-        'message' => 'User updated successfully',
-        'user' => $updatedUser,
-    ], 200);
-}
-
+    
 
     // Xóa người dùng
     public function destroy($id)

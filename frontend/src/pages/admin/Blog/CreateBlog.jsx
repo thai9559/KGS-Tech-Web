@@ -1,31 +1,90 @@
 import React, { useState } from "react";
-import { Layout, Row, Col, Form, Input, Button, Select, message } from "antd";
+import {
+  Layout,
+  Row,
+  Col,
+  Form,
+  Input,
+  Button,
+  Select,
+  Upload,
+  message,
+} from "antd";
+import TagsInputs from "./TagInputs";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+
+import { PlusOutlined } from "@ant-design/icons";
 import { Editor } from "@tinymce/tinymce-react";
-
-import { useCreateBlogMutation } from "../../../redux/api/blogApi";
-
+import { decodeToken } from "../../../utils/decodeToken";
+import {
+  useCreateBlogMutation,
+  useUploadImageMutation,
+} from "../../../redux/api/blogApi";
+import { useGetCategoriesQuery } from "../../../redux/api/categoryApi";
 const { Header, Content, Footer } = Layout;
 const { Option } = Select;
 
 const CreateBlog = () => {
   const [createBlog] = useCreateBlogMutation();
+  const [uploadImage] = useUploadImageMutation();
   const [content, setContent] = useState("");
+  const [thumbnail_image, setThumbnail_image] = useState(null);
+  const navigate = useNavigate();
 
-  const handleEditorChange = (value) => {
-    setContent(value);
-  };
-
+  const { data: categories, isLoading: isLoadingCategories } =
+    useGetCategoriesQuery();
   const handleFinish = async (values) => {
     try {
+      // Lấy access_token từ localStorage
+      const token = localStorage.getItem("access_token");
+      const decodedToken = decodeToken(token);
+
+      if (!decodedToken || !decodedToken.sub) {
+        message.error("Không thể xác định user_id. Vui lòng đăng nhập lại.");
+        return;
+      }
+
+      const userId = decodedToken.sub;
+
+      // Tách danh sách ảnh từ nội dung bài viết
+      const images =
+        content
+          .match(/<img[^>]+src="([^">]+)"/g)
+          ?.map((img) => img.match(/src="([^">]+)"/)[1]) || [];
+
       const payload = {
         ...values,
         content,
+        images,
+        thumbnail_image: thumbnail_image, // Ảnh tiêu đề
+        user_id: userId,
       };
+
+      console.log("Payload gửi đi:", payload);
 
       await createBlog(payload).unwrap();
       message.success("Tạo bài viết thành công!");
+      navigate("/admin/bloglist");
     } catch (error) {
-      message.error("Tạo bài viết thất bại!");
+      console.error("Lỗi khi tạo bài viết:", error);
+      const errorMessage =
+        error?.data?.message || "Tạo bài viết thất bại, kiểm tra lại dữ liệu!";
+      message.error(errorMessage);
+    }
+  };
+
+  const handleThumbnailImageUpload = async (file) => {
+    try {
+      const response = await uploadImage(file).unwrap();
+      if (response.location) {
+        setThumbnail_image(response.location);
+        message.success("Tải ảnh tiêu đề thành công!");
+      } else {
+        message.error("Không nhận được URL ảnh tiêu đề hợp lệ.");
+      }
+    } catch (error) {
+      console.error("Lỗi khi upload ảnh tiêu đề:", error);
+      message.error("Có lỗi xảy ra khi upload ảnh tiêu đề.");
     }
   };
 
@@ -66,9 +125,36 @@ const CreateBlog = () => {
               <Form.Item
                 name="tags"
                 label="Tags"
-                rules={[{ required: true, message: "Vui lòng nhập tags!" }]}
+                rules={[
+                  { required: true, message: "Vui lòng nhập ít nhất một tag!" },
+                ]}
               >
-                <Input placeholder="Nhập tags, cách nhau bằng dấu phẩy" />
+                <TagsInputs />
+              </Form.Item>
+
+              <Form.Item
+                name="meta_title"
+                label="Meta Title"
+                rules={[
+                  { required: true, message: "Vui lòng nhập meta title!" },
+                ]}
+              >
+                <Input placeholder="Nhập meta title cho bài viết" />
+              </Form.Item>
+              <Form.Item
+                name="meta_description"
+                label="Meta Description"
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng nhập meta description!",
+                  },
+                ]}
+              >
+                <Input.TextArea
+                  placeholder="Nhập meta description cho bài viết"
+                  rows={4}
+                />
               </Form.Item>
             </Col>
 
@@ -95,10 +181,67 @@ const CreateBlog = () => {
                 label="Danh Mục"
                 rules={[{ required: true, message: "Vui lòng chọn danh mục!" }]}
               >
-                <Select placeholder="Chọn danh mục">
-                  <Option value={1}>Danh Mục 1</Option>
-                  <Option value={2}>Danh Mục 2</Option>
+                <Select
+                  placeholder={
+                    isLoadingCategories
+                      ? "Đang tải danh mục..."
+                      : "Chọn danh mục"
+                  }
+                  loading={isLoadingCategories}
+                >
+                  {categories?.map((category) => (
+                    <Option key={category.id} value={category.id}>
+                      {category.name}
+                    </Option>
+                  ))}
                 </Select>
+              </Form.Item>
+
+              <Form.Item
+                name="focus_keyword"
+                label="Focus Keyword"
+                rules={[
+                  { required: true, message: "Vui lòng nhập focus keyword!" },
+                ]}
+              >
+                <Input placeholder="Nhập từ khóa tập trung (focus keyword)" />
+              </Form.Item>
+              <Form.Item
+                name="canonical_url"
+                label="Canonical URL"
+                rules={[
+                  { required: true, message: "Vui lòng nhập canonical URL!" },
+                ]}
+              >
+                <Input placeholder="Nhập URL canonical cho bài viết" />
+              </Form.Item>
+
+              {/* Trường tải lên ảnh tiêu đề */}
+              <Form.Item
+                label="Ảnh Tiêu Đề"
+                valuePropName="file"
+                rules={[
+                  { required: true, message: "Vui lòng upload ảnh tiêu đề!" },
+                ]}
+              >
+                <Upload
+                  listType="picture-card"
+                  showUploadList={false}
+                  customRequest={({ file }) => handleThumbnailImageUpload(file)}
+                >
+                  {thumbnail_image ? (
+                    <img
+                      src={thumbnail_image}
+                      alt="Ảnh tiêu đề"
+                      style={{ width: "100%" }}
+                    />
+                  ) : (
+                    <div>
+                      <PlusOutlined />
+                      <div style={{ marginTop: 8 }}>Upload</div>
+                    </div>
+                  )}
+                </Upload>
               </Form.Item>
             </Col>
           </Row>
@@ -106,7 +249,7 @@ const CreateBlog = () => {
           {/* Nội dung bài viết */}
           <Form.Item label="Nội Dung" required>
             <Editor
-              apiKey="9dsiwvmjoqjrozos58bg410o56uilmv29czcut6wjykwcvc1" // Thay bằng API key TinyMCE hợp lệ
+              tinymceScriptSrc="https://cdn.tiny.cloud/1/9dsiwvmjoqjrozos58bg410o56uilmv29czcut6wjykwcvc1/tinymce/5/tinymce.min.js"
               value={content}
               onEditorChange={(value) => setContent(value)}
               init={{
@@ -114,34 +257,31 @@ const CreateBlog = () => {
                 branding: false,
                 menubar: true,
                 plugins: [
-                  "image", // Plugin hỗ trợ chèn ảnh
-                  "imagetools", // Plugin chỉnh sửa ảnh
-                  "advlist autolink lists link charmap preview anchor",
-                  "searchreplace visualblocks code fullscreen",
-                  "insertdatetime media table paste code help wordcount",
+                  "image",
+                  "imagetools",
+                  "media",
+                  "link",
+                  "code",
+                  "fullscreen",
                 ],
-                toolbar:
-                  "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help | image",
-                automatic_uploads: true,
-                images_upload_handler: (blobInfo, success, failure) => {
-                  // Xử lý upload ảnh
-                  const file = blobInfo.blob(); // Lấy tệp ảnh
-                  const reader = new FileReader();
-
-                  // Chuyển ảnh thành Base64
-                  reader.onload = () => {
-                    try {
-                      success(reader.result); // Gọi hàm success với Base64 của ảnh
-                    } catch (error) {
-                      failure("Không thể tải ảnh!"); // Gọi failure nếu có lỗi
+                toolbar: `
+                undo redo | formatselect | bold italic underline strikethrough forecolor backcolor | 
+                alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | 
+                image imagetools media link anchor | table hr blockquote subscript superscript | 
+                code removeformat fullscreen preview
+              `,
+                images_upload_handler: async (blobInfo, success, failure) => {
+                  try {
+                    const file = blobInfo.blob();
+                    const response = await uploadImage(file).unwrap();
+                    if (response.location) {
+                      success(response.location);
+                    } else {
+                      failure("Không nhận được URL ảnh hợp lệ.");
                     }
-                  };
-
-                  reader.onerror = () => {
-                    failure("Không thể đọc ảnh!"); // Gọi failure nếu đọc file thất bại
-                  };
-
-                  reader.readAsDataURL(file); // Đọc ảnh dưới dạng Base64
+                  } catch (error) {
+                    failure("Có lỗi xảy ra khi upload ảnh.");
+                  }
                 },
               }}
             />

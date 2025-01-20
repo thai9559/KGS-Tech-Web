@@ -73,11 +73,12 @@ const BlogTable = () => {
       key: "actions",
       render: (_, record) => (
         <Space>
-          <Link to={`${BLOGADMIN}/edit/${record.id}`}>
+          <Link to={`/admin/blog/edit-blog/${record.id}`}>
             <Button type="primary" icon={<EditOutlined />}>
               Sửa
             </Button>
           </Link>
+
           <Popconfirm
             title="Bạn có chắc chắn muốn xóa bài viết này không?"
             onConfirm={() => handleDelete(record.id)}

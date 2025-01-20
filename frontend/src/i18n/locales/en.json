@@ -231,6 +231,7 @@
     "description": "Our mission is to provide innovative solutions that help businesses grow in the digital era. We are committed to providing products and services that not only meet current needs but also help customers lead the industry."
   },
   "login": {
+    "accountLocked": "Your account has been locked. Please contact the administrator.",
     "username": "Username",
     "password": "Password",
     "email": "Email",
@@ -305,12 +306,24 @@
     "deleteFail": "Unable to delete the user!",
     "createSuccess": "New user added successfully!",
     "updateSuccess": "User information updated successfully!",
+    "updateIsActiveSuccess": "Successfully updated active status",
+    "updateIsActiveError": "Failed to update active status. Please try again.",
+    "filterByName": "Filter by name",
+    "filterByEmail": "Filter by email",
+    "filterByPhone": "Filter by phone",
+    "filterByRole": "Filter by role",
+    "filterByPermissions": "Filter by permissions",
+    "filterByStatus": "Filter by status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "resetFilters": "Reset Filters",
     "formErrors": {
       "nameRequired": "Please enter the name!",
       "emailRequired": "Please enter the email!",
       "emailInvalid": "Invalid email!",
       "passwordRequired": "Please enter the password!",
       "passwordMin": "Password must be at least 6 characters!",
+      "newPassword": "New password must be at least 6 characters!",
       "phoneInvalid": "Invalid phone number!",
       "roleRequired": "Please choose a role!",
       "permissionsRequired": "Please select at least one permission!"

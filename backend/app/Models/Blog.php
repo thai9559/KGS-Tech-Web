@@ -16,8 +16,18 @@ class Blog extends Model
         'main_keyword',
         'secondary_keywords',
         'tags',
+        'meta_title',
+        'meta_description',
+        'focus_keyword',
+        'canonical_url',
         'category_id',
         'user_id',
+        'images',
+        'thumbnail_image', // Thêm trường thumbnail_image
+    ];
+
+    protected $casts = [
+        'images' => 'array', // Chuyển đổi JSON sang mảng khi lấy dữ liệu
     ];
 
     /**

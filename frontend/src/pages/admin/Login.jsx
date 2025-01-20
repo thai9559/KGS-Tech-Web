@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../redux/api/authApi";
 import Loading from "../../components/Loading";
 import { useTranslation } from "react-i18next";
+import { decodeToken } from "../../utils/decodeToken";
 
 const { Option } = Select;
 
@@ -49,20 +50,27 @@ const Login = () => {
 
   const handleSubmit = async () => {
     if (!validateForm()) return;
-    console.log(form);
+
     try {
-      // Gọi API đăng nhập qua hook `useLoginMutation`
-      const response = await login(form).unwrap(); // Unwrap để lấy dữ liệu từ phản hồi
-      const { access_token, user } = response;
+      // Gọi API đăng nhập
+      const response = await login(form).unwrap();
+      const { access_token } = response;
+
+      // Decode token để kiểm tra trạng thái `is_active`
+      const decoded = decodeToken(access_token);
+
+      if (decoded.is_active === 0) {
+        message.error(t("login.accountLocked")); // Thông báo lỗi nếu tài khoản bị khóa
+        return;
+      }
 
       // Lưu token vào localStorage
       localStorage.setItem("access_token", access_token);
 
       // Hiển thị thông báo thành công và điều hướng
-
+      message.success(t("login.success"));
       navigate("/admin/dashboard");
     } catch (error) {
-      // Xử lý lỗi nếu đăng nhập thất bại
       console.error("Error during login:", error);
       message.error(error.data?.message || t("login.invalid"));
     }

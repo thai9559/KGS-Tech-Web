@@ -40,7 +40,7 @@ const CompanyAdmin = () => {
   const { data: companyData, isLoading } = useGetCompanyQuery();
   const [updateCompany] = useUpdateCompanyMutation();
   const [deleteLogo] = useDeleteLogoMutation();
-  const { t } = useTranslation(); // Translation namespace
+  const { t } = useTranslation();
 
   const [tempData, setTempData] = useState({
     name: "",
@@ -99,14 +99,6 @@ const CompanyAdmin = () => {
       setIsDirty(socialLinksChanged || otherFieldsChanged);
     }
   }, [tempData, companyData]);
-
-  const startEditing = (field) => {
-    setEditingField(field);
-  };
-
-  const handleInputChange = (field, value) => {
-    setTempData((prev) => ({ ...prev, [field]: value }));
-  };
 
   const saveChanges = async () => {
     try {
@@ -168,49 +160,37 @@ const CompanyAdmin = () => {
     setTempData((prev) => ({ ...prev, social_links: updatedLinks }));
   };
 
-  const handleDeleteLogo = async () => {
-    try {
-      await deleteLogo().unwrap();
-      setTempData((prev) => ({ ...prev, logo: null }));
-      message.success(t("logoDeleted"));
-    } catch (error) {
-      message.error(t("logoDeleteFailed"));
-    }
-  };
-
-  const handleUploadLogo = async ({ file }) => {
-    const formData = new FormData();
-    formData.append("logo", file);
-
-    try {
-      const response = await updateCompany(formData).unwrap();
-      setTempData((prev) => ({ ...prev, logo: response.logo }));
-      message.success(t("logoUploaded"));
-    } catch (error) {
-      message.error(t("logoUploadFailed"));
-    }
-  };
-
   const renderField = (label, field) => (
     <Row gutter={[16, 16]} align="middle" style={{ marginBottom: 16 }}>
       <Col xs={24} md={6}>
         <strong>{t(label)}</strong>
       </Col>
-      <Col xs={24} md={12}>
+      <Col xs={24} md={15}>
+        {" "}
+        {/* Input dài ra */}
         {editingField === field ? (
           <Input
             value={tempData[field]}
-            onChange={(e) => handleInputChange(field, e.target.value)}
+            onChange={(e) =>
+              setTempData((prev) => ({ ...prev, [field]: e.target.value }))
+            }
           />
         ) : (
           <span>{tempData[field]}</span>
         )}
       </Col>
-      <Col xs={24} md={6} style={{ textAlign: "right" }}>
+      <Col xs={24} md={3} style={{ textAlign: "right" }}>
+        {" "}
+        {/* Nút Chỉnh sửa */}
         <Button
-          type="link"
+          type="text"
           icon={<EditOutlined />}
-          onClick={() => startEditing(field)}
+          onClick={() => setEditingField(editingField === field ? null : field)}
+          style={{
+            backgroundColor: "green", // Thêm màu xanh lá
+            color: "white",
+            width: "100%", // Đảm bảo nút có độ rộng đầy đủ
+          }}
         >
           {editingField === field ? t("editing") : t("edit")}
         </Button>
@@ -219,141 +199,201 @@ const CompanyAdmin = () => {
   );
 
   return (
-    <Card
-      title={<Title level={4}>{t("companyManagement")}</Title>}
-      extra={
-        <Button
-          type="primary"
-          icon={<SaveOutlined />}
-          onClick={saveChanges}
-          disabled={!isDirty}
-        >
-          {t("saveChanges")}
-        </Button>
-      }
-    >
-      {isLoading ? (
-        <p>{t("loadingCompanyInfo")}</p>
-      ) : (
-        <>
-          {renderField("name", "name")}
-          {renderField("email", "email")}
-          {renderField("phone", "phone")}
-          {renderField("address", "address")}
-          {renderField("website", "website")}
-          {renderField("description", "description")}
+    <>
+      <Card
+        title={<Title level={4}>{t("companyInformation")}</Title>}
+        extra={
+          <Button
+            type="primary"
+            icon={<SaveOutlined />}
+            onClick={saveChanges}
+            disabled={!isDirty}
+          >
+            {t("saveChanges")}
+          </Button>
+        }
+        style={{ marginBottom: 24 }}
+      >
+        {isLoading ? (
+          <p>{t("loadingCompanyInfo")}</p>
+        ) : (
+          <>
+            {renderField("name", "name")}
+            {renderField("email", "email")}
+            {renderField("phone", "phone")}
+            {renderField("address", "address")}
+            {renderField("website", "website")}
+            {renderField("description", "description")}
+          </>
+        )}
+      </Card>
 
-          <Row gutter={[16, 16]} align="middle" style={{ marginBottom: 16 }}>
-            <Col xs={24} md={6}>
-              <strong>{t("logo")}</strong>
-            </Col>
-            <Col xs={24} md={12}>
-              {tempData.logo ? (
-                <img
-                  src={tempData.logo}
-                  alt={t("logo")}
-                  style={{ maxHeight: "100px", maxWidth: "100px" }}
-                />
-              ) : (
-                <p>{t("noLogo")}</p>
-              )}
-            </Col>
-            <Col xs={24} md={6} style={{ textAlign: "right" }}>
-              <Upload
-                accept="image/*"
-                customRequest={handleUploadLogo}
-                showUploadList={false}
-              >
-                <Button icon={<UploadOutlined />}>{t("uploadLogo")}</Button>
-              </Upload>
-              {tempData.logo && (
-                <Button
-                  type="text"
-                  danger
-                  icon={<DeleteOutlined />}
-                  onClick={handleDeleteLogo}
-                >
-                  {t("deleteLogo")}
-                </Button>
-              )}
-            </Col>
-          </Row>
+      <Card
+        title={<Title level={4}>{t("companyLogo")}</Title>}
+        style={{ marginBottom: 24 }}
+      >
+        <Row gutter={[16, 16]} align="middle">
+          {/* Cột chứa logo */}
+          <Col xs={24} md={21} style={{ textAlign: "center" }}>
+            {" "}
+            {/* 75% cho logo */}
+            {tempData.logo ? (
+              <img
+                src={tempData.logo}
+                alt={t("logo")}
+                style={{
+                  maxHeight: "100px",
+                  maxWidth: "100px",
+                  borderRadius: "8px",
+                  border: "1px solid #d9d9d9",
+                  padding: "4px",
+                  display: "block",
+                  margin: "0 auto",
+                }}
+              />
+            ) : (
+              <p style={{ color: "#888" }}>{t("noLogo")}</p>
+            )}
+          </Col>
 
-          <Row>
-            <Col span={24}>
-              <Title level={5}>{t("socialNetworks")}</Title>
-            </Col>
-          </Row>
-          {tempData.social_links.map((social, index) => (
-            <Row
-              key={social.key || index}
-              gutter={[16, 16]}
-              align="middle"
-              style={{ marginBottom: "16px" }}
+          {/* Cột chứa các nút */}
+          <Col
+            xs={24}
+            md={3} /* 25% cho nút */
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end", // Đặt nút ở cuối cột
+              alignItems: "right", // Căn giữa nội dung
+              gap: "8px",
+            }}
+          >
+            <Upload
+              accept="image/*"
+              customRequest={({ file }) =>
+                setTempData((prev) => ({ ...prev, logo: file }))
+              }
+              showUploadList={false}
             >
-              <Col xs={24} md={6}>
-                {SOCIAL_OPTIONS.find((s) => s.key === social.key)?.label}
-              </Col>
-              <Col xs={24} md={12}>
-                <Input
-                  value={social.url}
-                  onChange={(e) => {
-                    const updatedLinks = [...tempData.social_links];
-                    updatedLinks[index].url = e.target.value;
-                    setTempData((prev) => ({
-                      ...prev,
-                      social_links: updatedLinks,
-                    }));
-                  }}
-                />
-              </Col>
-              <Col xs={24} md={6}>
-                <Button
-                  type="text"
-                  danger
-                  icon={<DeleteOutlined />}
-                  onClick={() => handleDeleteSocial(index)}
-                >
-                  {t("delete")}
-                </Button>
-              </Col>
-            </Row>
-          ))}
-
-          <Row gutter={[16, 16]} align="middle" style={{ marginTop: 16 }}>
-            <Col xs={24} md={18}>
-              <Select
-                placeholder={t("selectSocialNetwork")}
-                value={newSocial}
-                onChange={(value) => setNewSocial(value)}
-                style={{ width: "100%" }}
-              >
-                {SOCIAL_OPTIONS.filter(
-                  (option) =>
-                    !tempData.social_links.some(
-                      (social) => social.key === option.key
-                    )
-                ).map((option) => (
-                  <Option key={option.key} value={option.key}>
-                    {option.label}
-                  </Option>
-                ))}
-              </Select>
-            </Col>
-            <Col xs={24} md={6}>
               <Button
-                type="primary"
-                icon={<PlusOutlined />}
-                onClick={handleAddSocial}
-                block
+                icon={<UploadOutlined />}
+                style={{
+                  backgroundColor: "#1890ff",
+                  color: "white",
+                  width: "163px", // Đồng nhất kích thước nút
+                }}
               >
-                {t("add")}
+                {t("uploadLogo")}
+              </Button>
+            </Upload>
+
+            {tempData.logo && (
+              <Button
+                type="text"
+                danger
+                icon={<DeleteOutlined />}
+                style={{
+                  backgroundColor: "red",
+                  color: "white",
+                  width: "163px", // Đồng nhất kích thước nút
+                }}
+                onClick={() => setTempData((prev) => ({ ...prev, logo: null }))}
+              >
+                {t("deleteLogo")}
+              </Button>
+            )}
+          </Col>
+        </Row>
+      </Card>
+
+      <Card title={<Title level={4}>{t("socialMedia")}</Title>}>
+        {tempData.social_links.map((social, index) => (
+          <Row
+            key={index}
+            gutter={[16, 16]}
+            align="middle"
+            style={{ marginBottom: 16 }}
+          >
+            <Col xs={24} md={6}>
+              {" "}
+              {/* Cột nhãn mạng xã hội */}
+              {SOCIAL_OPTIONS.find((s) => s.key === social.key)?.label}
+            </Col>
+            <Col xs={24} md={15}>
+              {" "}
+              {/* Cột Input */}
+              <Input
+                value={social.url}
+                onChange={(e) => {
+                  const updatedLinks = [...tempData.social_links];
+                  updatedLinks[index].url = e.target.value;
+                  setTempData((prev) => ({
+                    ...prev,
+                    social_links: updatedLinks,
+                  }));
+                }}
+              />
+            </Col>
+            <Col xs={24} md={3} style={{ textAlign: "right" }}>
+              {" "}
+              {/* Cột nút Xóa */}
+              <Button
+                type="text"
+                danger
+                icon={<DeleteOutlined />}
+                style={{
+                  backgroundColor: "red",
+                  color: "white",
+                  width: "100%", // Đảm bảo nút rộng hơn và cân đối
+                }}
+                onClick={() => handleDeleteSocial(index)}
+              >
+                {t("delete")}
               </Button>
             </Col>
           </Row>
-        </>
-      )}
-    </Card>
+        ))}
+
+        <Row gutter={[16, 16]} align="middle" style={{ marginTop: 16 }}>
+          <Col xs={24} md={21}>
+            {" "}
+            {/* Cột Select để dài bằng Input */}
+            <Select
+              placeholder={t("selectSocialNetwork")}
+              value={newSocial}
+              onChange={(value) => setNewSocial(value)}
+              style={{ width: "100%" }}
+            >
+              {SOCIAL_OPTIONS.filter(
+                (option) =>
+                  !tempData.social_links.some(
+                    (social) => social.key === option.key
+                  )
+              ).map((option) => (
+                <Option key={option.key} value={option.key}>
+                  {option.label}
+                </Option>
+              ))}
+            </Select>
+          </Col>
+          <Col xs={24} md={3}>
+            {" "}
+            {/* Cột nút Thêm, nhỏ gọn */}
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={handleAddSocial}
+              block
+              style={{
+                backgroundColor: "#1890ff",
+              }}
+            >
+              {t("add")}
+            </Button>
+          </Col>
+        </Row>
+      </Card>
+    </>
   );
 };
 

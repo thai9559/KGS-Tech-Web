@@ -132,13 +132,12 @@ Tailwind CSS giúp bạn dễ dàng tùy chỉnh giao diện của mình mà kh�
 
   return (
     <Layout>
-      {/* <div className="container mx-auto p-6">
+      <div className="container mx-auto p-6">
         <BlogPage blogs={blogs} suggestedBlogs={suggestedBlogs} />
-      </div> */}
-      <div className=" mx-auto p-6">
-        {/* <BlogPage blogs={blogs} suggestedBlogs={suggestedBlogs} /> */}
-        <BlogTest blogs={blogs} suggestedBlogs={suggestedBlogs} />
       </div>
+      {/* <div className=" mx-auto p-6">
+        <BlogTest blogs={blogs} suggestedBlogs={suggestedBlogs} />
+      </div> */}
     </Layout>
   );
 };

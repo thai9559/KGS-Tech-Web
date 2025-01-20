@@ -15,12 +15,19 @@ class BlogFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->sentence, // Tiêu đề ngẫu nhiên
-            'content' => $this->faker->paragraphs(3, true), // Nội dung ngẫu nhiên
-            'slug' => $this->faker->slug, // Slug ngẫu nhiên
-            'main_keyword' => $this->faker->word, // Từ khóa chính
-            'secondary_keywords' => implode(', ', $this->faker->words(3)), // Từ khóa phụ (danh sách)
-            'tags' => implode(', ', $this->faker->words(5)), // Tags
+            'title' => $this->faker->sentence(),
+            'content' => $this->faker->paragraphs(3, true),
+            'slug' => $this->faker->slug(),
+            'main_keyword' => $this->faker->word(),
+            'secondary_keywords' => implode(',', $this->faker->words(3)),
+            'tags' => implode(',', $this->faker->words(5)),
+            'meta_title' => $this->faker->sentence(),
+            'meta_description' => $this->faker->text(150),
+            'focus_keyword' => $this->faker->word(),
+            'canonical_url' => $this->faker->url(),
+            'category_id' => $this->faker->numberBetween(1, 10), // ID danh mục giả
+            'user_id' => $this->faker->numberBetween(1, 5), // ID người dùng giả
+            'images' => json_encode([$this->faker->imageUrl()]), // Danh sách ảnh giả
         ];
     }
 }

@@ -8,8 +8,6 @@ import {
 } from "react-router-dom";
 import Loading from "./components/Loading";
 import PrivateRoute from "./pages/PriviteRoute/PrivateRoute";
-import BlogTest from "./components/Blog/Blogpage/BlogTest";
-import Homepage from "./components/Home/Homepage/Homepage";
 
 // Lazy load các trang
 const Home = lazy(() => import("./pages/Home"));
@@ -30,24 +28,39 @@ const FeedbackAdmin = lazy(() =>
 const CategoryAdmin = lazy(() =>
   import("./pages/admin/Category/CategoryManagement")
 );
-const TestBlog = lazy(() => import("./pages/admin/Blog/CreateBlog"));
+const NoAccess = lazy(() => import("./pages/admin/NoAccess"));
+const CreteBlog = lazy(() => import("./pages/admin/Blog/CreateBlog"));
+const EditBlog = lazy(() => import("./pages/admin/Blog/EditBlog"));
 
 function App() {
   const [loading, setLoading] = useState(false);
   const location = useLocation();
 
-  // Danh sách ngoại lệ (không hiển thị loading)
-  const exceptionRoutes = ["/admin/testtest", "/testtest"]; // Thêm đường dẫn cần bỏ qua
+  // Danh sách các đường dẫn thuộc PrivateRoute
+  const privateRoutes = [
+    "/admin",
+    "/admin/dashboard",
+    "/admin/users",
+    "/admin/users/roles",
+    "/admin/company",
+    "/admin/bloglist",
+    "/admin/blog/categories",
+    "/admin/feedback",
+  ];
 
   useEffect(() => {
-    // Nếu URL hiện tại nằm trong danh sách ngoại lệ, không hiển thị loading
-    if (exceptionRoutes.includes(location.pathname)) {
-      setLoading(false);
+    // Nếu đường dẫn hiện tại thuộc PrivateRoute, không hiển thị loading
+    const isPrivateRoute = privateRoutes.some((route) =>
+      location.pathname.startsWith(route)
+    );
+
+    if (isPrivateRoute) {
+      setLoading(false); // Không hiển thị loading
     } else {
-      setLoading(true);
+      setLoading(true); // Hiển thị loading cho các trang khác
       const timeout = setTimeout(() => {
         setLoading(false);
-      }, 500); // Set thời gian loading (nếu cần)
+      }, 500); // Set thời gian loading nếu cần
 
       return () => clearTimeout(timeout);
     }
@@ -68,38 +81,105 @@ function App() {
             <Route path="/blog/:id" element={<BlogDetailPage />} />
             <Route path="/admin/login" element={<Login />} />
 
-            {/* test */}
-            <Route path="blog/create-blog" element={<TestBlog />} />
-            <Route path="blog/test" element={<BlogTest />} />
-            <Route path="/homepage" element={<Homepage />} />
+            {/* Test */}
 
+            {/* <Route path="blog/create-blog" element={<TestBlog />} /> */}
             {/* Protected Routes */}
             <Route
               path="/admin"
               element={
-                <PrivateRoute>
+                <PrivateRoute requiredPermissions={["Dashboard"]}>
                   <MenuNavigate />
                 </PrivateRoute>
               }
             >
               {/* Dashboard */}
-              <Route path="dashboard" element={<Dashboard />} />
+              <Route
+                path="dashboard"
+                element={
+                  <PrivateRoute requiredPermissions={["Dashboard"]}>
+                    <Dashboard />
+                  </PrivateRoute>
+                }
+              />
 
               {/* Users Management */}
-              <Route path="users" element={<UserManagement />} />
-              <Route path="users/roles" element={<RoleAdmin />} />
+              <Route
+                path="users"
+                element={
+                  <PrivateRoute requiredPermissions={["Users"]}>
+                    <UserManagement />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="users/roles"
+                element={
+                  <PrivateRoute requiredPermissions={["Roles"]}>
+                    <RoleAdmin />
+                  </PrivateRoute>
+                }
+              />
 
               {/* Company Management */}
-              <Route path="company" element={<CompanyAdmin />} />
+              <Route
+                path="company"
+                element={
+                  <PrivateRoute requiredPermissions={["Company"]}>
+                    <CompanyAdmin />
+                  </PrivateRoute>
+                }
+              />
 
               {/* Blog Management */}
-              <Route path="bloglist" element={<BlogAdmin />} />
-              {/* <Route path="blog/create-blog" element={<TestBlog />} /> */}
-              <Route path="blog/categories" element={<CategoryAdmin />} />
+              <Route
+                path="bloglist"
+                element={
+                  <PrivateRoute requiredPermissions={["Blogs"]}>
+                    <BlogAdmin />
+                  </PrivateRoute>
+                }
+              />
+
+              <Route
+                path="blog/create-blog"
+                element={
+                  <PrivateRoute requiredPermissions={["Blogs"]}>
+                    <CreteBlog />
+                  </PrivateRoute>
+                }
+              />
+
+              <Route
+                path="blog/edit-blog/:id" // Route con cho chỉnh sửa blog
+                element={
+                  <PrivateRoute requiredPermissions={["Blogs"]}>
+                    <EditBlog />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="blog/categories"
+                element={
+                  <PrivateRoute requiredPermissions={["Blogs"]}>
+                    <CategoryAdmin />
+                  </PrivateRoute>
+                }
+              />
 
               {/* Feedback Management */}
-              <Route path="feedback" element={<FeedbackAdmin />} />
+              <Route
+                path="feedback"
+                element={
+                  <PrivateRoute requiredPermissions={["Feedback"]}>
+                    <FeedbackAdmin />
+                  </PrivateRoute>
+                }
+              />
             </Route>
+
+            {/* No Access Route */}
+            <Route path="/no-access" element={<NoAccess />} />
 
             {/* Redirect unknown routes */}
             <Route path="*" element={<Navigate to="/" replace />} />
