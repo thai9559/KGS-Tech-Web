@@ -5,16 +5,16 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://127.0.0.1:8000/api",
     prepareHeaders: (headers, { endpoint }) => {
-      // Lấy token từ localStorage
       const token = localStorage.getItem("access_token");
-      if (token && endpoint !== "login" && endpoint !== "register") {
+      console.log("Token:", token); // Log để kiểm tra token
+      if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
-
       headers.set("Content-Type", "application/json");
       return headers;
     },
   }),
+
   tagTypes: ["Auth"], // Thêm tag type cho xác thực
   endpoints: (builder) => ({
     login: builder.mutation({

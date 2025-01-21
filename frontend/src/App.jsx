@@ -31,6 +31,7 @@ const CategoryAdmin = lazy(() =>
 const NoAccess = lazy(() => import("./pages/admin/NoAccess"));
 const CreteBlog = lazy(() => import("./pages/admin/Blog/CreateBlog"));
 const EditBlog = lazy(() => import("./pages/admin/Blog/EditBlog"));
+const TagAdmin = lazy(() => import("./pages/admin/Blog/Tag/TagAdmin"));
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -163,6 +164,14 @@ function App() {
                 element={
                   <PrivateRoute requiredPermissions={["Blogs"]}>
                     <CategoryAdmin />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="blog/tags"
+                element={
+                  <PrivateRoute requiredPermissions={["Blogs"]}>
+                    <TagAdmin />
                   </PrivateRoute>
                 }
               />

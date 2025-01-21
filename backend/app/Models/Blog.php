@@ -24,10 +24,13 @@ class Blog extends Model
         'user_id',
         'images',
         'thumbnail_image', // Thêm trường thumbnail_image
+        'is_visible',
     ];
 
     protected $casts = [
         'images' => 'array', // Chuyển đổi JSON sang mảng khi lấy dữ liệu
+        'tags' => 'array',
+        'is_visible' => 'boolean',
     ];
 
     /**
@@ -44,5 +47,9 @@ class Blog extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'blog_tag'); // Quan hệ nhiều-nhiều
     }
 }

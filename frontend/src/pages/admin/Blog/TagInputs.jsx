@@ -1,11 +1,23 @@
 import React, { useState } from "react";
-import { Input, Button, Tag } from "antd";
+import { AutoComplete, Tag, Input } from "antd";
+import { useGetTagsQuery } from "../../../redux/api/TagApi";
 
 const TagsInputs = ({ value = [], onChange }) => {
   const [inputValue, setInputValue] = useState("");
+  const { data: response = {}, isFetching } = useGetTagsQuery(inputValue);
 
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
+  // Trích xuất mảng `data` từ phản hồi API
+  const tagOptions = Array.isArray(response.data) ? response.data : [];
+
+  const handleInputChange = (val) => {
+    setInputValue(val);
+  };
+
+  const handleSelect = (selectedTag) => {
+    if (!value.includes(selectedTag)) {
+      onChange([...value, selectedTag]);
+    }
+    setInputValue("");
   };
 
   const handleInputKeyDown = (e) => {
@@ -45,12 +57,20 @@ const TagsInputs = ({ value = [], onChange }) => {
           </Tag>
         ))}
       </div>
-      <Input
+      <AutoComplete
         value={inputValue}
         onChange={handleInputChange}
-        onKeyDown={handleInputKeyDown}
+        onSelect={handleSelect}
+        options={tagOptions.map((tag) => ({ value: tag.name }))}
+        style={{ width: "100%" }}
         placeholder="Nhập tag và nhấn Enter"
-      />
+        notFoundContent={isFetching ? "Đang tải..." : "Không tìm thấy tag nào"}
+      >
+        <Input
+          onKeyDown={handleInputKeyDown}
+          placeholder="Nhập tag và nhấn Enter"
+        />
+      </AutoComplete>
     </div>
   );
 };

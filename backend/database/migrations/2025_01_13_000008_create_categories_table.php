@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categories', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->id(); // ID danh mục
             $table->string('name'); // Tên danh mục
             $table->string('slug')->unique(); // Slug của danh mục (thân thiện SEO)

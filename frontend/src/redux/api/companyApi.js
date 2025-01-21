@@ -1,18 +1,23 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const companyApi = createApi({
-  reducerPath: "companyApi", // Định danh reducer
-  baseQuery: fetchBaseQuery({ baseUrl: "http://127.0.0.1:8000/api" }),
-
-  tagTypes: ["Company"], // Tag cho invalidation
+  reducerPath: "companyApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: "http://127.0.0.1:8000/api",
+    prepareHeaders: (headers) => {
+      headers.set("Accept", "application/json");
+      return headers;
+    },
+  }),
+  tagTypes: ["Company"],
   endpoints: (builder) => ({
     getCompany: builder.query({
-      query: () => "/company", // Endpoint GET thông tin công ty
+      query: () => "/company",
       providesTags: ["Company"],
     }),
     createCompany: builder.mutation({
       query: (newCompany) => ({
-        url: "/company", // Endpoint POST tạo công ty
+        url: "/company",
         method: "POST",
         body: newCompany,
       }),
@@ -23,37 +28,27 @@ export const companyApi = createApi({
         url: "/company",
         method: "PUT",
         body: updatedCompany,
-        headers: {
-          "Content-Type": "application/json",
-        },
       }),
       invalidatesTags: ["Company"],
     }),
-
-    // New Mutation: Update Logo
     updateLogo: builder.mutation({
-      query: (logoFile) => {
-        const formData = new FormData();
-        formData.append("logo", logoFile);
-        return {
-          url: "/company/logo", // Endpoint cập nhật logo
-          method: "POST", // Sử dụng POST để gửi file
-          body: formData,
-        };
-      },
-      invalidatesTags: ["Company"],
+      query: (formData) => ({
+        url: "/company/logo",
+        method: "POST",
+        body: formData,
+      }),
+      invalidatesTags: ["Company"], // Làm mới dữ liệu sau khi upload
     }),
-
     deleteCompany: builder.mutation({
       query: () => ({
-        url: "/company", // Endpoint DELETE xóa công ty
+        url: "/company",
         method: "DELETE",
       }),
       invalidatesTags: ["Company"],
     }),
     deleteLogo: builder.mutation({
       query: () => ({
-        url: "/company/logo", // Endpoint DELETE xóa logo
+        url: "/company/logo",
         method: "DELETE",
       }),
       invalidatesTags: ["Company"],
@@ -65,7 +60,7 @@ export const {
   useGetCompanyQuery,
   useCreateCompanyMutation,
   useUpdateCompanyMutation,
-  useUpdateLogoMutation, // Export mutation update logo
+  useUpdateLogoMutation,
   useDeleteCompanyMutation,
   useDeleteLogoMutation,
 } = companyApi;

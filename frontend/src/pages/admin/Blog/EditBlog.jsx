@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Layout, Form, Input, Button, Select, message, Upload } from "antd";
+import TagsInputs from "./TagInputs";
+import {
+  Layout,
+  Form,
+  Input,
+  Button,
+  Select,
+  message,
+  Upload,
+  Spin,
+} from "antd";
 import { Editor } from "@tinymce/tinymce-react";
 import { UploadOutlined } from "@ant-design/icons";
 
@@ -28,7 +38,9 @@ const EditBlog = () => {
         slug: blog.data.slug,
         main_keyword: blog.data.main_keyword,
         secondary_keywords: blog.data.secondary_keywords,
-        tags: blog.data.tags,
+        tags: Array.isArray(blog.data.tags)
+          ? blog.data.tags
+          : JSON.parse(blog.data.tags || "[]"),
         category_id: blog.data.category_id,
         meta_title: blog.data.meta_title,
         meta_description: blog.data.meta_description,
@@ -38,7 +50,6 @@ const EditBlog = () => {
 
       setContent(blog.data.content);
 
-      // Lấy ảnh tiêu đề từ dữ liệu API
       if (blog.data.thumbnail_image) {
         setThumbnailImage(blog.data.thumbnail_image);
       }
@@ -56,7 +67,7 @@ const EditBlog = () => {
         ...values,
         content,
         images,
-        thumbnail_image: thumbnailImage, // Thêm ảnh tiêu đề vào payload
+        thumbnail_image: thumbnailImage,
       };
 
       await updateBlog({ id, ...payload }).unwrap();
@@ -81,7 +92,7 @@ const EditBlog = () => {
 
       if (data.success) {
         message.success("Upload ảnh thành công!");
-        setThumbnailImage(data.location); // Lưu URL ảnh vào state
+        setThumbnailImage(data.location);
       } else {
         message.error("Upload ảnh thất bại!");
       }
@@ -92,7 +103,11 @@ const EditBlog = () => {
   };
 
   if (isLoading) {
-    return <p>Đang tải dữ liệu...</p>;
+    return (
+      <div style={{ textAlign: "center", marginTop: "20%" }}>
+        <Spin tip="Đang tải dữ liệu..." />
+      </div>
+    );
   }
 
   if (isError) {
@@ -133,14 +148,20 @@ const EditBlog = () => {
           <Form.Item
             name="tags"
             label="Tags"
-            rules={[{ required: true, message: "Vui lòng nhập tags!" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập ít nhất một tag!" },
+            ]}
           >
-            <Input placeholder="Nhập tags, cách nhau bằng dấu phẩy" />
+            <TagsInputs />
           </Form.Item>
+
           <Form.Item
             name="slug"
             label="Slug (URL thân thiện SEO)"
-            rules={[{ required: true, message: "Vui lòng nhập slug!" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập slug!" },
+              { max: 60, message: "Slug không được vượt quá 60 ký tự!" },
+            ]}
           >
             <Input placeholder="Nhập slug" />
           </Form.Item>
@@ -161,6 +182,41 @@ const EditBlog = () => {
               <Option value={2}>Danh Mục 2</Option>
             </Select>
           </Form.Item>
+          <Form.Item
+            name="meta_title"
+            label="Meta Title"
+            rules={[{ required: true, message: "Vui lòng nhập Meta Title!" }]}
+          >
+            <Input placeholder="Nhập Meta Title" />
+          </Form.Item>
+          <Form.Item
+            name="meta_description"
+            label="Meta Description"
+            rules={[
+              { required: true, message: "Vui lòng nhập Meta Description!" },
+            ]}
+          >
+            <Input.TextArea placeholder="Nhập Meta Description" rows={4} />
+          </Form.Item>
+          <Form.Item
+            name="focus_keyword"
+            label="Focus Keyword"
+            rules={[
+              { required: true, message: "Vui lòng nhập Focus Keyword!" },
+            ]}
+          >
+            <Input placeholder="Nhập Focus Keyword" />
+          </Form.Item>
+          <Form.Item
+            name="canonical_url"
+            label="Canonical URL"
+            rules={[
+              { required: true, message: "Vui lòng nhập Canonical URL!" },
+              { type: "url", message: "Vui lòng nhập đúng định dạng URL!" },
+            ]}
+          >
+            <Input placeholder="Nhập Canonical URL" />
+          </Form.Item>
           <Form.Item label="Ảnh Tiêu Đề">
             <Upload
               accept="image/*"
@@ -179,7 +235,7 @@ const EditBlog = () => {
           </Form.Item>
           <Form.Item label="Nội Dung">
             <Editor
-              tinymceScriptSrc="https://cdn.tiny.cloud/1/9dsiwvmjoqjrozos58bg410o56uilmv29czcut6wjykwcvc1/tinymce/5/tinymce.min.js"
+              tinymceScriptSrc="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"
               value={content}
               onEditorChange={(value) => setContent(value)}
               init={{

@@ -52,6 +52,7 @@ const UserManagement = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [filteredData, setFilteredData] = useState(users);
+  const [selectedPermissions, setSelectedPermissions] = useState([]);
 
   const [form] = Form.useForm();
 
@@ -89,8 +90,10 @@ const UserManagement = () => {
       const values = form.getFieldsValue();
 
       if (isEditing) {
+        // Chỉnh sửa user
         const updateData = { id: currentUser.id, ...values };
 
+        // Xử lý mật khẩu (chỉ cập nhật nếu có)
         if (!values.password) {
           delete updateData.password;
         } else {
@@ -99,6 +102,7 @@ const UserManagement = () => {
 
         await updateUser(updateData).unwrap();
 
+        // Gán quyền nếu có
         if (values.permissions?.length) {
           await assignPermissions({
             user_id: currentUser.id,
@@ -108,27 +112,19 @@ const UserManagement = () => {
 
         message.success(t("userAdmin.updateSuccess"));
       } else {
-        const { role_id, permissions, ...userData } = values;
+        // Thêm mới user
+        const { permissions, ...userData } = values; // Loại bỏ permissions trong payload khi thêm mới
 
-        if (!permissions || permissions.length === 0) {
-          message.error(t("userAdmin.formErrors.permissionsRequired"));
-          return;
-        }
-
+        // Kiểm tra mật khẩu bắt buộc khi thêm mới
         if (!userData.password) {
           message.error(t("userAdmin.formErrors.passwordRequired"));
           return;
         }
 
-        const newUser = await createUser({ ...userData, role_id }).unwrap();
+        // Gửi API tạo user
+        const newUser = await createUser(userData).unwrap();
 
-        if (permissions?.length) {
-          await assignPermissions({
-            user_id: newUser.id,
-            permission_ids: permissions,
-          });
-        }
-
+        // Không xử lý permissions khi thêm user
         message.success(t("userAdmin.createSuccess"));
       }
 
@@ -190,6 +186,20 @@ const UserManagement = () => {
 
   const handleResetFilter = () => {
     setFilteredData(users);
+  };
+  const handlePermissionChange = (value) => {
+    // Kiểm tra nếu chọn "Full admin privileges" (giả sử ID của quyền này là 1)
+    const isFullAdminSelected = value.includes(1); // 1 là ID của quyền "Full admin privileges"
+
+    if (isFullAdminSelected) {
+      // Nếu chọn quyền cao nhất, chỉ giữ lại quyền này
+      setSelectedPermissions([1]);
+      form.setFieldsValue({ permissions: [1] });
+    } else {
+      // Nếu không chọn quyền cao nhất, cập nhật trạng thái bình thường
+      setSelectedPermissions(value);
+      form.setFieldsValue({ permissions: value });
+    }
   };
 
   const columns = [
@@ -403,6 +413,7 @@ const UserManagement = () => {
           >
             <Switch />
           </Form.Item>
+          {/* Trường role vẫn hiển thị khi thêm hoặc chỉnh sửa */}
           <Form.Item
             label={t("userAdmin.role")}
             name="role_id"
@@ -424,25 +435,34 @@ const UserManagement = () => {
               ))}
             </Select>
           </Form.Item>
-          <Form.Item
-            label={t("userAdmin.permissions")}
-            name="permissions"
-            rules={[
-              { required: true, message: t("userAdmin.choosePermissions") },
-            ]}
-          >
-            <Select
-              mode="multiple"
-              placeholder={t("userAdmin.choosePermissions")}
-              loading={permissionsLoading}
+          {/* Trường permissions chỉ hiển thị khi chỉnh sửa */}
+          {isEditing && (
+            <Form.Item
+              label={t("userAdmin.permissions")}
+              name="permissions"
+              rules={[
+                { required: true, message: t("userAdmin.choosePermissions") },
+              ]}
             >
-              {permissions.map((perm) => (
-                <Option key={perm.id} value={perm.id}>
-                  {perm.name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
+              <Select
+                mode="multiple"
+                placeholder={t("userAdmin.choosePermissions")}
+                loading={permissionsLoading}
+                value={selectedPermissions}
+                onChange={handlePermissionChange} // Gọi hàm xử lý
+              >
+                {permissions.map((perm) => (
+                  <Option
+                    key={perm.id}
+                    value={perm.id}
+                    disabled={selectedPermissions.includes(1) && perm.id !== 1} // Vô hiệu hóa quyền khác nếu "Full admin privileges" được chọn
+                  >
+                    {perm.name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+          )}
         </Form>
       </Modal>
     </section>

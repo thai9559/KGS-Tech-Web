@@ -410,5 +410,36 @@
     "formErrors": {
       "nameRequired": "カテゴリ名を入力してください！"
     }
+  },
+  "tagAdmin": {
+    "addTag": "タグを追加",
+    "createSuccess": "タグの作成に成功しました",
+    "createFail": "タグの作成に失敗しました",
+    "updateSuccess": "タグの更新に成功しました",
+    "updateFail": "タグの更新に失敗しました",
+    "deleteSuccess": "タグの削除に成功しました",
+    "deleteFail": "タグの削除に失敗しました",
+    "loadingError": "タグの読み込みエラー",
+    "deleteConfirm": "このタグを削除してもよろしいですか？",
+    "yes": "はい",
+    "no": "いいえ",
+    "edit": "編集",
+    "delete": "削除",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "form": {
+      "name": "タグ名"
+    },
+    "formErrors": {
+      "nameRequired": "タグ名は必須です"
+    },
+    "tableColumns": {
+      "id": "ID",
+      "name": "名前",
+      "actions": "アクション"
+    },
+    "detailModal": {
+      "title": "タグの詳細"
+    }
   }
 }

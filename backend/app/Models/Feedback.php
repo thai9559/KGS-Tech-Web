@@ -14,6 +14,5 @@ class Feedback extends Model
         'subject',
         'content',
         'sent_at',
-        'is_visible', 
     ];
 }

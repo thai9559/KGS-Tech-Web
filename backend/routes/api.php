@@ -9,6 +9,8 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\ActivityLogController;
 
 
 Route::middleware([])->group(function () {
@@ -55,6 +57,8 @@ Route::middleware([])->group(function () {
     Route::put('/company', [CompanyController::class, 'updateCompany']); // Cập nhật công ty
     Route::delete('/company', [CompanyController::class, 'deleteCompany']); // Xóa công ty
     Route::delete('/company/logo', [CompanyController::class, 'deleteLogo']); // Xóa logo
+    Route::post('/company/logo', [CompanyController::class, 'uploadLogo']);
+
 });
 
 
@@ -77,11 +81,22 @@ Route::middleware([])->group(function () {
     Route::post('/upload-image', [BlogController::class, 'uploadImage']);
     
 });
-
+    Route::middleware([])->group(function () {
+    Route::get('/tags', [TagController::class, 'index']);
+    Route::post('/tags', [TagController::class, 'store']);
+    Route::put('/tags/{id}', [TagController::class, 'update']);
+    Route::delete('/tags/{id}', [TagController::class, 'destroy']);
+    
+});
 Route::middleware([])->group(function () {
     Route::get('/feedback', [FeedbackController::class, 'index']); // Lấy danh sách feedback
     Route::post('/feedback', [FeedbackController::class, 'store']); // Tạo feedback mới
     Route::patch('/feedback/{id}/visibility', [FeedbackController::class, 'updateVisibility']);
 
 });
+Route::middleware([])->group(function () {
+Route::get('/activity-logs', [ActivityLogController::class, 'index']); // Lấy danh sách log
+Route::get('/activity-logs/{id}', [ActivityLogController::class, 'show']); // Xem chi tiết log
+Route::delete('/activity-logs/{id}', [ActivityLogController::class, 'destroy']); // Xóa log
 
+});

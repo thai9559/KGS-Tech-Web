@@ -417,5 +417,36 @@
     "formErrors": {
       "nameRequired": "Vui lòng nhập tên danh mục!"
     }
+  },
+  "tagAdmin": {
+    "addTag": "Thêm Tag",
+    "createSuccess": "Tạo tag thành công",
+    "createFail": "Tạo tag thất bại",
+    "updateSuccess": "Cập nhật tag thành công",
+    "updateFail": "Cập nhật tag thất bại",
+    "deleteSuccess": "Xóa tag thành công",
+    "deleteFail": "Xóa tag thất bại",
+    "loadingError": "Lỗi khi tải danh sách tag",
+    "deleteConfirm": "Bạn có chắc chắn muốn xóa tag này không?",
+    "yes": "Có",
+    "no": "Không",
+    "edit": "Chỉnh sửa",
+    "delete": "Xóa",
+    "save": "Lưu",
+    "cancel": "Hủy",
+    "form": {
+      "name": "Tên Tag"
+    },
+    "formErrors": {
+      "nameRequired": "Tên tag là bắt buộc"
+    },
+    "tableColumns": {
+      "id": "ID",
+      "name": "Tên",
+      "actions": "Hành động"
+    },
+    "detailModal": {
+      "title": "Chi tiết Tag"
+    }
   }
 }

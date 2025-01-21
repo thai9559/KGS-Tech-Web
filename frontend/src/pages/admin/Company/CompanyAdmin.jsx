@@ -22,6 +22,7 @@ import {
   useGetCompanyQuery,
   useUpdateCompanyMutation,
   useDeleteLogoMutation,
+  useUpdateLogoMutation,
 } from "../../../redux/api/companyApi";
 import { useTranslation } from "react-i18next";
 
@@ -40,6 +41,8 @@ const CompanyAdmin = () => {
   const { data: companyData, isLoading } = useGetCompanyQuery();
   const [updateCompany] = useUpdateCompanyMutation();
   const [deleteLogo] = useDeleteLogoMutation();
+  const [updateLogo] = useUpdateLogoMutation();
+
   const { t } = useTranslation();
 
   const [tempData, setTempData] = useState({
@@ -52,9 +55,11 @@ const CompanyAdmin = () => {
     logo: null,
     social_links: [],
   });
-  const [isDirty, setIsDirty] = useState(false);
+  const [originalData, setOriginalData] = useState(null); // Dữ liệu gốc từ API
   const [editingField, setEditingField] = useState(null);
   const [newSocial, setNewSocial] = useState("");
+  const [isDirty, setIsDirty] = useState(false);
+  // So sánh dữ liệu hiện tại và gốc để xác định có thay đổi hay không
 
   useEffect(() => {
     if (companyData?.success) {
@@ -68,37 +73,34 @@ const CompanyAdmin = () => {
           ).map(([key, url]) => ({ key, url }))
         : [];
 
-      setTempData({
+      const updatedData = {
         ...company,
         social_links: socialLinksArray,
-      });
+      };
+
+      setTempData(updatedData);
+      setOriginalData(updatedData); // Lưu dữ liệu gốc từ API
     }
   }, [companyData]);
 
   useEffect(() => {
-    if (companyData?.success) {
-      const company = companyData.data;
+    if (originalData) {
+      const isFieldsChanged =
+        tempData.name !== originalData.name ||
+        tempData.email !== originalData.email ||
+        tempData.phone !== originalData.phone ||
+        tempData.address !== originalData.address ||
+        tempData.website !== originalData.website ||
+        tempData.description !== originalData.description ||
+        JSON.stringify(tempData.social_links) !==
+          JSON.stringify(originalData.social_links);
 
-      const socialLinksChanged =
-        JSON.stringify(
-          tempData.social_links.reduce((acc, { key, url }) => {
-            acc[key] = url;
-            return acc;
-          }, {})
-        ) !== JSON.stringify(company.social_links || {});
+      const isLogoChanged = tempData.logo !== originalData.logo;
 
-      const otherFieldsChanged =
-        tempData.name !== company.name ||
-        tempData.email !== company.email ||
-        tempData.phone !== company.phone ||
-        tempData.address !== company.address ||
-        tempData.website !== company.website ||
-        tempData.description !== company.description ||
-        tempData.logo !== company.logo;
-
-      setIsDirty(socialLinksChanged || otherFieldsChanged);
+      // Chỉ kích hoạt `isDirty` nếu có thay đổi
+      setIsDirty(isFieldsChanged || isLogoChanged);
     }
-  }, [tempData, companyData]);
+  }, [tempData, originalData]);
 
   const saveChanges = async () => {
     try {
@@ -111,32 +113,18 @@ const CompanyAdmin = () => {
       );
 
       const payload = {
-        name: tempData.name,
-        email: tempData.email,
-        phone: tempData.phone,
-        address: tempData.address,
-        website: tempData.website,
-        description: tempData.description,
+        ...tempData,
         social_links: updatedSocialLinks,
       };
 
-      if (tempData.logo instanceof File) {
-        const formData = new FormData();
-        Object.keys(payload).forEach((key) => {
-          if (key === "social_links") {
-            formData.append(key, JSON.stringify(payload[key]));
-          } else {
-            formData.append(key, payload[key]);
-          }
-        });
-        formData.append("logo", tempData.logo);
-        await updateCompany(formData).unwrap();
-      } else {
-        await updateCompany(payload).unwrap();
-      }
+      // Gửi dữ liệu cập nhật lên API
+      await updateCompany(payload).unwrap();
 
-      message.success(t("successMessage"));
+      // Cập nhật dữ liệu gốc sau khi lưu thành công
+      setOriginalData(tempData);
+      setEditingField(null);
       setIsDirty(false);
+      message.success(t("successMessage"));
     } catch (error) {
       message.error(t("errorMessage"));
     }
@@ -166,8 +154,6 @@ const CompanyAdmin = () => {
         <strong>{t(label)}</strong>
       </Col>
       <Col xs={24} md={15}>
-        {" "}
-        {/* Input dài ra */}
         {editingField === field ? (
           <Input
             value={tempData[field]}
@@ -180,16 +166,14 @@ const CompanyAdmin = () => {
         )}
       </Col>
       <Col xs={24} md={3} style={{ textAlign: "right" }}>
-        {" "}
-        {/* Nút Chỉnh sửa */}
         <Button
           type="text"
           icon={<EditOutlined />}
           onClick={() => setEditingField(editingField === field ? null : field)}
           style={{
-            backgroundColor: "green", // Thêm màu xanh lá
+            backgroundColor: "green",
             color: "white",
-            width: "100%", // Đảm bảo nút có độ rộng đầy đủ
+            width: "100%",
           }}
         >
           {editingField === field ? t("editing") : t("edit")}
@@ -201,7 +185,8 @@ const CompanyAdmin = () => {
   return (
     <>
       <Card
-        title={<Title level={4}>{t("companyInformation")}</Title>}
+        title={<Title level={4}>{t("companyLogo")}</Title>}
+        style={{ marginBottom: 24 }}
         extra={
           <Button
             type="primary"
@@ -212,34 +197,13 @@ const CompanyAdmin = () => {
             {t("saveChanges")}
           </Button>
         }
-        style={{ marginBottom: 24 }}
-      >
-        {isLoading ? (
-          <p>{t("loadingCompanyInfo")}</p>
-        ) : (
-          <>
-            {renderField("name", "name")}
-            {renderField("email", "email")}
-            {renderField("phone", "phone")}
-            {renderField("address", "address")}
-            {renderField("website", "website")}
-            {renderField("description", "description")}
-          </>
-        )}
-      </Card>
-
-      <Card
-        title={<Title level={4}>{t("companyLogo")}</Title>}
-        style={{ marginBottom: 24 }}
       >
         <Row gutter={[16, 16]} align="middle">
           {/* Cột chứa logo */}
           <Col xs={24} md={21} style={{ textAlign: "center" }}>
-            {" "}
-            {/* 75% cho logo */}
             {tempData.logo ? (
               <img
-                src={tempData.logo}
+                src={tempData.logo} // URL từ API
                 alt={t("logo")}
                 style={{
                   maxHeight: "100px",
@@ -259,20 +223,42 @@ const CompanyAdmin = () => {
           {/* Cột chứa các nút */}
           <Col
             xs={24}
-            md={3} /* 25% cho nút */
+            md={3}
             style={{
               display: "flex",
               flexDirection: "column",
-              justifyContent: "flex-end", // Đặt nút ở cuối cột
-              alignItems: "right", // Căn giữa nội dung
+              justifyContent: "flex-end",
+              alignItems: "center", // Căn giữa nút ở chế độ mobile
               gap: "8px",
             }}
           >
             <Upload
               accept="image/*"
-              customRequest={({ file }) =>
-                setTempData((prev) => ({ ...prev, logo: file }))
-              }
+              customRequest={async ({ file, onSuccess, onError }) => {
+                try {
+                  const formData = new FormData();
+                  formData.append("logo", file);
+
+                  // Gọi API tải lên logo
+                  const response = await updateLogo(formData).unwrap();
+
+                  if (response.success) {
+                    setTempData((prev) => ({
+                      ...prev,
+                      logo: response.data.logo,
+                    }));
+
+                    setIsDirty(true); // Bật nút "Save Changes"
+                    onSuccess(null, file);
+                    message.success("Tải lên logo thành công!");
+                  } else {
+                    throw new Error("Tải lên thất bại.");
+                  }
+                } catch (error) {
+                  onError(error);
+                  message.error("Tải lên logo thất bại.");
+                }
+              }}
               showUploadList={false}
             >
               <Button
@@ -280,10 +266,10 @@ const CompanyAdmin = () => {
                 style={{
                   backgroundColor: "#1890ff",
                   color: "white",
-                  width: "163px", // Đồng nhất kích thước nút
+                  width: "163px", // Đầy đủ chiều rộng trên mobile
                 }}
               >
-                {t("uploadLogo")}
+                Tải lên logo
               </Button>
             </Upload>
 
@@ -295,15 +281,46 @@ const CompanyAdmin = () => {
                 style={{
                   backgroundColor: "red",
                   color: "white",
-                  width: "163px", // Đồng nhất kích thước nút
+                  width: "100%", // Đầy đủ chiều rộng trên mobile
                 }}
-                onClick={() => setTempData((prev) => ({ ...prev, logo: null }))}
+                onClick={async () => {
+                  try {
+                    const response = await deleteLogo().unwrap();
+                    if (response.success) {
+                      setTempData((prev) => ({
+                        ...prev,
+                        logo: null,
+                      }));
+                      message.success(t("logoDeletedSuccessfully"));
+                    }
+                  } catch (error) {
+                    message.error(t("logoDeleteFailed"));
+                  }
+                }}
               >
                 {t("deleteLogo")}
               </Button>
             )}
           </Col>
         </Row>
+      </Card>
+
+      <Card
+        title={<Title level={4}>{t("companyInformation")}</Title>}
+        style={{ marginBottom: 24 }}
+      >
+        {isLoading ? (
+          <p>{t("loadingCompanyInfo")}</p>
+        ) : (
+          <>
+            {renderField("name", "name")}
+            {renderField("email", "email")}
+            {renderField("phone", "phone")}
+            {renderField("address", "address")}
+            {renderField("website", "website")}
+            {renderField("description", "description")}
+          </>
+        )}
       </Card>
 
       <Card title={<Title level={4}>{t("socialMedia")}</Title>}>

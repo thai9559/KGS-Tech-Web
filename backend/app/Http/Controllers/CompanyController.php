@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Storage;
 use App\Models\Company;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+
 
 class CompanyController extends Controller
 {
@@ -63,83 +63,67 @@ class CompanyController extends Controller
     }
 
     public function updateCompany(Request $request)
+    {
+        $company = Company::first();
+    
+        if (!$company) {
+            return response()->json(['success' => false, 'message' => 'Company not found'], 404);
+        }
+    
+        // Log dữ liệu từ request
+        \Log::info('Request data:', $request->all());
+    
+        $validatedData = $request->validate([
+            'name' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'website' => 'nullable|url',
+            'email' => 'nullable|email|unique:company,email,' . $company->id,
+            'phone' => 'nullable|string|max:15',
+            'address' => 'nullable|string',
+            'social_links' => 'nullable|array',
+        ]);
+    
+        // Log dữ liệu sau khi validate
+        \Log::info('Validated data:', $validatedData);
+    
+        // Encode social_links nếu cần
+        if ($request->has('social_links')) {
+            $validatedData['social_links'] = json_encode($request->input('social_links'));
+        }
+    
+        // Cập nhật công ty
+        $company->update($validatedData);
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Company updated successfully',
+            'data' => $company,
+        ], 200);
+    }
+    
+    
+    
+
+
+    public function deleteLogo()
 {
     $company = Company::first();
 
     if (!$company) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Company not found',
-        ], 404);
+        return response()->json(['success' => false, 'message' => 'Company not found'], 404);
     }
 
-    // Log dữ liệu nhận được
-    \Log::info('Request data: ', $request->all());
-
-    $validatedData = $request->validate([
-        'name' => 'sometimes|required|string|max:255', // Nếu có `name`, thì nó phải hợp lệ
-        'logo' => 'nullable|file|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'description' => 'nullable|string',
-        'website' => 'nullable|url',
-        'email' => 'sometimes|required|email|unique:company,email,' . $company->id,
-        'phone' => 'nullable|string|max:15',
-        'address' => 'nullable|string',
-        'social_links' => 'nullable|array',
-    ]);
-
-    // Log dữ liệu sau khi validate
-    \Log::info('Validated data: ', $validatedData);
-
-    // Xử lý logo nếu có
-    if ($request->hasFile('logo')) {
-        // Đường dẫn cố định trong thư mục `public`
-        $destinationPath = public_path('logo.png');
-
-        // Xóa file logo cũ nếu tồn tại
-        if (file_exists($destinationPath)) {
-            unlink($destinationPath);
-        }
-
-        // Di chuyển file mới vào thư mục `public` với tên cố định
-        $request->file('logo')->move(public_path(), 'logo.png');
-
-        // Lưu đường dẫn logo mới vào database
-        $validatedData['logo'] = 'logo.png';
+    $logoPath = public_path($company->logo);
+    if (file_exists($logoPath)) {
+        unlink($logoPath); // Xóa file logo
     }
 
-    // Cập nhật thông tin công ty
-    $company->update($validatedData);
+    $company->logo = null; // Xóa thông tin trong database
+    $company->save();
 
-    return response()->json([
-        'success' => true,
-        'message' => 'Company updated successfully',
-        'data' => $company,
-    ], 200);
+    return response()->json(['success' => true, 'message' => 'Logo deleted successfully'], 200);
 }
 
-
-    public function deleteLogo()
-    {
-        $company = Company::first();
-
-        if (!$company) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Company not found',
-            ], 404);
-        }
-
-        if ($company->logo && Storage::disk('public')->exists($company->logo)) {
-            Storage::disk('public')->delete($company->logo);
-            $company->logo = null;
-            $company->save();
-        }
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Logo deleted successfully',
-        ], 200);
-    }
 
     public function deleteCompany()
     {
@@ -163,4 +147,50 @@ class CompanyController extends Controller
             'message' => 'Company deleted successfully',
         ], 200);
     }
+ 
+
+    public function uploadLogo(Request $request)
+{
+    $company = Company::first();
+
+    if (!$company) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Company not found',
+        ], 404);
+    }
+
+    // Validate the logo file
+    $validatedData = $request->validate([
+        'logo' => 'required|file|image|mimes:jpeg,png,jpg,gif|max:10240',
+    ]);
+
+    // Delete the old logo if it exists
+    if ($company->logo && Storage::exists($company->logo)) {
+        Storage::delete($company->logo);
+    }
+
+    // Store the new logo file
+    $path = $request->file('logo')->store('uploads', 'public');
+
+    // Generate the full URL
+    $fullURL = url(Storage::url($path));
+
+    // Save the full URL in the database
+    $company->logo = $fullURL;
+    $company->save();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Logo uploaded successfully',
+        'data' => [
+            'logo' => $fullURL, // Return the full URL
+        ],
+    ], 200);
+}
+
+
+    
+    
+
 }

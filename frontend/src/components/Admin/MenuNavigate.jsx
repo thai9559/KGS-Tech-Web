@@ -118,6 +118,11 @@ const MenuNavigate = () => {
           label: <Link to="/admin/blog/categories">{t("categories")}</Link>,
           requiredPermissions: ["Blogs", "Full admin privileges"],
         },
+        {
+          key: "/admin/blog/tags",
+          label: <Link to="/admin/blog/tags">{t("tags")}</Link>,
+          requiredPermissions: ["Blogs", "Full admin privileges"],
+        },
       ],
     },
     {

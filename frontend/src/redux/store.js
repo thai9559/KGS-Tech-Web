@@ -8,16 +8,18 @@ import blogReducer from "./slices/blogSlice";
 import { roleApi } from "./api/roleApi";
 import { categoryApi } from "./api/categoryApi";
 import { feedbackApi } from "./api/feedbackApi";
+import { tagApi } from "./api/TagApi";
 const store = configureStore({
   reducer: {
-    [blogApi.reducerPath]: blogApi.reducer, // Reducer của Blog API
-    [authApi.reducerPath]: authApi.reducer, // Reducer của Auth API
-    [userApi.reducerPath]: userApi.reducer, // Reducer của User API
-    [companyApi.reducerPath]: companyApi.reducer, // Reducer của Company API
-    [categoryApi.reducerPath]: categoryApi.reducer, // Reducer của Company API
-    [feedbackApi.reducerPath]: feedbackApi.reducer, // Reducer của Company API
+    [blogApi.reducerPath]: blogApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
+    [companyApi.reducerPath]: companyApi.reducer,
+    [categoryApi.reducerPath]: categoryApi.reducer,
+    [feedbackApi.reducerPath]: feedbackApi.reducer,
     [roleApi.reducerPath]: roleApi.reducer,
-    blogs: blogReducer, // Reducer khác (nếu có)
+    [tagApi.reducerPath]: tagApi.reducer,
+    blogs: blogReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -27,7 +29,8 @@ const store = configureStore({
       .concat(companyApi.middleware)
       .concat(roleApi.middleware)
       .concat(categoryApi.middleware)
-      .concat(feedbackApi.middleware),
+      .concat(feedbackApi.middleware)
+      .concat(tagApi.middleware),
 });
 
 export default store;

@@ -14,9 +14,9 @@ class RoleSeeder extends Seeder
     {
         // Tạo vai trò
         Role::insert([
-            ['name' => 'admin', 'description' => 'Administrator'],
-            ['name' => 'editor', 'description' => 'Content Editor'],
-            ['name' => 'staff', 'description' => 'Staff Member'],
+            ['name' => 'Master', 'description' => 'Master'],
+            ['name' => 'Manager', 'description' => 'Manager'],
+            ['name' => 'Staff', 'description' => 'Staff Member'],
         ]);
     }
 }

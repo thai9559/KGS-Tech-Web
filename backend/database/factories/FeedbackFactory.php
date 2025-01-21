@@ -15,7 +15,6 @@ class FeedbackFactory extends Factory
             'subject' => $this->faker->sentence(3),
             'content' => $this->faker->paragraph,
             'sent_at' => now(),
-            'is_visible' => $this->faker->boolean(80), // 80% sẽ hiển thị
         ];
     }
 }

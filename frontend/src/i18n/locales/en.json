@@ -418,5 +418,36 @@
     "formErrors": {
       "nameRequired": "Please enter the category name!"
     }
+  },
+  "tagAdmin": {
+    "addTag": "Add Tag",
+    "createSuccess": "Tag created successfully",
+    "createFail": "Failed to create tag",
+    "updateSuccess": "Tag updated successfully",
+    "updateFail": "Failed to update tag",
+    "deleteSuccess": "Tag deleted successfully",
+    "deleteFail": "Failed to delete tag",
+    "loadingError": "Error loading tags",
+    "deleteConfirm": "Are you sure you want to delete this tag?",
+    "yes": "Yes",
+    "no": "No",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "form": {
+      "name": "Tag Name"
+    },
+    "formErrors": {
+      "nameRequired": "Tag name is required"
+    },
+    "tableColumns": {
+      "id": "ID",
+      "name": "Name",
+      "actions": "Actions"
+    },
+    "detailModal": {
+      "title": "Tag Details"
+    }
   }
 }

@@ -11,16 +11,17 @@ import {
   message,
 } from "antd";
 import TagsInputs from "./TagInputs";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
-
+import { useNavigate } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
 import { Editor } from "@tinymce/tinymce-react";
 import { decodeToken } from "../../../utils/decodeToken";
+import GooglePreview from "./GooglePreview";
 import {
   useCreateBlogMutation,
   useUploadImageMutation,
 } from "../../../redux/api/blogApi";
 import { useGetCategoriesQuery } from "../../../redux/api/categoryApi";
+
 const { Header, Content, Footer } = Layout;
 const { Option } = Select;
 
@@ -29,13 +30,63 @@ const CreateBlog = () => {
   const [uploadImage] = useUploadImageMutation();
   const [content, setContent] = useState("");
   const [thumbnail_image, setThumbnail_image] = useState(null);
+  const [slug, setSlug] = useState("");
+  const [canonicalUrl, setCanonicalUrl] = useState("");
+  const [title, setTitle] = useState(""); // Tiêu đề
+  const [description, setDescription] = useState(""); // Mô tả meta
+
   const navigate = useNavigate();
 
   const { data: categories, isLoading: isLoadingCategories } =
     useGetCategoriesQuery();
+
+  const createSlug = (title) => {
+    const vietnameseMap = {
+      a: "á|à|ả|ã|ạ|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ",
+      e: "é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ",
+      i: "í|ì|ỉ|ĩ|ị",
+      o: "ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ",
+      u: "ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự",
+      y: "ý|ỳ|ỷ|ỹ|ỵ",
+      d: "đ",
+    };
+
+    let slug = title.toLowerCase().trim();
+
+    // Loại bỏ dấu tiếng Việt
+    Object.keys(vietnameseMap).forEach((key) => {
+      const regex = new RegExp(vietnameseMap[key], "g");
+      slug = slug.replace(regex, key);
+    });
+
+    // Loại bỏ ký tự không hợp lệ
+    slug = slug.replace(/[^a-z0-9\s-]/g, "");
+    slug = slug.replace(/\s+/g, "-");
+    slug = slug.replace(/-+/g, "-");
+
+    return slug;
+  };
+
+  // Xử lý khi người dùng nhập tiêu đề
+  const handleTitleChange = (e) => {
+    if (e && e.target) {
+      const value = e.target.value; // Lấy giá trị từ input
+      setTitle(value); // Cập nhật state title
+      const generatedSlug = createSlug(value); // Tạo slug từ tiêu đề
+      setSlug(generatedSlug); // Cập nhật slug
+      setCanonicalUrl(`https://kgstech.com/${generatedSlug}`); // Cập nhật canonical URL
+    } else {
+      console.error("Sự kiện không hợp lệ:", e);
+    }
+  };
+
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
+  };
+
+  // Xử lý khi submit form
   const handleFinish = async (values) => {
     try {
-      // Lấy access_token từ localStorage
       const token = localStorage.getItem("access_token");
       const decodedToken = decodeToken(token);
 
@@ -45,8 +96,6 @@ const CreateBlog = () => {
       }
 
       const userId = decodedToken.sub;
-
-      // Tách danh sách ảnh từ nội dung bài viết
       const images =
         content
           .match(/<img[^>]+src="([^">]+)"/g)
@@ -54,25 +103,25 @@ const CreateBlog = () => {
 
       const payload = {
         ...values,
+        slug,
+        canonical_url: canonicalUrl,
         content,
         images,
-        thumbnail_image: thumbnail_image, // Ảnh tiêu đề
+        thumbnail_image,
         user_id: userId,
       };
-
-      console.log("Payload gửi đi:", payload);
 
       await createBlog(payload).unwrap();
       message.success("Tạo bài viết thành công!");
       navigate("/admin/bloglist");
     } catch (error) {
-      console.error("Lỗi khi tạo bài viết:", error);
       const errorMessage =
         error?.data?.message || "Tạo bài viết thất bại, kiểm tra lại dữ liệu!";
       message.error(errorMessage);
     }
   };
 
+  // Xử lý upload ảnh tiêu đề
   const handleThumbnailImageUpload = async (file) => {
     try {
       const response = await uploadImage(file).unwrap();
@@ -83,7 +132,6 @@ const CreateBlog = () => {
         message.error("Không nhận được URL ảnh tiêu đề hợp lệ.");
       }
     } catch (error) {
-      console.error("Lỗi khi upload ảnh tiêu đề:", error);
       message.error("Có lỗi xảy ra khi upload ảnh tiêu đề.");
     }
   };
@@ -103,16 +151,59 @@ const CreateBlog = () => {
 
       <Content style={{ padding: "20px" }}>
         <Form layout="vertical" onFinish={handleFinish}>
+          {/* Hàng đầu tiên: Logo hoặc Ảnh tiêu đề */}
+          <Row justify="center" className="mb-4">
+            <Col span={24} className="text-center">
+              <Form.Item
+                label="Ảnh Tiêu Đề"
+                valuePropName="file"
+                className="mb-0"
+                rules={[
+                  { required: true, message: "Vui lòng upload ảnh tiêu đề!" },
+                ]}
+              >
+                <Upload
+                  listType="picture-card"
+                  showUploadList={false}
+                  customRequest={({ file }) => handleThumbnailImageUpload(file)}
+                >
+                  {thumbnail_image ? (
+                    <img
+                      src={thumbnail_image}
+                      alt="Ảnh tiêu đề"
+                      // style={{
+                      //   maxWidth: "150px",
+                      //   maxHeight: "150px",
+                      //   objectFit: "cover",
+                      //   borderRadius: "50%",
+                      // }}
+                    />
+                  ) : (
+                    <div>
+                      <PlusOutlined />
+                      <div style={{ marginTop: 8 }}>Upload</div>
+                    </div>
+                  )}
+                </Upload>
+              </Form.Item>
+            </Col>
+          </Row>
+
+          {/* Nhóm 2: Thông tin tiêu đề và từ khóa */}
           <Row gutter={[16, 16]}>
-            {/* Cột trái */}
             <Col xs={24} md={12}>
               <Form.Item
                 name="title"
                 label="Tiêu Đề"
                 rules={[{ required: true, message: "Vui lòng nhập tiêu đề!" }]}
               >
-                <Input placeholder="Nhập tiêu đề bài viết" />
+                <Input
+                  placeholder="Nhập tiêu đề bài viết"
+                  onChange={handleTitleChange}
+                />
               </Form.Item>
+            </Col>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="main_keyword"
                 label="Từ Khóa Chính"
@@ -122,6 +213,8 @@ const CreateBlog = () => {
               >
                 <Input placeholder="Nhập từ khóa chính" />
               </Form.Item>
+            </Col>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="tags"
                 label="Tags"
@@ -131,7 +224,8 @@ const CreateBlog = () => {
               >
                 <TagsInputs />
               </Form.Item>
-
+            </Col>
+            {/* <Col xs={24} md={12}>
               <Form.Item
                 name="meta_title"
                 label="Meta Title"
@@ -141,32 +235,41 @@ const CreateBlog = () => {
               >
                 <Input placeholder="Nhập meta title cho bài viết" />
               </Form.Item>
+            </Col> */}
+            <Col xs={24} md={12}>
               <Form.Item
-                name="meta_description"
-                label="Meta Description"
+                name="focus_keyword"
+                label="Focus Keyword"
                 rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng nhập meta description!",
-                  },
+                  { required: true, message: "Vui lòng nhập focus keyword!" },
                 ]}
               >
-                <Input.TextArea
-                  placeholder="Nhập meta description cho bài viết"
-                  rows={4}
+                <Input placeholder="Nhập từ khóa tập trung (focus keyword)" />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          {/* Nhóm 3: Thông tin liên quan đến SEO */}
+          <Row gutter={[16, 16]}>
+            <Col xs={24} md={12}>
+              <Form.Item label="Slug">
+                <Input
+                  value={slug}
+                  placeholder="Slug sẽ được tự động tạo"
+                  readOnly
                 />
               </Form.Item>
             </Col>
-
-            {/* Cột phải */}
             <Col xs={24} md={12}>
-              <Form.Item
-                name="slug"
-                label="Slug (URL thân thiện SEO)"
-                rules={[{ required: true, message: "Vui lòng nhập slug!" }]}
-              >
-                <Input placeholder="Nhập slug" />
+              <Form.Item label="Canonical URL">
+                <Input
+                  value={canonicalUrl}
+                  placeholder="Canonical URL sẽ được tự động tạo"
+                  readOnly
+                />
               </Form.Item>
+            </Col>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="secondary_keywords"
                 label="Từ Khóa Phụ"
@@ -176,6 +279,8 @@ const CreateBlog = () => {
               >
                 <Input placeholder="Nhập từ khóa phụ, cách nhau bằng dấu phẩy" />
               </Form.Item>
+            </Col>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="category_id"
                 label="Danh Mục"
@@ -196,103 +301,96 @@ const CreateBlog = () => {
                   ))}
                 </Select>
               </Form.Item>
+            </Col>
 
+            <Col xs={24}>
               <Form.Item
-                name="focus_keyword"
-                label="Focus Keyword"
+                name="meta_description"
+                label="Meta Description"
                 rules={[
-                  { required: true, message: "Vui lòng nhập focus keyword!" },
+                  {
+                    required: true,
+                    message: "Vui lòng nhập meta description!",
+                  },
                 ]}
               >
-                <Input placeholder="Nhập từ khóa tập trung (focus keyword)" />
+                <Input.TextArea
+                  placeholder="Nhập meta description cho bài viết"
+                  rows={4}
+                  onChange={handleDescriptionChange}
+                />
               </Form.Item>
-              <Form.Item
-                name="canonical_url"
-                label="Canonical URL"
-                rules={[
-                  { required: true, message: "Vui lòng nhập canonical URL!" },
-                ]}
-              >
-                <Input placeholder="Nhập URL canonical cho bài viết" />
-              </Form.Item>
+            </Col>
+          </Row>
 
-              {/* Trường tải lên ảnh tiêu đề */}
-              <Form.Item
-                label="Ảnh Tiêu Đề"
-                valuePropName="file"
-                rules={[
-                  { required: true, message: "Vui lòng upload ảnh tiêu đề!" },
-                ]}
-              >
-                <Upload
-                  listType="picture-card"
-                  showUploadList={false}
-                  customRequest={({ file }) => handleThumbnailImageUpload(file)}
-                >
-                  {thumbnail_image ? (
-                    <img
-                      src={thumbnail_image}
-                      alt="Ảnh tiêu đề"
-                      style={{ width: "100%" }}
-                    />
-                  ) : (
-                    <div>
-                      <PlusOutlined />
-                      <div style={{ marginTop: 8 }}>Upload</div>
-                    </div>
-                  )}
-                </Upload>
+          {/* Google Preview */}
+          <Row justify="center">
+            <Col xs={24} md={12}>
+              <Form.Item label="Google Preview">
+                <GooglePreview
+                  title={title}
+                  description={description}
+                  url={canonicalUrl}
+                  thumbnail={thumbnail_image}
+                />
               </Form.Item>
             </Col>
           </Row>
 
           {/* Nội dung bài viết */}
-          <Form.Item label="Nội Dung" required>
-            <Editor
-              tinymceScriptSrc="https://cdn.tiny.cloud/1/9dsiwvmjoqjrozos58bg410o56uilmv29czcut6wjykwcvc1/tinymce/5/tinymce.min.js"
-              value={content}
-              onEditorChange={(value) => setContent(value)}
-              init={{
-                height: 500,
-                branding: false,
-                menubar: true,
-                plugins: [
-                  "image",
-                  "imagetools",
-                  "media",
-                  "link",
-                  "code",
-                  "fullscreen",
-                ],
-                toolbar: `
-                undo redo | formatselect | bold italic underline strikethrough forecolor backcolor | 
-                alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | 
-                image imagetools media link anchor | table hr blockquote subscript superscript | 
-                code removeformat fullscreen preview
-              `,
-                images_upload_handler: async (blobInfo, success, failure) => {
-                  try {
-                    const file = blobInfo.blob();
-                    const response = await uploadImage(file).unwrap();
-                    if (response.location) {
-                      success(response.location);
-                    } else {
-                      failure("Không nhận được URL ảnh hợp lệ.");
-                    }
-                  } catch (error) {
-                    failure("Có lỗi xảy ra khi upload ảnh.");
-                  }
-                },
-              }}
-            />
-          </Form.Item>
+          <Row>
+            <Col span={24}>
+              <Form.Item label="Nội Dung" required>
+                <Editor
+                  tinymceScriptSrc="https://cdn.tiny.cloud/1/9dsiwvmjoqjrozos58bg410o56uilmv29czcut6wjykwcvc1/tinymce/5/tinymce.min.js"
+                  value={content}
+                  onEditorChange={(value) => setContent(value)}
+                  init={{
+                    height: 500,
+                    branding: false,
+                    menubar: true,
+                    plugins: [
+                      "image",
+                      "imagetools",
+                      "media",
+                      "link",
+                      "code",
+                      "fullscreen",
+                    ],
+                    toolbar: `undo redo | formatselect | bold italic underline strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | image imagetools media link anchor | table hr blockquote subscript superscript | code removeformat fullscreen preview`,
+                    images_upload_handler: async (
+                      blobInfo,
+                      success,
+                      failure
+                    ) => {
+                      try {
+                        const file = blobInfo.blob();
+                        const response = await uploadImage(file).unwrap();
+                        if (response.location) {
+                          success(response.location);
+                        } else {
+                          failure("Không nhận được URL ảnh hợp lệ.");
+                        }
+                      } catch (error) {
+                        failure("Có lỗi xảy ra khi upload ảnh.");
+                      }
+                    },
+                  }}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
 
           {/* Nút Lưu */}
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              Lưu Bài Viết
-            </Button>
-          </Form.Item>
+          <Row>
+            <Col span={24}>
+              <Form.Item>
+                <Button type="primary" htmlType="submit" block>
+                  Lưu Bài Viết
+                </Button>
+              </Form.Item>
+            </Col>
+          </Row>
         </Form>
       </Content>
 

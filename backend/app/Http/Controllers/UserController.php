@@ -113,39 +113,91 @@ class UserController extends Controller
     
 
     // Đăng ký người dùng mới
-    public function register(Request $request)
-{
-    // Log toàn bộ payload từ frontend
+//     public function register(Request $request)
+// {
+//     // Log toàn bộ payload từ frontend
 
+//     $validatedData = $request->validate([
+//         'name' => 'required|string|max:255',
+//         'email' => 'required|email|unique:users,email',
+//         'phone' => 'nullable|string|max:15|regex:/^[0-9]{9,15}$/',
+//         'role_id' => 'required|exists:roles,id',
+//         'permissions' => 'nullable|array', // Chỉ cần là mảng
+//         'permissions.*' => 'exists:permissions,id', // Đảm bảo các quyền tồn tại
+//     ]);
+
+//     // Tạo người dùng với thông tin cơ bản
+//     $user = User::create([
+//         'name' => $request->name,
+//         'email' => $request->email,
+//    'password' => Hash::make($request->password),
+
+//         'phone' => $request->phone,
+//         'role_id' => $request->role_id,
+//     ]);
+
+//     // Gán quyền nếu có
+//     if ($request->has('permissions')) {
+//         $user->permissions()->sync($request->permissions);
+//     }
+
+//     return response()->json([
+//         'message' => 'User registered successfully',
+//         'user' => $user,
+//     ], 201);
+// }
+public function register(Request $request)
+{
     $validatedData = $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|email|unique:users,email',
         'phone' => 'nullable|string|max:15|regex:/^[0-9]{9,15}$/',
         'role_id' => 'required|exists:roles,id',
-        'permissions' => 'nullable|array', // Chỉ cần là mảng
-        'permissions.*' => 'exists:permissions,id', // Đảm bảo các quyền tồn tại
+        'permissions' => 'nullable|array',
+        'permissions.*' => 'exists:permissions,id',
     ]);
 
-    // Tạo người dùng với thông tin cơ bản
+    // Tạo người dùng
     $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-   'password' => Hash::make($request->password),
-
-        'phone' => $request->phone,
-        'role_id' => $request->role_id,
+        'name' => $validatedData['name'],
+        'email' => $validatedData['email'],
+        'password' => Hash::make($request->password),
+        'phone' => $validatedData['phone'],
+        'role_id' => $validatedData['role_id'],
     ]);
 
     // Gán quyền nếu có
     if ($request->has('permissions')) {
-        $user->permissions()->sync($request->permissions);
+        $user->permissions()->sync($validatedData['permissions']);
     }
+
+    // Lấy user_id từ token nếu tồn tại, nếu không để null
+    $actorId = null;
+    if ($request->header('Authorization')) {
+        try {
+            $actorId = auth()->id(); // Lấy ID từ token
+        } catch (\Exception $e) {
+            \Log::warning('Failed to parse token for register action: ' . $e->getMessage());
+        }
+    }
+
+    // Ghi log
+    ActivityLogController::log(
+        $actorId, 
+        'create',
+        'users',
+        $user->id,
+        null,
+        $user->toArray()
+    );
 
     return response()->json([
         'message' => 'User registered successfully',
         'user' => $user,
     ], 201);
 }
+
+
 
 // public function register(Request $request)
 // {
