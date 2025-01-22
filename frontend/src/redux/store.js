@@ -9,6 +9,7 @@ import { roleApi } from "./api/roleApi";
 import { categoryApi } from "./api/categoryApi";
 import { feedbackApi } from "./api/feedbackApi";
 import { tagApi } from "./api/TagApi";
+import { activityLogApi } from "./api/activityLogApi";
 const store = configureStore({
   reducer: {
     [blogApi.reducerPath]: blogApi.reducer,
@@ -19,6 +20,7 @@ const store = configureStore({
     [feedbackApi.reducerPath]: feedbackApi.reducer,
     [roleApi.reducerPath]: roleApi.reducer,
     [tagApi.reducerPath]: tagApi.reducer,
+    [activityLogApi.reducerPath]: activityLogApi.reducer,
     blogs: blogReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -30,6 +32,7 @@ const store = configureStore({
       .concat(roleApi.middleware)
       .concat(categoryApi.middleware)
       .concat(feedbackApi.middleware)
+      .concat(activityLogApi.middleware)
       .concat(tagApi.middleware),
 });
 

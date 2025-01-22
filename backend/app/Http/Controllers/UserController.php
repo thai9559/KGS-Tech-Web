@@ -146,56 +146,6 @@ class UserController extends Controller
 //         'user' => $user,
 //     ], 201);
 // }
-public function register(Request $request)
-{
-    $validatedData = $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email',
-        'phone' => 'nullable|string|max:15|regex:/^[0-9]{9,15}$/',
-        'role_id' => 'required|exists:roles,id',
-        'permissions' => 'nullable|array',
-        'permissions.*' => 'exists:permissions,id',
-    ]);
-
-    // Tạo người dùng
-    $user = User::create([
-        'name' => $validatedData['name'],
-        'email' => $validatedData['email'],
-        'password' => Hash::make($request->password),
-        'phone' => $validatedData['phone'],
-        'role_id' => $validatedData['role_id'],
-    ]);
-
-    // Gán quyền nếu có
-    if ($request->has('permissions')) {
-        $user->permissions()->sync($validatedData['permissions']);
-    }
-
-    // Lấy user_id từ token nếu tồn tại, nếu không để null
-    $actorId = null;
-    if ($request->header('Authorization')) {
-        try {
-            $actorId = auth()->id(); // Lấy ID từ token
-        } catch (\Exception $e) {
-            \Log::warning('Failed to parse token for register action: ' . $e->getMessage());
-        }
-    }
-
-    // Ghi log
-    ActivityLogController::log(
-        $actorId, 
-        'create',
-        'users',
-        $user->id,
-        null,
-        $user->toArray()
-    );
-
-    return response()->json([
-        'message' => 'User registered successfully',
-        'user' => $user,
-    ], 201);
-}
 
 
 
@@ -239,7 +189,118 @@ public function register(Request $request)
             'data' => $user,
         ], 200);
     }
-
+    public function register(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'nullable|string|max:15|regex:/^[0-9]{9,15}$/',
+            'role_id' => 'required|exists:roles,id',
+            'permissions' => 'nullable|array',
+            'permissions.*' => 'exists:permissions,id',
+        ]);
+    
+        // Tạo người dùng
+        $user = User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($request->password),
+            'phone' => $validatedData['phone']?? null,
+            'role_id' => $validatedData['role_id'],
+        ]);
+    
+        // Gán quyền nếu có
+        if ($request->has('permissions')) {
+            $user->permissions()->sync($validatedData['permissions']);
+        }
+    
+        // Lấy user_id từ token nếu tồn tại, nếu không để null
+        $actorId = null;
+        if ($request->header('Authorization')) {
+            try {
+                $actorId = auth()->id(); // Lấy ID từ token
+            } catch (\Exception $e) {
+                \Log::warning('Failed to parse token for register action: ' . $e->getMessage());
+            }
+        }
+    
+        // Ghi log
+        ActivityLogController::log(
+            $actorId, 
+            'create',
+            'users',
+            $user->id,
+            null,
+            $user->toArray()
+        );
+    
+        return response()->json([
+            'message' => 'User registered successfully',
+            'user' => $user,
+        ], 201);
+    }
+    
+    // public function update(Request $request, $id)
+    // {
+    //     // Tìm người dùng
+    //     $user = User::find($id);
+    
+    //     if (!$user) {
+    //         return response()->json(['message' => 'User not found'], 404);
+    //     }
+    
+    //     // Xác thực dữ liệu đầu vào
+    //     $validatedData = $request->validate([
+    //         'name' => 'nullable|string|max:255',
+    //         'email' => 'nullable|email|unique:users,email,' . $id,
+    //         'phone' => 'nullable|string|max:15|regex:/^[0-9]{9,15}$/',
+    //         'is_active' => 'nullable|boolean',
+    //         'password' => 'nullable|min:6|confirmed', // Xác thực mật khẩu nếu có
+    //         'role_id' => 'nullable|exists:roles,id', // Đảm bảo role_id hợp lệ
+    //         'permissions' => 'nullable|array', // Xác thực danh sách quyền
+    //         'permissions.*' => 'exists:permissions,id', // Đảm bảo các quyền tồn tại
+    //     ]);
+    
+    //     // Cập nhật thông tin người dùng nếu các trường có trong yêu cầu
+    //     if ($request->has('name')) {
+    //         $user->name = $validatedData['name'];
+    //     }
+    //     if ($request->has('email')) {
+    //         $user->email = $validatedData['email'];
+    //     }
+    //     if ($request->has('phone')) {
+    //         $user->phone = $validatedData['phone'];
+    //     }
+    //     if ($request->has('is_active')) {
+    //         $user->is_active = $validatedData['is_active'];
+    //     }
+    
+    //     // Cập nhật mật khẩu nếu được gửi
+    //     if ($request->has('password')) {
+    //         $user->password = Hash::make($validatedData['password']);
+    //     }
+    
+    //     // Cập nhật vai trò nếu có
+    //     if ($request->has('role_id')) {
+    //         $user->role_id = $validatedData['role_id'];
+    //     }
+    
+    //     // Lưu người dùng
+    //     $user->save();
+    
+    //     // Cập nhật quyền
+    //     if ($request->has('permissions')) {
+    //         $user->permissions()->sync($validatedData['permissions']);
+    //     }
+    
+    //     // Tải lại thông tin người dùng với quan hệ
+    //     $updatedUser = $user->load('role', 'permissions');
+    
+    //     return response()->json([
+    //         'message' => 'User updated successfully',
+    //         'user' => $updatedUser,
+    //     ], 200);
+    // }
     public function update(Request $request, $id)
     {
         // Tìm người dùng
@@ -249,52 +310,102 @@ public function register(Request $request)
             return response()->json(['message' => 'User not found'], 404);
         }
     
-        // Xác thực dữ liệu đầu vào
+        // Lưu dữ liệu cũ
+        $oldData = $user->toArray();
+    
+        // Xác thực dữ liệu
         $validatedData = $request->validate([
             'name' => 'nullable|string|max:255',
             'email' => 'nullable|email|unique:users,email,' . $id,
             'phone' => 'nullable|string|max:15|regex:/^[0-9]{9,15}$/',
             'is_active' => 'nullable|boolean',
-            'password' => 'nullable|min:6|confirmed', // Xác thực mật khẩu nếu có
-            'role_id' => 'nullable|exists:roles,id', // Đảm bảo role_id hợp lệ
-            'permissions' => 'nullable|array', // Xác thực danh sách quyền
-            'permissions.*' => 'exists:permissions,id', // Đảm bảo các quyền tồn tại
+            'password' => 'nullable|min:6|confirmed',
+            'role_id' => 'nullable|exists:roles,id',
+            'permissions' => 'nullable|array',
+            'permissions.*' => 'exists:permissions,id',
         ]);
     
-        // Cập nhật thông tin người dùng nếu các trường có trong yêu cầu
-        if ($request->has('name')) {
+        // Khởi tạo mảng thay đổi
+        $changes = [];
+        $newData = [];
+    
+        // Kiểm tra và cập nhật từng trường
+        if ($request->has('name') && $validatedData['name'] !== $user->name) {
+            $changes['name'] = $user->name;
+            $newData['name'] = $validatedData['name'];
             $user->name = $validatedData['name'];
         }
-        if ($request->has('email')) {
+        if ($request->has('email') && $validatedData['email'] !== $user->email) {
+            $changes['email'] = $user->email;
+            $newData['email'] = $validatedData['email'];
             $user->email = $validatedData['email'];
         }
-        if ($request->has('phone')) {
+        if ($request->has('phone') && $validatedData['phone'] !== $user->phone) {
+            $changes['phone'] = $user->phone;
+            $newData['phone'] = $validatedData['phone'];
             $user->phone = $validatedData['phone'];
         }
-        if ($request->has('is_active')) {
+        if ($request->has('is_active') && (bool) $validatedData['is_active'] !== (bool) $user->is_active) {
+            $changes['is_active'] = (bool) $user->is_active;
+            $newData['is_active'] = (bool) $validatedData['is_active'];
             $user->is_active = $validatedData['is_active'];
         }
-    
-        // Cập nhật mật khẩu nếu được gửi
         if ($request->has('password')) {
+            $changes['password'] = '********'; // Không lưu mật khẩu cũ
+            $newData['password'] = '********'; // Chỉ báo mật khẩu đã thay đổi
             $user->password = Hash::make($validatedData['password']);
         }
-    
-        // Cập nhật vai trò nếu có
-        if ($request->has('role_id')) {
+        if ($request->has('role_id') && $validatedData['role_id'] !== $user->role_id) {
+            $changes['role_id'] = $user->role_id;
+            $newData['role_id'] = $validatedData['role_id'];
             $user->role_id = $validatedData['role_id'];
         }
     
-        // Lưu người dùng
+        // Lưu thay đổi người dùng
         $user->save();
     
         // Cập nhật quyền
         if ($request->has('permissions')) {
-            $user->permissions()->sync($validatedData['permissions']);
+            $oldPermissions = $user->permissions()->pluck('permissions.id')->toArray();
+            $newPermissions = $validatedData['permissions'];
+    
+            if ($oldPermissions !== $newPermissions) {
+                $changes['permissions'] = $oldPermissions;
+                $newData['permissions'] = $newPermissions;
+                $user->permissions()->sync($newPermissions);
+            }
         }
     
-        // Tải lại thông tin người dùng với quan hệ
+        // Tải lại thông tin người dùng
         $updatedUser = $user->load('role', 'permissions');
+    
+        // Ghi log hoạt động
+        $actorId = null;
+        if ($request->header('Authorization')) {
+            try {
+                $actorId = auth()->id();
+            } catch (\Exception $e) {
+                \Log::warning('Failed to parse token for update action: ' . $e->getMessage());
+            }
+        }
+    
+        // Đồng nhất format trước khi log
+        $changes = array_map(function ($value) {
+            return is_bool($value) ? (bool) $value : $value;
+        }, $changes);
+    
+        $newData = array_map(function ($value) {
+            return is_bool($value) ? (bool) $value : $value;
+        }, $newData);
+    
+        ActivityLogController::log(
+            $actorId,
+            'update',
+            'users',
+            $user->id,
+            $changes,
+            $newData
+        );
     
         return response()->json([
             'message' => 'User updated successfully',
@@ -307,13 +418,37 @@ public function register(Request $request)
     public function destroy($id)
     {
         $user = User::find($id);
-
+    
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
-
+    
+        // Lưu thông tin trước khi xóa
+        $oldData = $user->toArray();
+    
+        // Ghi log trước khi xóa
+        $actorId = null;
+        if (request()->header('Authorization')) {
+            try {
+                $actorId = auth()->id();
+            } catch (\Exception $e) {
+                \Log::warning('Failed to parse token for delete action: ' . $e->getMessage());
+            }
+        }
+    
+        ActivityLogController::log(
+            $actorId,
+            'delete',
+            'users',
+            $user->id,
+            $oldData,
+            null
+        );
+    
+        // Xóa người dùng
         $user->delete();
-
+    
         return response()->json(['message' => 'User deleted successfully'], 200);
     }
+    
 }

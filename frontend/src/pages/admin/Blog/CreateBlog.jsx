@@ -21,11 +21,13 @@ import {
   useUploadImageMutation,
 } from "../../../redux/api/blogApi";
 import { useGetCategoriesQuery } from "../../../redux/api/categoryApi";
+import { useTranslation } from "react-i18next";
 
 const { Header, Content, Footer } = Layout;
 const { Option } = Select;
 
 const CreateBlog = () => {
+  const { t } = useTranslation();
   const [createBlog] = useCreateBlogMutation();
   const [uploadImage] = useUploadImageMutation();
   const [content, setContent] = useState("");
@@ -140,26 +142,31 @@ const CreateBlog = () => {
     <Layout style={{ minHeight: "100vh" }}>
       <Header
         style={{
-          background: "#001529",
+          background: "#f5f5f5",
           color: "#fff",
           padding: "10px 20px",
           fontSize: "18px",
         }}
       >
-        <h1 style={{ color: "#fff", margin: 0 }}>Tạo Bài Viết Mới</h1>
+        <h1 className="text-black font-notoSansJP font-bold">
+          {t("create_blog.header")}
+        </h1>
       </Header>
 
       <Content style={{ padding: "20px" }}>
         <Form layout="vertical" onFinish={handleFinish}>
           {/* Hàng đầu tiên: Logo hoặc Ảnh tiêu đề */}
           <Row justify="center" className="mb-4">
-            <Col span={24} className="text-center">
+            <Col span={24}>
               <Form.Item
-                label="Ảnh Tiêu Đề"
+                label={t("create_blog.thumbnail_image")}
                 valuePropName="file"
                 className="mb-0"
                 rules={[
-                  { required: true, message: "Vui lòng upload ảnh tiêu đề!" },
+                  {
+                    required: true,
+                    message: t("create_blog.validation.required"),
+                  },
                 ]}
               >
                 <Upload
@@ -181,7 +188,9 @@ const CreateBlog = () => {
                   ) : (
                     <div>
                       <PlusOutlined />
-                      <div style={{ marginTop: 8 }}>Upload</div>
+                      <div style={{ marginTop: 8 }}>
+                        {t("create_blog.upload")}
+                      </div>
                     </div>
                   )}
                 </Upload>
@@ -194,11 +203,11 @@ const CreateBlog = () => {
             <Col xs={24} md={12}>
               <Form.Item
                 name="title"
-                label="Tiêu Đề"
+                label={t("create_blog.title")}
                 rules={[{ required: true, message: "Vui lòng nhập tiêu đề!" }]}
               >
                 <Input
-                  placeholder="Nhập tiêu đề bài viết"
+                  placeholder={t("create_blog.placeholder.title")}
                   onChange={handleTitleChange}
                 />
               </Form.Item>
@@ -206,18 +215,20 @@ const CreateBlog = () => {
             <Col xs={24} md={12}>
               <Form.Item
                 name="main_keyword"
-                label="Từ Khóa Chính"
+                label={t("create_blog.main_keyword")}
                 rules={[
                   { required: true, message: "Vui lòng nhập từ khóa chính!" },
                 ]}
               >
-                <Input placeholder="Nhập từ khóa chính" />
+                <Input
+                  placeholder={t("create_blog.placeholder.main_keyword")}
+                />
               </Form.Item>
             </Col>
             <Col xs={24} md={12}>
               <Form.Item
                 name="tags"
-                label="Tags"
+                label={t("create_blog.tags")}
                 rules={[
                   { required: true, message: "Vui lòng nhập ít nhất một tag!" },
                 ]}
@@ -239,12 +250,14 @@ const CreateBlog = () => {
             <Col xs={24} md={12}>
               <Form.Item
                 name="focus_keyword"
-                label="Focus Keyword"
+                label={t("create_blog.focus_keyword")}
                 rules={[
                   { required: true, message: "Vui lòng nhập focus keyword!" },
                 ]}
               >
-                <Input placeholder="Nhập từ khóa tập trung (focus keyword)" />
+                <Input
+                  placeholder={t("create_blog.placeholder.focus_keyword")}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -252,19 +265,19 @@ const CreateBlog = () => {
           {/* Nhóm 3: Thông tin liên quan đến SEO */}
           <Row gutter={[16, 16]}>
             <Col xs={24} md={12}>
-              <Form.Item label="Slug">
+              <Form.Item label={t("create_blog.slug")}>
                 <Input
                   value={slug}
-                  placeholder="Slug sẽ được tự động tạo"
+                  placeholder={t("create_blog.placeholder.slug")}
                   readOnly
                 />
               </Form.Item>
             </Col>
             <Col xs={24} md={12}>
-              <Form.Item label="Canonical URL">
+              <Form.Item label={t("create_blog.canonical_url")}>
                 <Input
                   value={canonicalUrl}
-                  placeholder="Canonical URL sẽ được tự động tạo"
+                  placeholder={t("create_blog.placeholder.canonical_url")}
                   readOnly
                 />
               </Form.Item>
@@ -272,25 +285,27 @@ const CreateBlog = () => {
             <Col xs={24} md={12}>
               <Form.Item
                 name="secondary_keywords"
-                label="Từ Khóa Phụ"
+                label={t("create_blog.secondary_keywords")}
                 rules={[
                   { required: true, message: "Vui lòng nhập từ khóa phụ!" },
                 ]}
               >
-                <Input placeholder="Nhập từ khóa phụ, cách nhau bằng dấu phẩy" />
+                <Input
+                  placeholder={t("create_blog.placeholder.secondary_keywords")}
+                />
               </Form.Item>
             </Col>
             <Col xs={24} md={12}>
               <Form.Item
                 name="category_id"
-                label="Danh Mục"
+                label={t("create_blog.category")}
                 rules={[{ required: true, message: "Vui lòng chọn danh mục!" }]}
               >
                 <Select
                   placeholder={
                     isLoadingCategories
-                      ? "Đang tải danh mục..."
-                      : "Chọn danh mục"
+                      ? t("create_blog.loading_categories")
+                      : t("create_blog.category")
                   }
                   loading={isLoadingCategories}
                 >
@@ -303,7 +318,7 @@ const CreateBlog = () => {
               </Form.Item>
             </Col>
 
-            <Col xs={24}>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="meta_description"
                 label="Meta Description"
@@ -315,16 +330,12 @@ const CreateBlog = () => {
                 ]}
               >
                 <Input.TextArea
-                  placeholder="Nhập meta description cho bài viết"
+                  placeholder={t("create_blog.placeholder.meta_description")}
                   rows={4}
                   onChange={handleDescriptionChange}
                 />
               </Form.Item>
             </Col>
-          </Row>
-
-          {/* Google Preview */}
-          <Row justify="center">
             <Col xs={24} md={12}>
               <Form.Item label="Google Preview">
                 <GooglePreview
@@ -340,7 +351,7 @@ const CreateBlog = () => {
           {/* Nội dung bài viết */}
           <Row>
             <Col span={24}>
-              <Form.Item label="Nội Dung" required>
+              <Form.Item label={t("create_blog.content")} required>
                 <Editor
                   tinymceScriptSrc="https://cdn.tiny.cloud/1/9dsiwvmjoqjrozos58bg410o56uilmv29czcut6wjykwcvc1/tinymce/5/tinymce.min.js"
                   value={content}
@@ -386,17 +397,13 @@ const CreateBlog = () => {
             <Col span={24}>
               <Form.Item>
                 <Button type="primary" htmlType="submit" block>
-                  Lưu Bài Viết
+                  {t("create_blog.save_post")}
                 </Button>
               </Form.Item>
             </Col>
           </Row>
         </Form>
       </Content>
-
-      <Footer style={{ textAlign: "center" }}>
-        Hệ thống quản lý Blog ©2025
-      </Footer>
     </Layout>
   );
 };

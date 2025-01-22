@@ -29,12 +29,19 @@ export const blogApi = createApi({
       }),
       invalidatesTags: (result, error, { id }) => [{ type: "Blog", id }],
     }),
+    updateVisibility: builder.mutation({
+      query: ({ id, is_visible }) => ({
+        url: `/blogs/${id}/visibility`,
+        method: "PUT",
+        body: { is_visible },
+      }),
+      invalidatesTags: ["Blog"],
+    }),
     deleteBlog: builder.mutation({
       query: (id) => ({
         url: `/blogs/${id}`,
         method: "DELETE",
       }),
-      // invalidatesTags: (result, error, id) => [{ type: "Blog", id }],
       invalidatesTags: ["Blog"],
     }),
     uploadImage: builder.mutation({
@@ -58,6 +65,7 @@ export const {
   useGetBlogByIdQuery, // Hook cho API lấy blog theo ID
   useCreateBlogMutation,
   useUpdateBlogMutation,
+  useUpdateVisibilityMutation, // Hook mới cho cập nhật trạng thái ẩn/hiện
   useDeleteBlogMutation,
   useUploadImageMutation,
 } = blogApi;

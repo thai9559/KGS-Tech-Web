@@ -11,6 +11,7 @@ import {
   LogoutOutlined,
   CloseOutlined,
 } from "@ant-design/icons";
+import ActivityLogViewer from "./ActivityLogViewer";
 import { decodeToken } from "../../utils/decodeToken";
 import { useTranslation } from "react-i18next";
 
@@ -120,7 +121,7 @@ const MenuNavigate = () => {
         },
         {
           key: "/admin/blog/tags",
-          label: <Link to="/admin/blog/tags">{t("tags")}</Link>,
+          label: <Link to="/admin/blog/tags">{t("tagManagement")}</Link>,
           requiredPermissions: ["Blogs", "Full admin privileges"],
         },
       ],
@@ -133,7 +134,7 @@ const MenuNavigate = () => {
       children: [
         {
           key: "/admin/feedback",
-          label: <Link to="/admin/feedback">{t("articles")}</Link>,
+          label: <Link to="/admin/feedback">{t("feedback")}</Link>,
           requiredPermissions: ["Feedback", "Full admin privileges"],
         },
       ],
@@ -346,11 +347,12 @@ const MenuNavigate = () => {
       <Layout>
         <Content
           style={{
-            margin: "16px",
-            padding: "24px",
+            // margin: "16px",
+            // padding: "24px",
             backgroundColor: "#ffffff",
           }}
         >
+          <ActivityLogViewer />
           <Outlet />
         </Content>
       </Layout>

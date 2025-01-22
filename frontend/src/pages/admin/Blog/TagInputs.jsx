@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { AutoComplete, Tag, Input } from "antd";
 import { useGetTagsQuery } from "../../../redux/api/TagApi";
-
+import { useTranslation } from "react-i18next";
 const TagsInputs = ({ value = [], onChange }) => {
   const [inputValue, setInputValue] = useState("");
   const { data: response = {}, isFetching } = useGetTagsQuery(inputValue);
-
+  const { t } = useTranslation();
   // Trích xuất mảng `data` từ phản hồi API
   const tagOptions = Array.isArray(response.data) ? response.data : [];
 
@@ -63,12 +63,11 @@ const TagsInputs = ({ value = [], onChange }) => {
         onSelect={handleSelect}
         options={tagOptions.map((tag) => ({ value: tag.name }))}
         style={{ width: "100%" }}
-        placeholder="Nhập tag và nhấn Enter"
         notFoundContent={isFetching ? "Đang tải..." : "Không tìm thấy tag nào"}
       >
         <Input
           onKeyDown={handleInputKeyDown}
-          placeholder="Nhập tag và nhấn Enter"
+          placeholder={t("create_blog.placeholder.tags")}
         />
       </AutoComplete>
     </div>

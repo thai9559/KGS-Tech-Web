@@ -19,10 +19,14 @@ Route::middleware([])->group(function () {
     Route::put('/users/{id}', [UserController::class, 'update']);
 
     Route::post('/login', [UserController::class, 'login']);
-    Route::delete('/users/{id}', [UserController::class, 'destroy']); // Xóa người dùng
-    Route::post('/register', [UserController::class, 'register']);
+    // Route::delete('/users/{id}', [UserController::class, 'destroy']); // Xóa người dùng
+    // Route::post('/register', [UserController::class, 'register']);
     Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
 });
+    Route::post('/register', [UserController::class, 'register'])->middleware('auth:api');
+    Route::put('/users/{id}', [UserController::class, 'update'])->middleware('auth:api');
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->middleware('auth:api');
+
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return response()->json([
@@ -79,7 +83,8 @@ Route::middleware([])->group(function () {
     Route::put('/blogs/{id}', [BlogController::class, 'update']); // Cập nhật bài viết
     Route::delete('/blogs/{id}', [BlogController::class, 'destroy']); // Xóa bài viết
     Route::post('/upload-image', [BlogController::class, 'uploadImage']);
-    
+    Route::put('/blogs/{id}/visibility', [BlogController::class, 'updateVisibility']);
+
 });
     Route::middleware([])->group(function () {
     Route::get('/tags', [TagController::class, 'index']);

@@ -142,6 +142,10 @@ class BlogController extends Controller
             'slug' => 'nullable|string|unique:blogs,slug,' . $id . '|max:255',
             'main_keyword' => 'required|string|max:255',
             'secondary_keywords' => 'nullable|string',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string|max:255',
+            'focus_keyword' => 'nullable|string|max:255',
+            'canonical_url' => 'nullable|string|url|max:255',
             'tags' => 'nullable|array',
             'tags.*' => 'string',
             'category_id' => 'nullable|exists:categories,id',
@@ -206,4 +210,43 @@ class BlogController extends Controller
             'message' => 'Blog deleted successfully',
         ], 200);
     }
+    public function updateVisibility(Request $request, $id)
+{
+    // Tìm bài viết theo ID
+    $blog = Blog::find($id);
+
+    if (!$blog) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Blog not found',
+        ], 404);
+    }
+
+    // Validate dữ liệu
+    $validatedData = $request->validate([
+        'is_visible' => 'required|boolean',
+    ]);
+
+    // Cập nhật trạng thái is_visible
+    $blog->is_visible = $validatedData['is_visible'];
+    $blog->save();
+
+    // Ghi log (nếu cần)
+    ActivityLogController::log(
+        auth()->id(), // Người dùng hiện tại
+        'update_visibility',
+        'blogs',
+        $blog->id,
+        null,
+        ['is_visible' => $blog->is_visible]
+    );
+
+    return response()->json([
+        'success' => true,
+        'message' => $blog->is_visible
+            ? 'Blog is now visible'
+            : 'Blog is now hidden',
+        'data' => $blog,
+    ], 200);
+}
 }

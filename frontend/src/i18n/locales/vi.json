@@ -9,10 +9,12 @@
   "accountManagement": "Quản lý tài khoản",
   "users": "Người dùng",
   "roles": "Vai trò",
-  "blogManagement": "Quản lý Blog",
+  "blogManagement": "Quản lý bài viết",
   "articles": "Bài viết",
+  "feedback": "Phản hồi",
   "categories": "Danh mục",
-  "feedbackManagement": "Quản lý Feedback",
+  "feedbackManagement": "Quản lý phản hồi",
+  "tagManagement": "Quản lý thẻ",
   "logout": "Đăng xuất",
   "manage": "Quản lý",
   "stats": {
@@ -447,6 +449,149 @@
     },
     "detailModal": {
       "title": "Chi tiết Tag"
+    }
+  },
+  "create_blog": {
+    "header": "Tạo Blog",
+    "title": "Tiêu đề",
+    "main_keyword": "Từ khóa chính",
+    "tags": "Thẻ",
+    "focus_keyword": "Từ khóa mục tiêu",
+    "slug": "Slug",
+    "canonical_url": "URL Chính tắc",
+    "secondary_keywords": "Từ khóa phụ",
+    "category": "Danh mục",
+    "meta_description": "Mô tả meta",
+    "google_preview": "Xem trước Google",
+    "content": "Nội dung",
+    "thumbnail_image": "Hình thu nhỏ",
+    "upload": "Tải lên",
+    "save_post": "Lưu bài đăng",
+    "validation": {
+      "required": "Trường này là bắt buộc",
+      "max_length": "Đã vượt quá độ dài tối đa",
+      "url_format": "Định dạng URL không hợp lệ"
+    },
+    "placeholder": {
+      "title": "Nhập tiêu đề bài đăng",
+      "main_keyword": "Nhập từ khóa chính",
+      "tags": "Nhập ít nhất một thẻ",
+      "focus_keyword": "Nhập từ khóa mục tiêu",
+      "secondary_keywords": "Nhập từ khóa phụ, cách nhau bằng dấu phẩy",
+      "meta_description": "Nhập mô tả meta cho bài đăng",
+      "content": "Viết nội dung tại đây",
+      "slug": "Slug sẽ được tạo tự động",
+      "canonical_url": "URL chính tắc sẽ được tạo tự động",
+      "category": "Chọn danh mục"
+    }
+  },
+  "edit_blog": {
+    "header": {
+      "title": "Chỉnh Sửa Bài Viết"
+    },
+    "form": {
+      "fields": {
+        "title": {
+          "label": "Tiêu Đề",
+          "placeholder": "Nhập tiêu đề bài viết",
+          "error": "Vui lòng nhập tiêu đề!"
+        },
+        "main_keyword": {
+          "label": "Từ Khóa Chính",
+          "placeholder": "Nhập từ khóa chính",
+          "error": "Vui lòng nhập từ khóa chính!"
+        },
+        "secondary_keywords": {
+          "label": "Từ Khóa Phụ",
+          "placeholder": "Nhập từ khóa phụ, cách nhau bằng dấu phẩy",
+          "error": "Vui lòng nhập từ khóa phụ!"
+        },
+        "tags": {
+          "label": "Tags",
+          "error": "Vui lòng nhập ít nhất một tag!"
+        },
+        "slug": {
+          "label": "Slug (URL thân thiện SEO)",
+          "placeholder": "Nhập slug",
+          "error": "Vui lòng nhập slug!",
+          "error_max_length": "Slug không được vượt quá 60 ký tự!"
+        },
+        "category_id": {
+          "label": "Danh Mục",
+          "placeholder": "Chọn danh mục",
+          "error": "Vui lòng chọn danh mục!"
+        },
+        "focus_keyword": {
+          "label": "Từ khóa mục tiêu",
+          "placeholder": "Nhập từ khóa mục tiêu",
+          "error": "Vui lòng nhập từ khóa mục tiêu!"
+        },
+        "canonical_url": {
+          "label": "Canonical URL",
+          "placeholder": "Nhập Canonical URL",
+          "error": "Vui lòng nhập Canonical URL!",
+          "error_format": "Vui lòng nhập đúng định dạng URL!"
+        },
+        "meta_description": {
+          "label": "Meta Description",
+          "placeholder": "Nhập Meta Description",
+          "error": "Vui lòng nhập Meta Description!"
+        },
+        "google_preview": {
+          "label": "Google Preview"
+        },
+        "thumbnail_image": {
+          "label": "Ảnh Tiêu Đề",
+          "button": "Chọn Ảnh Tiêu Đề",
+          "success": "Upload ảnh thành công!",
+          "error": "Upload ảnh thất bại!",
+          "alt": "Ảnh Tiêu Đề"
+        },
+        "content": {
+          "label": "Nội Dung"
+        }
+      },
+      "submit_button": {
+        "text": "Lưu Thay Đổi"
+      }
+    },
+    "messages": {
+      "success": "Cập nhật bài viết thành công!",
+      "error": "Cập nhật bài viết thất bại!",
+      "loading": "Đang tải dữ liệu...",
+      "load_error": "Không thể tải dữ liệu blog. Vui lòng thử lại!"
+    }
+  },
+  "blog_table": {
+    "header": {
+      "title": "Quản lý Blogs",
+      "create_button": "Tạo"
+    },
+    "columns": {
+      "id": "ID",
+      "title": "Tiêu đề",
+      "main_keyword": "Từ khóa chính",
+      "category": "Danh mục",
+      "creator": "Người tạo",
+      "created_date": "Ngày tạo",
+      "updated_date": "Ngày cập nhật",
+      "visibility": "Ẩn/hiện",
+      "actions": "Hành động"
+    },
+    "actions": {
+      "edit": "Sửa",
+      "delete": "Xóa"
+    },
+    "confirm": {
+      "delete_title": "Bạn có chắc chắn muốn xóa bài viết này không?",
+      "delete_ok": "Xóa",
+      "delete_cancel": "Hủy"
+    },
+    "messages": {
+      "delete_success": "Xóa bài viết thành công!",
+      "delete_fail": "Xóa bài viết thất bại!",
+      "update_visibility_success": "Cập nhật trạng thái thành công!",
+      "update_visibility_fail": "Cập nhật trạng thái thất bại!"
     }
   }
 }

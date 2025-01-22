@@ -6,8 +6,8 @@ import {
   Form,
   Input,
   Space,
-  message,
   Popconfirm,
+  message,
 } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
@@ -17,10 +17,11 @@ import {
   useUpdateRoleMutation,
   useDeleteRoleMutation,
 } from "../../../redux/api/roleApi";
+import RoleCard from "./RoleCard"; // Import component RoleCard
 
 const RoleManagement = () => {
-  const { t } = useTranslation(); // Không chỉ định namespace ở đây
-  const { data: rolesData, isLoading, error } = useGetRolesQuery();
+  const { t } = useTranslation();
+  const { data: rolesData, isLoading } = useGetRolesQuery();
   const [createRole] = useCreateRoleMutation();
   const [updateRole] = useUpdateRoleMutation();
   const [deleteRole] = useDeleteRoleMutation();
@@ -29,6 +30,7 @@ const RoleManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [currentRole, setCurrentRole] = useState(null);
+  const [swipedCard, setSwipedCard] = useState(null); // Trạng thái vuốt
 
   const [form] = Form.useForm();
 
@@ -61,8 +63,8 @@ const RoleManagement = () => {
       }
       closeModal();
     } catch (error) {
-      console.error("Error handling form submission:", error);
-      message.error(t("roleAdmin.error"));
+      console.error(error);
+      message.error(t("roleAdmin.errorOccurred"));
     }
   };
 
@@ -70,127 +72,130 @@ const RoleManagement = () => {
     try {
       await deleteRole(id);
       message.success(t("roleAdmin.deleteSuccess"));
+      setSwipedCard(null);
     } catch (error) {
-      console.error("Error deleting role:", error);
+      console.error(error);
       message.error(t("roleAdmin.deleteFail"));
     }
   };
 
-  const columns = [
-    {
-      title: <span className="font-notoSansJP">ID</span>,
-      dataIndex: "id",
-      key: "id",
-    },
-    {
-      title: <span className="font-notoSansJP">{t("roleAdmin.name")}</span>,
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: (
-        <span className="font-notoSansJP">{t("roleAdmin.description")}</span>
-      ),
-      dataIndex: "description",
-      key: "description",
-    },
-    {
-      title: <span className="font-notoSansJP">{t("roleAdmin.actions")}</span>,
-      key: "action",
-      render: (_, record) => (
-        <Space>
-          <Button
-            type="primary"
-            icon={<EditOutlined />}
-            onClick={() => openModal(record)}
-          >
-            <span className="font-notoSansJP">{t("roleAdmin.editRole")}</span>
-          </Button>
-          <Popconfirm
-            title={t("roleAdmin.deleteConfirm")}
-            onConfirm={() => handleDelete(record.id)}
-            okText={t("roleAdmin.yes")}
-            cancelText={t("roleAdmin.no")}
-          >
-            <Button danger type="primary" icon={<DeleteOutlined />}>
-              <span className="font-notoSansJP">{t("roleAdmin.delete")}</span>
-            </Button>
-          </Popconfirm>
-        </Space>
-      ),
-    },
-  ];
-
-  if (error) {
-    console.error("Error fetching roles:", error);
-    message.error(t("roleAdmin.loadingError"));
-  }
-
   return (
-    <div>
-      <div
-        className="flex justify-between items-center mb-4"
-        style={{ marginBottom: 16 }}
-      >
-        <h1 className="text-2xl text-black font-bold font-notoSansJP">
-          {t("roleAdmin.roleManagement")}
-        </h1>
+    <div className="p-4">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">{t("roleAdmin.roleManagement")}</h1>
         <Button
           type="primary"
           icon={<PlusOutlined />}
           onClick={() => openModal()}
         >
-          <span className="font-notoSansJP">{t("roleAdmin.addRole")}</span>
+          {t("roleAdmin.addRole")}
         </Button>
       </div>
 
-      <Table
-        columns={columns}
-        dataSource={roles}
-        loading={isLoading}
-        rowKey="id"
-      />
+      {/* Legend Section */}
+      <div className="block md:hidden mb-4">
+        <h2 className="text-lg font-bold mb-2">Legend</h2>
+        <div className="flex gap-4">
+          <div className="flex items-center gap-2">
+            <span className="w-4 h-4 rounded-full bg-green-500"></span>
+            <span>{t("roleAdmin.legendName")}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-4 h-4 rounded-full bg-blue-500"></span>
+            <span>{t("roleAdmin.legendDescription")}</span>
+          </div>
+        </div>
+      </div>
 
+      {/* Card Layout for Mobile */}
+      <div className="md:hidden grid grid-cols-1 gap-4">
+        {roles.map((role) => (
+          <RoleCard
+            key={role.id}
+            role={role}
+            onEdit={openModal}
+            onDelete={handleDelete}
+            swipedCard={swipedCard}
+            setSwipedCard={setSwipedCard}
+          />
+        ))}
+      </div>
+
+      {/* Table for PC */}
+      <div className="hidden md:block">
+        <Table
+          columns={[
+            {
+              title: "ID",
+              dataIndex: "id",
+              key: "id",
+            },
+            {
+              title: t("roleAdmin.name"),
+              dataIndex: "name",
+              key: "name",
+            },
+            {
+              title: t("roleAdmin.description"),
+              dataIndex: "description",
+              key: "description",
+            },
+            {
+              title: t("roleAdmin.actions"),
+              key: "action",
+              render: (_, record) => (
+                <Space>
+                  <Button
+                    type="primary"
+                    icon={<EditOutlined />}
+                    onClick={() => openModal(record)}
+                  >
+                    {t("roleAdmin.editRole")}
+                  </Button>
+                  <Popconfirm
+                    title={t("roleAdmin.deleteConfirm")}
+                    onConfirm={() => handleDelete(record.id)}
+                    okText={t("roleAdmin.yes")}
+                    cancelText={t("roleAdmin.no")}
+                  >
+                    <Button danger type="primary" icon={<DeleteOutlined />}>
+                      {t("roleAdmin.delete")}
+                    </Button>
+                  </Popconfirm>
+                </Space>
+              ),
+            },
+          ]}
+          dataSource={roles}
+          loading={isLoading}
+          rowKey="id"
+        />
+      </div>
+
+      {/* Modal */}
       <Modal
-        title={
-          <span className="font-notoSansJP">
-            {isEditing ? t("roleAdmin.editRole") : t("roleAdmin.addRole")}
-          </span>
-        }
+        title={isEditing ? t("roleAdmin.editRole") : t("roleAdmin.addRole")}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={closeModal}
-        okText={
-          <span className="font-notoSansJP">{t("roleAdmin.update")}</span>
-        }
-        cancelText={
-          <span className="font-notoSansJP">{t("roleAdmin.cancel")}</span>
-        }
+        okText={t("roleAdmin.update")}
+        cancelText={t("roleAdmin.cancel")}
       >
         <Form form={form} layout="vertical">
           <Form.Item
-            label={
-              <span className="font-notoSansJP">{t("roleAdmin.name")}</span>
-            }
+            label={t("roleAdmin.name")}
             name="name"
             rules={[
               {
                 required: true,
                 message: t("roleAdmin.formErrors.nameRequired"),
-                className: "font-notoSansJP",
               },
             ]}
           >
             <Input />
           </Form.Item>
-          <Form.Item
-            label={
-              <span className="font-notoSansJP">
-                {t("roleAdmin.description")}
-              </span>
-            }
-            name="description"
-          >
+          <Form.Item label={t("roleAdmin.description")} name="description">
             <Input.TextArea />
           </Form.Item>
         </Form>

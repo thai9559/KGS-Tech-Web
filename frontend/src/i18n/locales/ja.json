@@ -13,6 +13,8 @@
   "articles": "記事",
   "categories": "カテゴリー",
   "feedbackManagement": "フィードバック管理",
+  "feedback": "フィードバック",
+  "tagManagement": "タグ管理",
   "logout": "ログアウト",
   "manage": "管理する",
   "stats": {
@@ -440,6 +442,149 @@
     },
     "detailModal": {
       "title": "タグの詳細"
+    }
+  },
+  "create_blog": {
+    "header": "ブログ作成",
+    "title": "タイトル",
+    "main_keyword": "メインキーワード",
+    "tags": "タグ",
+    "focus_keyword": "フォーカスキーワード",
+    "slug": "スラッグ",
+    "canonical_url": "正規URL",
+    "secondary_keywords": "セカンダリーキーワード",
+    "category": "カテゴリー",
+    "meta_description": "メタ説明",
+    "google_preview": "Googleプレビュー",
+    "content": "コンテンツ",
+    "thumbnail_image": "サムネイル画像",
+    "upload": "アップロード",
+    "save_post": "投稿を保存",
+    "validation": {
+      "required": "このフィールドは必須です",
+      "max_length": "最大長を超えました",
+      "url_format": "無効なURL形式"
+    },
+    "placeholder": {
+      "title": "ブログ投稿のタイトルを入力してください",
+      "main_keyword": "メインキーワードを入力してください",
+      "tags": "少なくとも1つのタグを入力してください",
+      "focus_keyword": "フォーカスキーワードを入力してください",
+      "secondary_keywords": "カンマで区切ってセカンダリーキーワードを入力してください",
+      "meta_description": "ブログ投稿のメタ説明を入力してください",
+      "content": "ここに内容を書いてください",
+      "slug": "スラッグが自動的に生成されます",
+      "canonical_url": "正規URLが自動的に生成されます",
+      "category": "カテゴリーを選択してください"
+    }
+  },
+  "edit_blog": {
+    "header": {
+      "title": "ブログ投稿の編集"
+    },
+    "form": {
+      "fields": {
+        "title": {
+          "label": "タイトル",
+          "placeholder": "ブログ投稿のタイトルを入力してください",
+          "error": "タイトルを入力してください！"
+        },
+        "main_keyword": {
+          "label": "メインキーワード",
+          "placeholder": "メインキーワードを入力してください",
+          "error": "メインキーワードを入力してください！"
+        },
+        "secondary_keywords": {
+          "label": "サブキーワード",
+          "placeholder": "サブキーワードをコンマで区切って入力してください",
+          "error": "サブキーワードを入力してください！"
+        },
+        "tags": {
+          "label": "タグ",
+          "error": "少なくとも1つのタグを入力してください！"
+        },
+        "slug": {
+          "label": "スラッグ（SEO対応URL）",
+          "placeholder": "スラッグを入力してください",
+          "error": "スラッグを入力してください！",
+          "error_max_length": "スラッグは60文字を超えてはいけません！"
+        },
+        "category_id": {
+          "label": "カテゴリー",
+          "placeholder": "カテゴリーを選択してください",
+          "error": "カテゴリーを選択してください！"
+        },
+        "focus_keyword": {
+          "label": "フォーカスキーワード",
+          "placeholder": "フォーカスキーワードを入力してください",
+          "error": "フォーカスキーワードを入力してください！"
+        },
+        "canonical_url": {
+          "label": "正規URL",
+          "placeholder": "正規URLを入力してください",
+          "error": "正規URLを入力してください！",
+          "error_format": "有効なURLを入力してください！"
+        },
+        "meta_description": {
+          "label": "メタ説明",
+          "placeholder": "メタ説明を入力してください",
+          "error": "メタ説明を入力してください！"
+        },
+        "google_preview": {
+          "label": "Googleプレビュー"
+        },
+        "thumbnail_image": {
+          "label": "サムネイル画像",
+          "button": "サムネイル画像を選択",
+          "success": "画像のアップロードに成功しました！",
+          "error": "画像のアップロードに失敗しました！",
+          "alt": "サムネイル画像"
+        },
+        "content": {
+          "label": "コンテンツ"
+        }
+      },
+      "submit_button": {
+        "text": "変更を保存"
+      }
+    },
+    "messages": {
+      "success": "ブログ投稿の更新に成功しました！",
+      "error": "ブログ投稿の更新に失敗しました！",
+      "loading": "データを読み込んでいます...",
+      "load_error": "ブログデータを読み込めませんでした。再試行してください！"
+    }
+  },
+  "blog_table": {
+    "header": {
+      "title": "ブログ管理",
+      "create_button": "作成"
+    },
+    "columns": {
+      "id": "ID",
+      "title": "タイトル",
+      "main_keyword": "メインキーワード",
+      "category": "カテゴリー",
+      "creator": "作成者",
+      "created_date": "作成日",
+      "updated_date": "更新日",
+      "visibility": "表示/非表示",
+      "actions": "操作"
+    },
+    "actions": {
+      "edit": "編集",
+      "delete": "削除"
+    },
+    "confirm": {
+      "delete_title": "このブログを削除してもよろしいですか？",
+      "delete_ok": "削除",
+      "delete_cancel": "キャンセル"
+    },
+    "messages": {
+      "delete_success": "ブログが正常に削除されました！",
+      "delete_fail": "ブログの削除に失敗しました！",
+      "update_visibility_success": "表示状態が正常に更新されました！",
+      "update_visibility_fail": "表示状態の更新に失敗しました！"
     }
   }
 }

@@ -7,6 +7,8 @@ import {
   Input,
   Button,
   Select,
+  Row,
+  Col,
   message,
   Upload,
   Spin,
@@ -18,11 +20,14 @@ import {
   useGetBlogByIdQuery,
   useUpdateBlogMutation,
 } from "../../../redux/api/blogApi";
-
+import GooglePreview from "./GooglePreview";
+import FormItem from "antd/es/form/FormItem";
+import { useTranslation } from "react-i18next";
 const { Header, Content, Footer } = Layout;
 const { Option } = Select;
 
 const EditBlog = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const { data: blog, isLoading, isError } = useGetBlogByIdQuery(id);
@@ -30,6 +35,11 @@ const EditBlog = () => {
   const [form] = Form.useForm();
   const [content, setContent] = useState("");
   const [thumbnailImage, setThumbnailImage] = useState(null);
+  const [googlePreviewData, setGooglePreviewData] = useState({
+    title: "",
+    description: "",
+    url: "",
+  });
 
   useEffect(() => {
     if (!isLoading && blog) {
@@ -71,11 +81,11 @@ const EditBlog = () => {
       };
 
       await updateBlog({ id, ...payload }).unwrap();
-      message.success("Cập nhật bài viết thành công!");
+      message.success(t("edit_blog.messages.success")); // Dùng i18n để dịch
       navigate("/admin/bloglist");
     } catch (error) {
-      console.error("Lỗi khi cập nhật bài viết:", error);
-      message.error("Cập nhật bài viết thất bại!");
+      console.error(t("edit_blog.messages.error"), error); // Thông báo lỗi đã được dịch
+      message.error(t("edit_blog.messages.error"));
     }
   };
 
@@ -91,14 +101,14 @@ const EditBlog = () => {
       const data = await response.json();
 
       if (data.success) {
-        message.success("Upload ảnh thành công!");
+        message.success(t("edit_blog.form.fields.thumbnail_image.success")); // Dùng i18n để dịch
         setThumbnailImage(data.location);
       } else {
-        message.error("Upload ảnh thất bại!");
+        message.error(t("edit_blog.form.fields.thumbnail_image.error")); // Dùng i18n để dịch
       }
     } catch (error) {
-      console.error("Lỗi upload ảnh:", error);
-      message.error("Có lỗi xảy ra khi upload ảnh.");
+      console.error(t("edit_blog.form.fields.thumbnail_image.error"), error); // Log lỗi đã được dịch
+      message.error(t("edit_blog.form.fields.thumbnail_image.error"));
     }
   };
 
@@ -118,146 +128,295 @@ const EditBlog = () => {
     <Layout style={{ minHeight: "100vh" }}>
       <Header
         style={{
-          background: "#001529",
+          background: "#f5f5f5",
           color: "#fff",
           padding: "10px 20px",
           fontSize: "18px",
         }}
       >
-        <h1 style={{ color: "#fff", margin: 0 }}>Chỉnh Sửa Bài Viết</h1>
+        <h1 className="text-black font-notoSansJP font-bold">
+          {t("edit_blog.header.title")}
+        </h1>
       </Header>
 
       <Content style={{ padding: "20px" }}>
         <Form form={form} layout="vertical" onFinish={handleFinish}>
-          <Form.Item
-            name="title"
-            label="Tiêu Đề"
-            rules={[{ required: true, message: "Vui lòng nhập tiêu đề!" }]}
-          >
-            <Input placeholder="Nhập tiêu đề bài viết" />
-          </Form.Item>
-          <Form.Item
-            name="main_keyword"
-            label="Từ Khóa Chính"
-            rules={[
-              { required: true, message: "Vui lòng nhập từ khóa chính!" },
-            ]}
-          >
-            <Input placeholder="Nhập từ khóa chính" />
-          </Form.Item>
-          <Form.Item
-            name="tags"
-            label="Tags"
-            rules={[
-              { required: true, message: "Vui lòng nhập ít nhất một tag!" },
-            ]}
-          >
-            <TagsInputs />
-          </Form.Item>
+          <Row gutter={[16, 16]}>
+            <Col xs={24} md={12}>
+              <Form.Item
+                name="title"
+                label={t("edit_blog.form.fields.title.label")}
+                rules={[
+                  {
+                    required: true,
+                    message: t("edit_blog.form.fields.title.error"),
+                  },
+                ]}
+              >
+                <Input
+                  placeholder={t("edit_blog.form.fields.title.placeholder")}
+                  onChange={(e) =>
+                    setGooglePreviewData((prev) => ({
+                      ...prev,
+                      title: e.target.value,
+                    }))
+                  }
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={12}>
+              <Form.Item
+                name="main_keyword"
+                label={t("edit_blog.form.fields.main_keyword.label")}
+                rules={[
+                  {
+                    required: true,
+                    message: t("edit_blog.form.fields.main_keyword.error"),
+                  },
+                ]}
+              >
+                <Input
+                  placeholder={t(
+                    "edit_blog.form.fields.main_keyword.placeholder"
+                  )}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
 
-          <Form.Item
-            name="slug"
-            label="Slug (URL thân thiện SEO)"
-            rules={[
-              { required: true, message: "Vui lòng nhập slug!" },
-              { max: 60, message: "Slug không được vượt quá 60 ký tự!" },
-            ]}
-          >
-            <Input placeholder="Nhập slug" />
-          </Form.Item>
-          <Form.Item
-            name="secondary_keywords"
-            label="Từ Khóa Phụ"
-            rules={[{ required: true, message: "Vui lòng nhập từ khóa phụ!" }]}
-          >
-            <Input placeholder="Nhập từ khóa phụ, cách nhau bằng dấu phẩy" />
-          </Form.Item>
-          <Form.Item
-            name="category_id"
-            label="Danh Mục"
-            rules={[{ required: true, message: "Vui lòng chọn danh mục!" }]}
-          >
-            <Select placeholder="Chọn danh mục">
-              <Option value={1}>Danh Mục 1</Option>
-              <Option value={2}>Danh Mục 2</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item
-            name="meta_title"
-            label="Meta Title"
-            rules={[{ required: true, message: "Vui lòng nhập Meta Title!" }]}
-          >
-            <Input placeholder="Nhập Meta Title" />
-          </Form.Item>
-          <Form.Item
-            name="meta_description"
-            label="Meta Description"
-            rules={[
-              { required: true, message: "Vui lòng nhập Meta Description!" },
-            ]}
-          >
-            <Input.TextArea placeholder="Nhập Meta Description" rows={4} />
-          </Form.Item>
-          <Form.Item
-            name="focus_keyword"
-            label="Focus Keyword"
-            rules={[
-              { required: true, message: "Vui lòng nhập Focus Keyword!" },
-            ]}
-          >
-            <Input placeholder="Nhập Focus Keyword" />
-          </Form.Item>
-          <Form.Item
-            name="canonical_url"
-            label="Canonical URL"
-            rules={[
-              { required: true, message: "Vui lòng nhập Canonical URL!" },
-              { type: "url", message: "Vui lòng nhập đúng định dạng URL!" },
-            ]}
-          >
-            <Input placeholder="Nhập Canonical URL" />
-          </Form.Item>
-          <Form.Item label="Ảnh Tiêu Đề">
-            <Upload
-              accept="image/*"
-              customRequest={handleUpload}
-              showUploadList={false}
-            >
-              <Button icon={<UploadOutlined />}>Chọn Ảnh Tiêu Đề</Button>
-            </Upload>
-            {thumbnailImage && (
-              <img
-                src={thumbnailImage}
-                alt="Ảnh Tiêu Đề"
-                style={{ marginTop: 10, maxWidth: "100%" }}
-              />
-            )}
-          </Form.Item>
-          <Form.Item label="Nội Dung">
-            <Editor
-              tinymceScriptSrc="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"
-              value={content}
-              onEditorChange={(value) => setContent(value)}
-              init={{
-                height: 500,
-                branding: false,
-                menubar: true,
-                plugins: ["image", "link", "code", "imagetools"],
-                toolbar: `undo redo | formatselect | bold italic underline strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | image imagetools media link anchor | table hr blockquote subscript superscript | code removeformat fullscreen preview`,
-              }}
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              Lưu Thay Đổi
-            </Button>
-          </Form.Item>
+          <Row gutter={[16, 16]}>
+            <Col xs={24} md={12}>
+              <Form.Item
+                name="secondary_keywords"
+                label={t("edit_blog.form.fields.secondary_keywords.label")}
+                rules={[
+                  { required: true, message: "Vui lòng nhập từ khóa phụ!" },
+                ]}
+              >
+                <Input
+                  placeholder={t(
+                    "edit_blog.form.fields.secondary_keywords.placeholder"
+                  )}
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={12}>
+              <Form.Item
+                name="tags"
+                label={t("edit_blog.form.fields.tags.label")}
+                rules={[
+                  {
+                    required: true,
+                    message: t("edit_blog.form.fields.tags.error"),
+                  },
+                ]}
+              >
+                <TagsInputs />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={[16, 16]}>
+            <Col xs={24} md={12}>
+              <Form.Item
+                name="slug"
+                label={t("edit_blog.form.fields.slug.label")}
+                rules={[
+                  {
+                    required: true,
+                    message: t("edit_blog.form.fields.slug.error"),
+                  },
+                  {
+                    max: 60,
+                    message: t("edit_blog.form.fields.slug.error_max_length"),
+                  },
+                ]}
+              >
+                <Input
+                  placeholder={t("edit_blog.form.fields.slug.placeholder")}
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={12}>
+              <Form.Item
+                name="category_id"
+                label={t("edit_blog.form.fields.category_id.label")}
+                rules={[
+                  {
+                    required: true,
+                    message: t("edit_blog.form.fields.category_id.error"),
+                  },
+                ]}
+              >
+                <Select
+                  placeholder={t(
+                    "edit_blog.form.fields.category_id.placeholder"
+                  )}
+                >
+                  <Option value={1}>Danh Mục 1</Option>
+                  <Option value={2}>Danh Mục 2</Option>
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={[16, 16]}>
+            <Col xs={24} md={12}>
+              <Form.Item
+                name="focus_keyword"
+                label={t("edit_blog.form.fields.focus_keyword.label")}
+                rules={[
+                  {
+                    required: true,
+                    message: t("edit_blog.form.fields.focus_keyword.error"),
+                  },
+                ]}
+              >
+                <Input
+                  placeholder={t(
+                    "edit_blog.form.fields.focus_keyword.placeholder"
+                  )}
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={12}>
+              <Form.Item
+                name="canonical_url"
+                label={t("edit_blog.form.fields.canonical_url.label")}
+                rules={[
+                  {
+                    required: true,
+                    message: t("edit_blog.form.fields.canonical_url.error"),
+                  },
+                  {
+                    type: "url",
+                    message: t(
+                      "edit_blog.form.fields.canonical_url.error_format"
+                    ),
+                  },
+                ]}
+                onChange={(e) =>
+                  setGooglePreviewData((prev) => ({
+                    ...prev,
+                    url: e.target.value,
+                  }))
+                }
+              >
+                <Input
+                  placeholder={t(
+                    "edit_blog.form.fields.canonical_url.placeholder"
+                  )}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={[16, 16]}>
+            {/* <Col xs={24} md={12}>
+              <Form.Item
+                name="meta_title"
+                label="Meta Title"
+                rules={[
+                  { required: true, message: "Vui lòng nhập Meta Title!" },
+                ]}
+              >
+                <Input placeholder="Nhập Meta Title" />
+              </Form.Item>
+            </Col> */}
+            <Col xs={24} md={12}>
+              <Form.Item
+                name="meta_description"
+                label={t("edit_blog.form.fields.meta_description.label")}
+                rules={[
+                  {
+                    required: true,
+                    message: t("edit_blog.form.fields.meta_description.error"),
+                  },
+                ]}
+                onChange={(e) =>
+                  setGooglePreviewData((prev) => ({
+                    ...prev,
+                    description: e.target.value,
+                  }))
+                }
+              >
+                <Input.TextArea
+                  placeholder={t(
+                    "edit_blog.form.fields.meta_description.placeholder"
+                  )}
+                  rows={6}
+                />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} md={12}>
+              <Form.Item
+                label={t("edit_blog.form.fields.google_preview.label")}
+              >
+                <GooglePreview
+                  title={form.getFieldValue("title")}
+                  description={form.getFieldValue("meta_description")}
+                  url={form.getFieldValue("canonical_url")}
+                  thumbnail={thumbnailImage}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={[16, 16]}>
+            <Col xs={24} md={12}>
+              <Form.Item
+                label={t("edit_blog.form.fields.thumbnail_image.label")}
+              >
+                <Upload
+                  accept="image/*"
+                  customRequest={handleUpload}
+                  showUploadList={false}
+                >
+                  <Button icon={<UploadOutlined />}>
+                    {t("edit_blog.form.fields.thumbnail_image.button")}
+                  </Button>
+                </Upload>
+                {thumbnailImage && (
+                  <img
+                    src={thumbnailImage}
+                    alt={t("edit_blog.form.fields.thumbnail_image.alt")}
+                    style={{ marginTop: 10, maxWidth: "100%" }}
+                  />
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col span={24}>
+              <Form.Item label={t("edit_blog.form.fields.content.label")}>
+                <Editor
+                  tinymceScriptSrc="https://cdn.tiny.cloud/1/9dsiwvmjoqjrozos58bg410o56uilmv29czcut6wjykwcvc1/tinymce/5/tinymce.min.js"
+                  value={content}
+                  onEditorChange={(value) => setContent(value)}
+                  init={{
+                    height: 500,
+                    branding: false,
+                    menubar: true,
+                    plugins: ["image", "link", "code", "imagetools"],
+                    toolbar: `undo redo | formatselect | bold italic underline strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | image imagetools media link anchor | table hr blockquote subscript superscript | code removeformat fullscreen preview`,
+                  }}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row justify="center">
+            <Col xs={24} md={12}>
+              <Form.Item>
+                <Button type="primary" htmlType="submit" block>
+                  {t("edit_blog.form.submit_button.text")}
+                </Button>
+              </Form.Item>
+            </Col>
+          </Row>
         </Form>
       </Content>
-
-      <Footer style={{ textAlign: "center" }}>
-        Hệ thống quản lý Blog ©2025
-      </Footer>
     </Layout>
   );
 };

@@ -23,7 +23,7 @@ import {
   useAssignPermissionsMutation,
 } from "../../../redux/api/userApi";
 import TagList from "../../../components/Admin/Taglist";
-
+import { useGetActivityLogsQuery } from "../../../redux/api/activityLogApi";
 const { Option } = Select;
 
 const UserManagement = () => {
@@ -34,6 +34,7 @@ const UserManagement = () => {
     isLoading: usersLoading,
     refetch,
   } = useGetUsersQuery();
+  const { refetch: refetching } = useGetActivityLogsQuery();
   const users = Array.isArray(usersData?.data) ? usersData.data : [];
 
   const { data: rolesData = [], isLoading: rolesLoading } = useGetRolesQuery();
@@ -111,6 +112,7 @@ const UserManagement = () => {
         }
 
         message.success(t("userAdmin.updateSuccess"));
+        refetching();
       } else {
         // Thêm mới user
         const { permissions, ...userData } = values; // Loại bỏ permissions trong payload khi thêm mới
@@ -126,6 +128,7 @@ const UserManagement = () => {
 
         // Không xử lý permissions khi thêm user
         message.success(t("userAdmin.createSuccess"));
+        refetching();
       }
 
       closeModal();
@@ -140,7 +143,7 @@ const UserManagement = () => {
     try {
       await deleteUser(id);
       message.success(t("userAdmin.deleteSuccess"));
-      refetch();
+      refetching();
     } catch (error) {
       console.error("Error deleting user:", error);
       message.error(t("deleteFail"));
@@ -203,6 +206,11 @@ const UserManagement = () => {
   };
 
   const columns = [
+    {
+      title: t("ID"),
+      dataIndex: "id",
+      key: "id",
+    },
     {
       title: t("userAdmin.name"),
       dataIndex: "name",
@@ -347,7 +355,7 @@ const UserManagement = () => {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={closeModal}
-        okText={t("userAdmin.update")}
+        okText={isEditing ? t("userAdmin.update") : t("userAdmin.addUser")}
         cancelText={t("userAdmin.cancel")}
       >
         <Form form={form} layout="vertical">
