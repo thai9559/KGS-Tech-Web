@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Validator; 
 
 class UserController extends Controller
 {
@@ -189,56 +190,119 @@ class UserController extends Controller
             'data' => $user,
         ], 200);
     }
+    // public function register(Request $request)
+    // {
+    //     $validatedData = $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'email' => 'required|email|unique:users,email',
+    //         'phone' => 'nullable|string|max:15|regex:/^[0-9]{9,15}$/',
+    //         'role_id' => 'required|exists:roles,id',
+    //         'permissions' => 'nullable|array',
+    //         'permissions.*' => 'exists:permissions,id',
+    //     ]);
+    
+    //     // Tạo người dùng
+    //     $user = User::create([
+    //         'name' => $validatedData['name'],
+    //         'email' => $validatedData['email'],
+    //         'password' => Hash::make($request->password),
+    //         'phone' => $validatedData['phone']?? null,
+    //         'role_id' => $validatedData['role_id'],
+    //     ]);
+    
+    //     // Gán quyền nếu có
+    //     if ($request->has('permissions')) {
+    //         $user->permissions()->sync($validatedData['permissions']);
+    //     }
+    
+    //     // Lấy user_id từ token nếu tồn tại, nếu không để null
+    //     $actorId = null;
+    //     if ($request->header('Authorization')) {
+    //         try {
+    //             $actorId = auth()->id(); // Lấy ID từ token
+    //         } catch (\Exception $e) {
+    //             \Log::warning('Failed to parse token for register action: ' . $e->getMessage());
+    //         }
+    //     }
+    
+    //     // Ghi log
+    //     ActivityLogController::log(
+    //         $actorId, 
+    //         'create',
+    //         'users',
+    //         $user->id,
+    //         null,
+    //         $user->toArray()
+    //     );
+    
+    //     return response()->json([
+    //         'message' => 'User registered successfully',
+    //         'user' => $user,
+    //     ], 201);
+    // }
     public function register(Request $request)
-    {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'phone' => 'nullable|string|max:15|regex:/^[0-9]{9,15}$/',
-            'role_id' => 'required|exists:roles,id',
-            'permissions' => 'nullable|array',
-            'permissions.*' => 'exists:permissions,id',
-        ]);
-    
-        // Tạo người dùng
-        $user = User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($request->password),
-            'phone' => $validatedData['phone']?? null,
-            'role_id' => $validatedData['role_id'],
-        ]);
-    
-        // Gán quyền nếu có
-        if ($request->has('permissions')) {
-            $user->permissions()->sync($validatedData['permissions']);
+{
+    // Khởi tạo validator để kiểm tra dữ liệu
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'phone' => 'nullable|string|max:15|regex:/^[0-9]{9,15}$/',
+        'role_id' => 'required|exists:roles,id',
+        'permissions' => 'nullable|array',
+        'permissions.*' => 'exists:permissions,id',
+    ]);
+
+    // Nếu có lỗi validate, kiểm tra email trùng với email đang đăng nhập
+    if ($validator->fails()) {
+        if (auth()->check() && auth()->user()->email === $request->email) {
+            return response()->json([
+                'status' => 'error',
+                'duplicate_email' => true, // Biến báo trùng email
+            ], 422);
         }
-    
-        // Lấy user_id từ token nếu tồn tại, nếu không để null
-        $actorId = null;
-        if ($request->header('Authorization')) {
-            try {
-                $actorId = auth()->id(); // Lấy ID từ token
-            } catch (\Exception $e) {
-                \Log::warning('Failed to parse token for register action: ' . $e->getMessage());
-            }
-        }
-    
-        // Ghi log
-        ActivityLogController::log(
-            $actorId, 
-            'create',
-            'users',
-            $user->id,
-            null,
-            $user->toArray()
-        );
-    
+
+        // Các lỗi validate khác
         return response()->json([
-            'message' => 'User registered successfully',
-            'user' => $user,
-        ], 201);
+            'status' => 'error',
+            'errors' => $validator->errors(),
+        ], 422);
     }
+
+    // Lấy dữ liệu đã được xác thực
+    $validatedData = $validator->validated();
+
+    // Tạo người dùng mới
+    $user = User::create([
+        'name' => $validatedData['name'],
+        'email' => $validatedData['email'],
+        'password' => Hash::make($request->password),
+        'phone' => $validatedData['phone'] ?? null,
+        'role_id' => $validatedData['role_id'],
+    ]);
+
+    // Gán quyền nếu có
+    if ($request->has('permissions')) {
+        $user->permissions()->sync($validatedData['permissions']);
+    }
+
+    // Ghi log
+    $actorId = auth()->check() ? auth()->id() : null;
+    ActivityLogController::log(
+        $actorId,
+        'create',
+        'users',
+        $user->id,
+        null,
+        $user->toArray()
+    );
+
+    // Trả về phản hồi thành công
+    return response()->json([
+        'status' => 'success',
+        'user' => $user,
+    ], 201); // HTTP 201 Created
+}
+
     
     // public function update(Request $request, $id)
     // {

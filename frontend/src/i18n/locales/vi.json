@@ -321,6 +321,7 @@
     "formErrors": {
       "nameRequired": "Vui lòng nhập tên!",
       "emailRequired": "Vui lòng nhập email!",
+      "phoneRequired": "Vui lòng nhập số điện thoại!",
       "emailInvalid": "Email không hợp lệ!",
       "passwordRequired": "Vui lòng nhập mật khẩu!",
       "newPassword": "Mật khẩu mới phải có ít nhất 6 ký tự!",

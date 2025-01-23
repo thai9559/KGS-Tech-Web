@@ -14,10 +14,9 @@ const ActivityLogViewer = () => {
   const { t } = useTranslation();
   const location = useLocation(); // Lấy URL hiện tại
 
-  // Kiểm tra nếu URL hiện tại là Blog hoặc Users
-  const isBlogOrUsersPage =
-    location.pathname.includes("/bloglist") ||
-    location.pathname.includes("/userlist");
+  // Determine if the current page is related to blogs or users
+  const isUserPage = location.pathname.includes("/userlist");
+  const isBlogPage = location.pathname.includes("/bloglist");
 
   const {
     data: logs,
@@ -92,19 +91,8 @@ const ActivityLogViewer = () => {
     const changes = Object.keys(newData).map((key) => {
       const field = formatTitle(key);
 
-      let oldValue =
-        key === "is_visible"
-          ? oldData[key] === true
-            ? t("History_view.visible")
-            : t("History_view.invisible")
-          : formatValue(key, oldData[key]);
-
-      let newValue =
-        key === "is_visible"
-          ? newData[key] === true
-            ? t("History_view.visible")
-            : t("History_view.invisible")
-          : formatValue(key, newData[key]);
+      let oldValue = formatValue(key, oldData[key]);
+      let newValue = formatValue(key, newData[key]);
 
       oldValue = truncateValue(formatComplexValue(oldValue));
       newValue = truncateValue(formatComplexValue(newValue));
@@ -144,10 +132,21 @@ const ActivityLogViewer = () => {
     );
   };
 
+  // Filter logs based on the current page
+  const filteredLogs = logs?.data?.filter((log) => {
+    if (isUserPage) {
+      return log.table_name === "users"; // Only show logs for the "users" table
+    }
+    if (isBlogPage) {
+      return log.table_name === "blogs"; // Only show logs for the "blogs" table
+    }
+    return true; // Default: show all logs
+  });
+
   return (
     <>
       <div className="flex justify-end items-center ">
-        {isBlogOrUsersPage && (
+        {(isUserPage || isBlogPage) && (
           <Button
             type="primary"
             icon={<EditOutlined />}
@@ -177,7 +176,7 @@ const ActivityLogViewer = () => {
           <p style={customFontStyle}>{t("History_view.error_loading_data")}</p>
         ) : (
           <List
-            dataSource={logs?.data || []}
+            dataSource={filteredLogs || []}
             renderItem={(log) => (
               <List.Item>
                 <Card
@@ -230,10 +229,10 @@ const ActivityLogViewer = () => {
                     <Tag
                       color={
                         log.action === "update"
-                          ? "Green"
+                          ? "green"
                           : log.action === "create"
-                          ? "Blue"
-                          : "Red"
+                          ? "blue"
+                          : "red"
                       }
                     >
                       {t(`History_view.${log.action.toLowerCase()}`)}

@@ -314,6 +314,7 @@
     "formErrors": {
       "nameRequired": "名前を入力してください！",
       "emailRequired": "メールアドレスを入力してください！",
+      "phoneRequired": "電話番号を入力してください！",
       "emailInvalid": "無効なメールアドレスです！",
       "passwordRequired": "パスワードを入力してください！",
       "passwordMin": "パスワードは6文字以上である必要があります！",
