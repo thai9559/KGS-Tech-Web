@@ -92,8 +92,8 @@ const MenuNavigate = () => {
       requiredPermissions: ["Users"],
       children: [
         {
-          key: "/admin/users",
-          label: <Link to="/admin/users">{t("users")}</Link>,
+          key: "/admin/userlist",
+          label: <Link to="/admin/userlist">{t("users")}</Link>,
           requiredPermissions: ["Users"],
         },
         {
@@ -348,7 +348,7 @@ const MenuNavigate = () => {
         <Content
           style={{
             // margin: "16px",
-            // padding: "24px",
+            padding: "24px",
             backgroundColor: "#ffffff",
           }}
         >

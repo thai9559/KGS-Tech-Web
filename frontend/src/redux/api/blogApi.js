@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const blogApi = createApi({
   reducerPath: "blogApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://127.0.0.1:8000/api" }),
-  tagTypes: ["Blog"],
+  tagTypes: ["Blog", "ActivityLog"],
   endpoints: (builder) => ({
     getBlogs: builder.query({
       query: () => "/blogs",
@@ -19,30 +19,40 @@ export const blogApi = createApi({
         method: "POST",
         body: newBlog,
       }),
-      invalidatesTags: ["Blog"],
+      invalidatesTags: ["Blog", "ActivityLog"],
     }),
     updateBlog: builder.mutation({
       query: ({ id, ...updatedBlog }) => ({
         url: `/blogs/${id}`,
         method: "PUT",
         body: updatedBlog,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`, // Lấy access_token từ localStorage
+          "Content-Type": "application/json",
+        },
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: "Blog", id }],
+      // invalidatesTags: (result, error, { id }) => [{ type: "Blog", id }],
+      invalidatesTags: ["Blog", "ActivityLog"],
     }),
+
     updateVisibility: builder.mutation({
       query: ({ id, is_visible }) => ({
         url: `/blogs/${id}/visibility`,
         method: "PUT",
         body: { is_visible },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`, // Thêm token vào header
+        },
       }),
-      invalidatesTags: ["Blog"],
+      invalidatesTags: ["Blog", "ActivityLog"],
     }),
+
     deleteBlog: builder.mutation({
       query: (id) => ({
         url: `/blogs/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Blog"],
+      invalidatesTags: ["Blog", "ActivityLog"],
     }),
     uploadImage: builder.mutation({
       query: (image) => {

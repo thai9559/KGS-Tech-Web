@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('record_id'); // ID bản ghi bị thay đổi
             $table->json('old_data')->nullable(); // Dữ liệu cũ trước khi chỉnh sửa
             $table->json('new_data')->nullable(); // Dữ liệu mới sau khi chỉnh sửa
+            
             $table->timestamps(); // Thời gian thực hiện
         });
     }

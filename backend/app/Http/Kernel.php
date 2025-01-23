@@ -53,6 +53,7 @@ class Kernel extends HttpKernel
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
+            \Illuminate\Auth\Middleware\Authenticate::class,    
         ],
 
     ];

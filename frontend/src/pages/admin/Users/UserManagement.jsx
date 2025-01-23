@@ -166,6 +166,7 @@ const UserManagement = () => {
       message.success(
         t("userAdmin.updateIsActiveSuccess", { name: record.name })
       );
+      refetching();
     } catch (error) {
       console.error("Error updating is_active:", error);
       message.error(t("userAdmin.updateIsActiveError"));
@@ -331,8 +332,9 @@ const UserManagement = () => {
 
   return (
     <section>
-      <div className="flex justify-between items-center bg-gray-100 mb-4">
-        <h1>{t("userAdmin.userManagement")}</h1>
+      <div className="flex justify-between items-center  mb-4">
+        <h1 className="text-2xl font-bold">{t("userAdmin.userManagement")}</h1>
+
         <Button
           type="primary"
           icon={<PlusOutlined />}

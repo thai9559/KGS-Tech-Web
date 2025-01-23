@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
 import { Editor } from "@tinymce/tinymce-react";
 import { decodeToken } from "../../../utils/decodeToken";
+import { useGetActivityLogsQuery } from "../../../redux/api/activityLogApi";
 import GooglePreview from "./GooglePreview";
 import {
   useCreateBlogMutation,
@@ -29,6 +30,7 @@ const { Option } = Select;
 const CreateBlog = () => {
   const { t } = useTranslation();
   const [createBlog] = useCreateBlogMutation();
+  const { refetch } = useGetActivityLogsQuery();
   const [uploadImage] = useUploadImageMutation();
   const [content, setContent] = useState("");
   const [thumbnail_image, setThumbnail_image] = useState(null);
@@ -115,6 +117,7 @@ const CreateBlog = () => {
 
       await createBlog(payload).unwrap();
       message.success("Tạo bài viết thành công!");
+      refetch();
       navigate("/admin/bloglist");
     } catch (error) {
       const errorMessage =
@@ -142,10 +145,10 @@ const CreateBlog = () => {
     <Layout style={{ minHeight: "100vh" }}>
       <Header
         style={{
-          background: "#f5f5f5",
+          background: "#fff",
           color: "#fff",
           padding: "10px 20px",
-          fontSize: "18px",
+          fontSize: "22px",
         }}
       >
         <h1 className="text-black font-notoSansJP font-bold">

@@ -76,17 +76,35 @@ Route::middleware([])->group(function () {
 });
 
 
+// Route::middleware([])->group(function () {
+//     Route::get('/blogs', [BlogController::class, 'index']); // Lấy danh sách bài viết
+//     Route::post('/blogs', [BlogController::class, 'store']); // Tạo bài viết mới
+//     Route::get('/blogs/{id}', [BlogController::class, 'show']); // Lấy thông tin chi tiết bài viết
+//     // Route::put('/blogs/{id}', [BlogController::class, 'update']); // Cập nhật bài viết
+//     Route::delete('/blogs/{id}', [BlogController::class, 'destroy']); // Xóa bài viết
+//     Route::post('/upload-image', [BlogController::class, 'uploadImage']);
+//     Route::put('/blogs/{id}/visibility', [BlogController::class, 'updateVisibility']);
+// });
+// // Route::put('/blogs/{id}', [BlogController::class, 'update'])->middleware('auth:api');; // Cập nhật bài viết
+// Route::put('/blogs/{id}', [BlogController::class, 'update'])->middleware('auth:api');
+
+
 Route::middleware([])->group(function () {
     Route::get('/blogs', [BlogController::class, 'index']); // Lấy danh sách bài viết
     Route::post('/blogs', [BlogController::class, 'store']); // Tạo bài viết mới
     Route::get('/blogs/{id}', [BlogController::class, 'show']); // Lấy thông tin chi tiết bài viết
-    Route::put('/blogs/{id}', [BlogController::class, 'update']); // Cập nhật bài viết
-    Route::delete('/blogs/{id}', [BlogController::class, 'destroy']); // Xóa bài viết
-    Route::post('/upload-image', [BlogController::class, 'uploadImage']);
-    Route::put('/blogs/{id}/visibility', [BlogController::class, 'updateVisibility']);
-
+    Route::post('/upload-image', [BlogController::class, 'uploadImage']); // Upload hình ảnh
+    Route::delete('/blogs/{id}', [BlogController::class, 'destroy']); 
+    // Route::put('/blogs/{id}/visibility', [BlogController::class, 'updateVisibility']); 
 });
-    Route::middleware([])->group(function () {
+Route::get('/login', function () {
+    return response()->json(['error' => 'Unauthenticated'], 401);
+})->name('login');
+Route::middleware('auth:api')->put('/blogs/{id}', [BlogController::class, 'update']);
+Route::put('/blogs/{id}/visibility', [BlogController::class, 'updateVisibility'])->middleware('auth:api');
+
+
+Route::middleware([])->group(function () {
     Route::get('/tags', [TagController::class, 'index']);
     Route::post('/tags', [TagController::class, 'store']);
     Route::put('/tags/{id}', [TagController::class, 'update']);

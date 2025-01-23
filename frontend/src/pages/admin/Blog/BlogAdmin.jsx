@@ -9,17 +9,18 @@ import {
 } from "../../../redux/api/blogApi";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { CREATEBLOG } from "../../../utils/config";
-
+import { useGetActivityLogsQuery } from "../../../redux/api/activityLogApi";
 const BlogTable = () => {
   const { t } = useTranslation(); // Initialize translation
   const { data: blogsData, isLoading } = useGetBlogsQuery();
   const [deleteBlog] = useDeleteBlogMutation();
   const [updateVisibility] = useUpdateVisibilityMutation();
-
+  const { refetch } = useGetActivityLogsQuery();
   const handleDelete = async (id) => {
     try {
       await deleteBlog(id).unwrap();
       message.success(t("blog_table.messages.delete_success"));
+      refetch();
     } catch (error) {
       message.error(t("blog_table.messages.delete_fail"));
     }
@@ -32,6 +33,7 @@ const BlogTable = () => {
         is_visible: isVisible,
       }).unwrap();
       message.success(response.message);
+      refetch();
     } catch (error) {
       console.error(error);
       message.error(t("blog_table.messages.update_visibility_fail"));

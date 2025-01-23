@@ -25,12 +25,13 @@ import FormItem from "antd/es/form/FormItem";
 import { useTranslation } from "react-i18next";
 const { Header, Content, Footer } = Layout;
 const { Option } = Select;
-
+import { useGetActivityLogsQuery } from "../../../redux/api/activityLogApi";
 const EditBlog = () => {
   const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const { data: blog, isLoading, isError } = useGetBlogByIdQuery(id);
+  const { refetch } = useGetActivityLogsQuery();
   const [updateBlog] = useUpdateBlogMutation();
   const [form] = Form.useForm();
   const [content, setContent] = useState("");
@@ -82,9 +83,10 @@ const EditBlog = () => {
 
       await updateBlog({ id, ...payload }).unwrap();
       message.success(t("edit_blog.messages.success")); // Dùng i18n để dịch
+      refetch();
       navigate("/admin/bloglist");
     } catch (error) {
-      console.error(t("edit_blog.messages.error"), error); // Thông báo lỗi đã được dịch
+      console.error(t("edit_blog.messages.error"), error);
       message.error(t("edit_blog.messages.error"));
     }
   };
@@ -101,13 +103,13 @@ const EditBlog = () => {
       const data = await response.json();
 
       if (data.success) {
-        message.success(t("edit_blog.form.fields.thumbnail_image.success")); // Dùng i18n để dịch
+        message.success(t("edit_blog.form.fields.thumbnail_image.success"));
         setThumbnailImage(data.location);
       } else {
-        message.error(t("edit_blog.form.fields.thumbnail_image.error")); // Dùng i18n để dịch
+        message.error(t("edit_blog.form.fields.thumbnail_image.error"));
       }
     } catch (error) {
-      console.error(t("edit_blog.form.fields.thumbnail_image.error"), error); // Log lỗi đã được dịch
+      console.error(t("edit_blog.form.fields.thumbnail_image.error"), error);
       message.error(t("edit_blog.form.fields.thumbnail_image.error"));
     }
   };
@@ -128,10 +130,10 @@ const EditBlog = () => {
     <Layout style={{ minHeight: "100vh" }}>
       <Header
         style={{
-          background: "#f5f5f5",
+          background: "#fff",
           color: "#fff",
           padding: "10px 20px",
-          fontSize: "18px",
+          fontSize: "22px",
         }}
       >
         <h1 className="text-black font-notoSansJP font-bold">

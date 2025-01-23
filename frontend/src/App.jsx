@@ -106,7 +106,7 @@ function App() {
 
               {/* Users Management */}
               <Route
-                path="users"
+                path="userlist"
                 element={
                   <PrivateRoute requiredPermissions={["Users"]}>
                     <UserManagement />
