@@ -76,14 +76,54 @@ const UserManagement = () => {
   };
 
   // Save user (add or edit)
+  // const handleSave = async () => {
+  //   try {
+  //     const values = form.getFieldsValue();
+  //     if (isEditing) {
+  //       const updateData = { id: currentUser.id, ...values };
+  //       if (!values.password) delete updateData.password;
+
+  //       await updateUser(updateData).unwrap();
+  //       if (values.permissions?.length) {
+  //         await assignPermissions({
+  //           user_id: currentUser.id,
+  //           permission_ids: values.permissions,
+  //         });
+  //       }
+
+  //       message.success(t("userAdmin.updateSuccess"));
+  //       refetching();
+  //     } else {
+  //       if (!values.password) {
+  //         message.error(t("userAdmin.formErrors.passwordRequired"));
+  //         return;
+  //       }
+
+  //       await createUser(values).unwrap();
+  //       message.success(t("userAdmin.createSuccess"));
+  //       refetching();
+  //     }
+
+  //     closeModal();
+  //     refetch();
+  //   } catch (error) {
+  //     console.error(error);
+  //     message.error(t("error"));
+  //   }
+  // };
   const handleSave = async () => {
     try {
       const values = form.getFieldsValue();
+
+      // Phân biệt giữa create và update
       if (isEditing) {
         const updateData = { id: currentUser.id, ...values };
         if (!values.password) delete updateData.password;
 
+        // Gửi request cập nhật
         await updateUser(updateData).unwrap();
+
+        // Gán quyền nếu có
         if (values.permissions?.length) {
           await assignPermissions({
             user_id: currentUser.id,
@@ -91,25 +131,47 @@ const UserManagement = () => {
           });
         }
 
+        // Hiển thị thông báo thành công
         message.success(t("userAdmin.updateSuccess"));
         refetching();
       } else {
+        // Kiểm tra password khi tạo mới
         if (!values.password) {
           message.error(t("userAdmin.formErrors.passwordRequired"));
           return;
         }
 
+        // Gửi request tạo mới
         await createUser(values).unwrap();
+
+        // Hiển thị thông báo thành công
         message.success(t("userAdmin.createSuccess"));
         refetching();
       }
 
+      // Đóng modal và làm mới dữ liệu
       closeModal();
       refetch();
     } catch (error) {
-      console.error(error);
+      // Xử lý lỗi từ BE
+      handleErrors(error);
+    }
+  };
+
+  // Hàm xử lý lỗi
+  const handleErrors = (error) => {
+    if (error?.data?.duplicate_email) {
+      // Lỗi trùng email
+      message.error(t("userAdmin.emailExists"));
+    } else if (error?.data?.errors) {
+      // Các lỗi validate khác
+      const errors = Object.values(error.data.errors).flat();
+      errors.forEach((err) => message.error(err));
+    } else {
+      // Lỗi không xác định
       message.error(t("error"));
     }
+    console.error(error);
   };
 
   // Delete user

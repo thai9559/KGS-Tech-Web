@@ -311,6 +311,7 @@
     "active": "アクティブ",
     "inactive": "非アクティブ",
     "resetFilters": "フィルタをリセット",
+    "emailExists": "このメールアドレスはすでに登録されています。別のメールアドレスを使用してください。",
     "formErrors": {
       "nameRequired": "名前を入力してください！",
       "emailRequired": "メールアドレスを入力してください！",

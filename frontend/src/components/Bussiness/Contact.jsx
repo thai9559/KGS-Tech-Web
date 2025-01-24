@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useCreateFeedbackMutation } from "../../redux/api/feedbackApi";
+import { message } from "antd"; // Import message từ Ant Design
 
 function Contact() {
   const { t } = useTranslation();
@@ -10,8 +12,7 @@ function Contact() {
     content: "",
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [createFeedback, { isLoading }] = useCreateFeedbackMutation(); // Gọi API
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,36 +22,49 @@ function Contact() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation
+    // Kiểm tra dữ liệu đầu vào
     if (
       !formData.email ||
-      !formData.subject ||
+      !formData.content ||
       (!formData.subjectOther && formData.subject === "other") ||
-      !formData.content
+      (!formData.subject && formData.subject !== "other")
     ) {
-      setErrorMessage(t("BusinessPage.contact.errorMessage"));
-      setSuccessMessage("");
-    } else {
-      setErrorMessage("");
-      setSuccessMessage(t("BusinessPage.contact.successMessage"));
+      message.error(t("BusinessPage.contact.errorMessage")); // Thông báo lỗi
+      return;
+    }
 
-      // Reset form data after successful submission
+    try {
+      // Chuẩn bị dữ liệu gửi API
+      const feedbackData = {
+        email: formData.email,
+        subject:
+          formData.subject === "other"
+            ? formData.subjectOther
+            : formData.subject,
+        content: formData.content,
+      };
+
+      // Gửi API
+      await createFeedback(feedbackData).unwrap();
+
+      // Thông báo thành công
+      message.success(t("BusinessPage.contact.successMessage"));
+
+      // Reset form
       setFormData({
         email: "",
         subject: "",
         subjectOther: "",
         content: "",
       });
-
-      // Hide the success message after 3 seconds
-      setTimeout(() => {
-        setSuccessMessage("");
-      }, 3000);
-
-      // Add form submission logic here (e.g., send to an API or email)
+    } catch (error) {
+      // Thông báo lỗi từ API
+      message.error(
+        error?.data?.message || t("BusinessPage.contact.errorOccurred")
+      );
     }
   };
 
@@ -178,18 +192,14 @@ function Contact() {
               ></textarea>
             </div>
 
-            {errorMessage && (
-              <p className="text-red-500 text-lg">{errorMessage}</p>
-            )}
-            {successMessage && (
-              <p className="text-green-500 text-lg">{successMessage}</p>
-            )}
-
             <button
               type="submit"
               className="w-full bg-[#1ea0ff] text-white py-3 px-8 rounded-lg hover:bg-blue-700 transition duration-300 text-lg"
+              disabled={isLoading}
             >
-              {t("BusinessPage.contact.submit")}
+              {isLoading
+                ? t("BusinessPage.contact.submitting")
+                : t("BusinessPage.contact.submit")}
             </button>
           </form>
         </div>

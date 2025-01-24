@@ -1,18 +1,19 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { Input, Select, Button, Spin } from "antd";
 import { SearchOutlined, ReloadOutlined } from "@ant-design/icons";
-import moment from "moment";
 import { useTranslation } from "react-i18next";
+import { useGetTagsQuery } from "../../redux/api/TagApi";
+import moment from "moment";
 
 // Lazy load components
 const BlogList = React.lazy(() => import("./BlogList"));
 const SuggestedBlogs = React.lazy(() => import("./SuggestedBlogs"));
-const TagList = React.lazy(() => import("./TagList")); // TagList component
+const TagList = React.lazy(() => import("./TagList"));
 
 const { Option } = Select;
 
 const BlogPage = ({ blogs, suggestedBlogs }) => {
-  const { t } = useTranslation(); // Lấy hàm dịch từ i18n
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -21,35 +22,29 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
   const [isLoading, setIsLoading] = useState(false);
   const blogsPerPage = 8;
 
-  // Lắng nghe sự thay đổi của hash trong URL và cập nhật searchTerm
+  // Fetch tags from API
+  const { data: tagsData, isLoading: isTagsLoading } = useGetTagsQuery();
+
+  // Extract tag names
+  const tags = Array.isArray(tagsData?.data)
+    ? tagsData.data.map((tag) => tag.name)
+    : [];
+
   useEffect(() => {
     const hash = window.location.hash.replace("#", "");
     if (hash) {
-      setSearchTerm(hash); // Nếu có hash, cập nhật searchTerm
+      setSearchTerm(hash);
     }
-  }, []); // Chỉ chạy 1 lần khi component mount
+  }, []);
 
-  // Handle search term
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
+  const handleSearch = (e) => setSearchTerm(e.target.value);
+
+  const handleTagClick = (tag) => {
+    const tagWithoutHash = tag.replace("#", "").trim();
+    setSearchTerm(tagWithoutHash);
+    window.location.hash = tag;
   };
 
-  // Handle category change
-  const handleCategoryChange = (value) => {
-    setSelectedCategory(value);
-  };
-
-  // Handle date change
-  const handleDateChange = (value) => {
-    setSelectedDate(value);
-  };
-
-  // Handle sort change
-  const handleSortChange = (value) => {
-    setSortOrder(value);
-  };
-
-  // Reset all filters
   const handleResetFilters = () => {
     setSearchTerm("");
     setSelectedCategory(null);
@@ -57,14 +52,6 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
     setSortOrder("asc");
   };
 
-  // Handle tag click (update search term and URL)
-  const handleTagClick = (tag) => {
-    const tagWithoutHash = tag.replace("#", "").trim();
-    setSearchTerm(tagWithoutHash);
-    window.location.hash = tag;
-  };
-
-  // Filtering the blogs
   const filteredBlogs = blogs.filter((blog) => {
     const isTitleMatch = blog.title
       .toLowerCase()
@@ -80,7 +67,6 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
     return isTitleMatch && isCategoryMatch && isDateMatch;
   });
 
-  // Sorting blogs by date
   const sortedBlogs = filteredBlogs.sort((a, b) => {
     const dateA = moment(a.date);
     const dateB = moment(b.date);
@@ -93,36 +79,20 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
       : 1;
   });
 
-  // Pagination
   const indexOfLastBlog = currentPage * blogsPerPage;
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
   const currentBlogs = sortedBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
   const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
 
-  // Handling page change
   const handlePageChange = (page) => {
-    setIsLoading(true); // Set loading to true
+    setIsLoading(true);
     setCurrentPage(page);
-    const scrollOffset = window.innerWidth < 768 ? 200 : 0; // Adjust scroll offset for mobile
-    window.scrollTo({ top: scrollOffset, behavior: "smooth" }); // Smooth scroll to adjusted position
-
-    // Simulate an API call delay or fetching data (for demonstration purposes)
+    const scrollOffset = window.innerWidth < 768 ? 200 : 0;
+    window.scrollTo({ top: scrollOffset, behavior: "smooth" });
     setTimeout(() => {
-      setIsLoading(false); // Set loading to false after loading
-    }, 500); // Simulated loading delay
+      setIsLoading(false);
+    }, 500);
   };
-
-  const tags = [
-    "#React",
-    "#Tailwind",
-    "#PHP",
-    "#AntDesign",
-    "#Redux",
-    "#TypeScript",
-    "#GraphQL",
-    "#Node.js",
-    "#Express",
-  ];
 
   return (
     <div className="container mx-auto p-6 scroll-smooth">
@@ -136,13 +106,14 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
           className="w-full h-10 py-2 text-base"
         />
       </div>
-      {/* Filters and sorting */}
+
+      {/* Filters */}
       <div className="mb-6 flex flex-col lg:flex-row items-center justify-between w-full lg:w-3/4">
         <div className="flex flex-col lg:flex-row w-full lg:w-3/4 mb-4 lg:mb-0">
           <Select
             placeholder={t("blogPage.filter.category")}
             value={selectedCategory}
-            onChange={handleCategoryChange}
+            onChange={(value) => setSelectedCategory(value)}
             className="w-full lg:w-1/4 mr-0 lg:mr-5 mb-4 lg:mb-0"
           >
             <Option value="react">{t("blogPage.filter.react")}</Option>
@@ -152,7 +123,7 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
           <Select
             placeholder={t("blogPage.filter.time")}
             value={selectedDate}
-            onChange={handleDateChange}
+            onChange={(value) => setSelectedDate(value)}
             className="w-full lg:w-1/4 mb-4 lg:mb-0"
           >
             <Option value="1">{t("blogPage.filter.1month")}</Option>
@@ -166,7 +137,7 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
           <Select
             placeholder={t("blogPage.filter.sort")}
             value={sortOrder}
-            onChange={handleSortChange}
+            onChange={(value) => setSortOrder(value)}
             className="w-full lg:w-1/2 mr-0 lg:mr-5 mb-4 lg:mb-0"
           >
             <Option value="asc">{t("blogPage.filter.newest")}</Option>
@@ -180,85 +151,48 @@ const BlogPage = ({ blogs, suggestedBlogs }) => {
           />
         </div>
       </div>
-      <div className="lg:hidden mb-6">
-        <Suspense fallback={<Spin size="large" />}>
-          <TagList tags={tags} onTagClick={handleTagClick} />
-        </Suspense>
-      </div>
+
+      {/* Blogs */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <div className="lg:col-span-3">
           <h2 className="text-2xl text-black font-bold mb-6">
             {t("blogList.title")}
           </h2>
-
-          {/* Show loading spinner if data is loading */}
           {isLoading ? (
             <div className="flex justify-center items-center h-64">
               <Spin size="large" />
             </div>
           ) : (
             <Suspense fallback={<Spin size="large" />}>
-              <BlogList blogs={currentBlogs} />
+              <BlogList blogs={blogs} />
             </Suspense>
           )}
         </div>
 
+        {/* Suggested blogs */}
         <div>
           <Suspense fallback={<Spin size="large" />}>
             <SuggestedBlogs blogs={suggestedBlogs} />
           </Suspense>
-
-          {/* TagList - Visible on PC, hidden on mobile */}
-          <div className="hidden lg:block mt-6">
+          <div className="lg:hidden mb-6">
             <Suspense fallback={<Spin size="large" />}>
-              <TagList tags={tags} onTagClick={handleTagClick} />
+              {isTagsLoading ? (
+                <Spin size="large" />
+              ) : (
+                <TagList tags={tags} onTagClick={handleTagClick} />
+              )}
             </Suspense>
           </div>
-        </div>
-      </div>
-      {/* Pagination */}
-      <div className="flex justify-center mt-6 mb-12">
-        <div className="flex items-center space-x-2">
-          {/* Previous Button */}
-          <Button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className={`px-4 py-2 rounded-full ${
-              currentPage === 1
-                ? "bg-gray-200 text-gray-500"
-                : "bg-blue-500 text-white"
-            }`}
-          >
-            {t("blogPage.previous")}
-          </Button>
 
-          {/* Page Number Buttons */}
-          {[...Array(totalPages)].map((_, index) => (
-            <Button
-              key={index + 1}
-              onClick={() => handlePageChange(index + 1)}
-              className={`w-8 h-8 flex items-center justify-center rounded-full text-sm ${
-                currentPage === index + 1
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200"
-              }`}
-            >
-              {index + 1}
-            </Button>
-          ))}
-
-          {/* Next Button */}
-          <Button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className={`px-4 py-2 rounded-full ${
-              currentPage === totalPages
-                ? "bg-gray-200 text-gray-500"
-                : "bg-blue-500 text-white"
-            }`}
-          >
-            {t("blogPage.next")}
-          </Button>
+          <div className="hidden lg:block mt-6">
+            <Suspense fallback={<Spin size="large" />}>
+              {isTagsLoading ? (
+                <Spin size="large" />
+              ) : (
+                <TagList tags={tags} onTagClick={handleTagClick} />
+              )}
+            </Suspense>
+          </div>
         </div>
       </div>
     </div>

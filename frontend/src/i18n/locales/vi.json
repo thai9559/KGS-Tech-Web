@@ -318,6 +318,7 @@
     "filterByStatus": "Lọc theo trạng thái",
     "active": "Hoạt động",
     "inactive": "Không hoạt động",
+    "emailExists": "Email đã tồn tại.Vui lòng nhập email khác.",
     "formErrors": {
       "nameRequired": "Vui lòng nhập tên!",
       "emailRequired": "Vui lòng nhập email!",

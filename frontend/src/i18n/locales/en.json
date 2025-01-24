@@ -319,9 +319,11 @@
     "active": "Active",
     "inactive": "Inactive",
     "resetFilters": "Reset Filters",
+    "emailExists": "Email already exists. Please use another email.",
     "formErrors": {
       "nameRequired": "Please enter the name!",
       "emailRequired": "Please enter the email!",
+      "phoneRequired": "Please enter the phone!",
       "emailInvalid": "Invalid email!",
       "passwordRequired": "Please enter the password!",
       "passwordMin": "Password must be at least 6 characters!",

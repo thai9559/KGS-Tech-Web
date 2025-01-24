@@ -27,6 +27,7 @@ const RoleManagement = () => {
   const [deleteRole] = useDeleteRoleMutation();
 
   const roles = Array.isArray(rolesData?.data) ? rolesData.data : [];
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [currentRole, setCurrentRole] = useState(null);
@@ -93,23 +94,8 @@ const RoleManagement = () => {
         </Button>
       </div>
 
-      {/* Legend Section */}
-      <div className="block md:hidden mb-4">
-        <h2 className="text-lg font-bold mb-2">Legend</h2>
-        <div className="flex gap-4">
-          <div className="flex items-center gap-2">
-            <span className="w-4 h-4 rounded-full bg-green-500"></span>
-            <span>{t("roleAdmin.legendName")}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="w-4 h-4 rounded-full bg-blue-500"></span>
-            <span>{t("roleAdmin.legendDescription")}</span>
-          </div>
-        </div>
-      </div>
-
       {/* Card Layout for Mobile */}
-      <div className="md:hidden grid grid-cols-1 gap-4">
+      {/* <div className="md:hidden grid grid-cols-1 gap-4">
         {roles.map((role) => (
           <RoleCard
             key={role.id}
@@ -120,6 +106,20 @@ const RoleManagement = () => {
             setSwipedCard={setSwipedCard}
           />
         ))}
+      </div> */}
+      <div className="md:hidden grid grid-cols-1 gap-4">
+        {Array.isArray(roles) ? (
+          roles.map((role) => (
+            <RoleCard
+              key={role.id}
+              role={role}
+              onEdit={openModal}
+              onDelete={handleDelete}
+            />
+          ))
+        ) : (
+          <p>Không có vai trò nào để hiển thị.</p>
+        )}
       </div>
 
       {/* Table for PC */}
