@@ -5,12 +5,13 @@ import {
   useUpdateVisibilityMutation,
   useGetBlogsQuery,
 } from "../../../redux/api/blogApi";
+import { useGetActivityLogsQuery } from "../../../redux/api/activityLogApi";
 
 const BlogVisibilitySwitch = ({ isVisible, record }) => {
   const { t } = useTranslation();
   const [updateVisibility] = useUpdateVisibilityMutation();
   const { refetch } = useGetBlogsQuery();
-
+  const { refetch: refetching } = useGetActivityLogsQuery();
   const handleVisibilityToggle = async (id, isVisible) => {
     try {
       const response = await updateVisibility({
@@ -19,6 +20,7 @@ const BlogVisibilitySwitch = ({ isVisible, record }) => {
       }).unwrap();
       message.success(response.message);
       refetch();
+      refetching();
     } catch (error) {
       console.error(error);
       message.error(t("blog_table.messages.update_visibility_fail"));

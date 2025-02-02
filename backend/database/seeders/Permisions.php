@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class permisions extends Seeder
+class Permisions extends Seeder
 {
     /**
      * Run the database seeds.

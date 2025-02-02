@@ -173,6 +173,31 @@ const Dashboard = () => {
             </Card>
           </Col>
         )}
+        {hasPermission(["Recruiment"]) && (
+          <Col xs={24} md={12} lg={8}>
+            <Card
+              style={cardStyles}
+              hoverable
+              bodyStyle={{
+                backgroundColor: "#fff3e0",
+                padding: "20px",
+                border: "none",
+              }}
+            >
+              <CommentOutlined
+                style={{
+                  fontSize: "48px",
+                  color: "#ff6f00",
+                  marginBottom: "16px",
+                }}
+              />
+              <Title level={4}>{t("recruitmentManagement")}</Title>
+              <Button type="link">
+                <Link to="/admin/recruiment">{t("recruitment")}</Link>
+              </Button>
+            </Card>
+          </Col>
+        )}
       </Row>
     </div>
   );

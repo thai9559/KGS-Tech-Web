@@ -82,11 +82,6 @@ const BlogList = ({ blogs }) => {
     navigate(`/blog/${id}`);
   };
 
-  const handleTagClick = (tag) => {
-    // Handle tag click (e.g., navigate to the tag filter page or update the search)
-    console.log(`Tag clicked: ${tag}`);
-  };
-
   const parseTags = (tags) => {
     // Check if tags is a string that needs to be parsed into an array
     if (typeof tags === "string") {
@@ -143,24 +138,6 @@ const BlogList = ({ blogs }) => {
             <p className="text-sm text-gray-500 mb-4">
               {moment(blog.created_at).format("DD/MM/YYYY")} {/* Format date */}
             </p>
-
-            {/* Tags as buttons */}
-            <div className="mb-4">
-              {parseTags(blog.tags).map((tag, idx) => (
-                <Button
-                  key={idx}
-                  type="default"
-                  className="mr-2 mb-2 px-3 py-1 text-sm rounded-full border hover:bg-blue-500 hover:text-white"
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent card click
-                    handleTagClick(tag);
-                  }}
-                >
-                  {tag}
-                </Button>
-              ))}
-            </div>
-
             {/* Description */}
             <p className="text-sm text-gray-700 mb-4 line-clamp-2">
               {blog.meta_description ||

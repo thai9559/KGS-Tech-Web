@@ -11,7 +11,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\ActivityLogController;
-
+use App\Http\Controllers\RecruitmentPageController;
 
 Route::middleware([])->group(function () {
     Route::get('/users', [UserController::class, 'index']); // Danh sách người dùng
@@ -23,10 +23,11 @@ Route::middleware([])->group(function () {
     // Route::post('/register', [UserController::class, 'register']);
     Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
 });
-    Route::post('/register', [UserController::class, 'register'])->middleware('auth:api');
-    Route::put('/users/{id}', [UserController::class, 'update'])->middleware('auth:api');
+    // Route::post('/register', [UserController::class, 'register'])->middleware('auth:api');
+    Route::post('/register', [UserController::class, 'register']);
+    // Route::put('/users/{id}', [UserController::class, 'update'])->middleware('auth:api');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->middleware('auth:api');
-
+    Route::put('/users/{id}', [UserController::class, 'update']);
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return response()->json([
@@ -122,4 +123,11 @@ Route::get('/activity-logs', [ActivityLogController::class, 'index']); // Lấy 
 Route::get('/activity-logs/{id}', [ActivityLogController::class, 'show']); // Xem chi tiết log
 Route::delete('/activity-logs/{id}', [ActivityLogController::class, 'destroy']); // Xóa log
 
+});
+
+Route::middleware([])->group(function () {
+Route::get('/recruitments', [RecruitmentPageController::class, 'index']);
+Route::post('/recruitments', [RecruitmentPageController::class, 'store']);
+Route::get('/recruitments/{id}', [RecruitmentPageController::class, 'show']);
+Route::delete('/recruitments/{id}', [RecruitmentPageController::class, 'destroy']);
 });

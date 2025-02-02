@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+
 const Benefit = () => {
   const { t } = useTranslation();
 
@@ -23,136 +24,80 @@ const Benefit = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center  bg-white overflow-hidden">
-      <div className="w-full mx-auto">
-        <div>
-          {/* PC Layout */}
-          <div className="hidden lg:block">
-            {events.map((event, index) => (
-              <div className="relative w-full h-[100vh] flex flex-col bg-white overflow-hidden mb-12">
-                <div
-                  className="w-full h-full bg-cover bg-center"
-                  style={{
-                    backgroundImage: `url('${event.image}')`,
-                  }}
-                >
-                  <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center space-y-4 px-4 bg-black bg-opacity-30 z-10">
-                    <div className="bg-white p-4 flex items-center flex-col justify-center shadow-md w-full max-w-4xl">
-                      <h3 className="font-bold font-notoSansJP text-orange-700 text-3xl">
-                        {event.year1}
-                      </h3>
-                      <h4 className="font-semibold text-xl text-gray-700">
-                        {event.title1}
-                      </h4>
-                      <p className="font-notoSansJP text-center text-lg text-gray-700">
-                        {event.description1}
-                      </p>
-                    </div>
+    <div className="flex flex-col items-center bg-gradient-to-b from-[#f3f4f6] to-[#e2e8f0] overflow-visible">
+      <div className="w-full mx-auto px-4 md:px-8">
+        {events.map((event, index) => (
+          <div
+            key={index}
+            className="relative w-full min-h-screen flex flex-col bg-white overflow-hidden mb-8 rounded-lg shadow-lg"
+          >
+            {/* Background image */}
+            <div
+              className="w-full h-full bg-cover bg-center"
+              style={{
+                backgroundImage: `url('${event.image}')`,
+              }}
+            >
+              {/* Overlay */}
+              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-[#00000066] via-transparent to-[#00000066] opacity-50 z-10"></div>
 
-                    <div className="bg-white p-4 flex items-center flex-col shadow-md w-full max-w-4xl">
-                      <h3 className="font-bold text-3xl text-orange-700">
-                        {event.year2}
-                      </h3>
-                      <h4 className="font-semibold text-xl text-gray-700">
-                        {event.title2}
-                      </h4>
-                      <p className="font-notoSansJP text-center text-lg text-gray-700">
-                        {event.description2}
-                      </p>
-                    </div>
+              {/* Content */}
+              <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center space-y-8 px-4 md:px-12 z-20">
+                {/* Block 1 */}
+                <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm md:max-w-lg lg:max-w-4xl mx-auto">
+                  <h3 className="font-bold text-4xl text-[#4a90e2] text-center">
+                    {event.year1}
+                  </h3>
+                  <h4 className="font-semibold text-lg md:text-xl text-gray-800 text-center">
+                    {event.title1}
+                  </h4>
+                  <p className="text-center text-sm md:text-lg text-gray-600">
+                    {event.description1}
+                  </p>
+                </div>
 
-                    <div className="bg-white p-4 flex items-center flex-col shadow-md w-full max-w-4xl">
-                      <h3 className="font-bold text-3xl text-orange-700">
-                        {event.year3}
-                      </h3>
-                      <h4 className="font-semibold text-xl text-gray-700">
-                        {event.title3}
-                      </h4>
-                      <p className="font-notoSansJP text-center text-lg text-gray-700">
-                        {event.description3}
-                      </p>
-                    </div>
+                {/* Block 2 */}
+                <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm md:max-w-lg lg:max-w-4xl mx-auto">
+                  <h3 className="font-bold text-4xl text-[#4a90e2] text-center">
+                    {event.year2}
+                  </h3>
+                  <h4 className="font-semibold text-lg md:text-xl text-gray-800 text-center">
+                    {event.title2}
+                  </h4>
+                  <p className="text-center text-sm md:text-lg text-gray-600">
+                    {event.description2}
+                  </p>
+                </div>
 
-                    <div className="bg-white p-4 flex items-center flex-col shadow-md w-full max-w-4xl">
-                      <h3 className="font-bold text-3xl text-orange-700">
-                        {event.year4}
-                      </h3>
-                      <h4 className="font-semibold text-xl text-gray-700">
-                        {event.title4}
-                      </h4>
-                      <p className="font-notoSansJP text-center text-lg text-gray-700">
-                        {event.description4}
-                      </p>
-                    </div>
-                  </div>
+                {/* Block 3 */}
+                <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm md:max-w-lg lg:max-w-4xl mx-auto">
+                  <h3 className="font-bold text-4xl text-[#4a90e2] text-center">
+                    {event.year3}
+                  </h3>
+                  <h4 className="font-semibold text-lg md:text-xl text-gray-800 text-center">
+                    {event.title3}
+                  </h4>
+                  <p className="text-center text-sm md:text-lg text-gray-600">
+                    {event.description3}
+                  </p>
+                </div>
+
+                {/* Block 4 */}
+                <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm md:max-w-lg lg:max-w-4xl mx-auto">
+                  <h3 className="font-bold text-4xl text-[#4a90e2] text-center">
+                    {event.year4}
+                  </h3>
+                  <h4 className="font-semibold text-lg md:text-xl text-gray-800 text-center">
+                    {event.title4}
+                  </h4>
+                  <p className="text-center text-sm md:text-lg text-gray-600">
+                    {event.description4}
+                  </p>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
-
-          {/* Mobile Layout */}
-          <div className="block lg:hidden">
-            {events.map((event, index) => (
-              <div className="relative w-full flex flex-col bg-white overflow-hidden mb-12">
-                <div className="w-full flex flex-col items-center space-y-4">
-                  <div
-                    className="w-full bg-cover bg-center h-64"
-                    style={{
-                      backgroundImage: `url('${event.image}')`,
-                    }}
-                  />
-                  <div className="bg-white p-4 flex items-center flex-col justify-center shadow-md w-full">
-                    <h3 className="font-bold font-notoSansJP text-orange-700 text-2xl">
-                      {event.year1}
-                    </h3>
-                    <h4 className="font-semibold text-xl text-gray-700">
-                      {event.title1}
-                    </h4>
-                    <p className="font-notoSansJP text-center text-lg text-gray-700">
-                      {event.description1}
-                    </p>
-                  </div>
-
-                  <div className="bg-white p-4 flex items-center flex-col shadow-md w-full">
-                    <h3 className="font-bold text-2xl text-orange-700">
-                      {event.year2}
-                    </h3>
-                    <h4 className="font-semibold text-xl text-gray-700">
-                      {event.title2}
-                    </h4>
-                    <p className="font-notoSansJP text-center text-lg text-gray-700">
-                      {event.description2}
-                    </p>
-                  </div>
-
-                  <div className="bg-white p-4 flex items-center flex-col shadow-md w-full">
-                    <h3 className="font-bold text-2xl text-orange-700">
-                      {event.year3}
-                    </h3>
-                    <h4 className="font-semibold text-xl text-gray-700">
-                      {event.title3}
-                    </h4>
-                    <p className="font-notoSansJP text-center text-lg text-gray-700">
-                      {event.description3}
-                    </p>
-                  </div>
-
-                  <div className="bg-white p-4 flex items-center flex-col shadow-md w-full">
-                    <h3 className="font-bold text-2xl text-orange-700">
-                      {event.year4}
-                    </h3>
-                    <h4 className="font-semibold text-xl text-gray-700">
-                      {event.title4}
-                    </h4>
-                    <p className="font-notoSansJP text-center text-lg text-gray-700">
-                      {event.description4}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

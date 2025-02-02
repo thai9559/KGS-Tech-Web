@@ -50,7 +50,7 @@ const BlogDetailPage = () => {
 
   return (
     <Layout>
-      <div className="flex blog justify-center items-center min-h-screen px-4 sm:px-6 lg:px-8">
+      <section className="flex blog justify-center items-center min-h-screen px-4 sm:px-6 lg:px-8">
         <div className="w-full p-4 sm:p-6 lg:p-8">
           {/* Back Button */}
           <div className="mb-6 flex justify-start">
@@ -101,7 +101,7 @@ const BlogDetailPage = () => {
             <RecommendBlog blogs={[]} />
           </div>
         </div>
-      </div>
+      </section>
     </Layout>
   );
 };

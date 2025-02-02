@@ -32,6 +32,9 @@ const NoAccess = lazy(() => import("./pages/admin/NoAccess"));
 const CreteBlog = lazy(() => import("./pages/admin/Blog/CreateBlog"));
 const EditBlog = lazy(() => import("./pages/admin/Blog/EditBlog"));
 const TagAdmin = lazy(() => import("./pages/admin/Blog/Tag/TagAdmin"));
+const RecruitmentManagement = lazy(() =>
+  import("./pages/admin/Recruitment/RecruitmentManagement")
+);
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -41,27 +44,34 @@ function App() {
   const privateRoutes = [
     "/admin",
     "/admin/dashboard",
-    "/admin/users",
+    "/admin/userlist",
     "/admin/users/roles",
     "/admin/company",
     "/admin/bloglist",
     "/admin/blog/categories",
     "/admin/feedback",
+    "/admin/recruiment",
   ];
+  const excludeLoadingRoutes = ["/blogs"];
 
   useEffect(() => {
-    // Nếu đường dẫn hiện tại thuộc PrivateRoute, không hiển thị loading
+    // Kiểm tra xem đường dẫn hiện tại có cần loading hay không
+    const isExcluded = excludeLoadingRoutes.some((route) =>
+      location.pathname.startsWith(route)
+    );
+
     const isPrivateRoute = privateRoutes.some((route) =>
       location.pathname.startsWith(route)
     );
 
-    if (isPrivateRoute) {
-      setLoading(false); // Không hiển thị loading
+    // Nếu là PrivateRoute hoặc đường dẫn trong excludeLoadingRoutes, không hiển thị loading
+    if (isPrivateRoute || isExcluded) {
+      setLoading(false);
     } else {
-      setLoading(true); // Hiển thị loading cho các trang khác
+      setLoading(true);
       const timeout = setTimeout(() => {
         setLoading(false);
-      }, 500); // Set thời gian loading nếu cần
+      }, 500); // Thời gian loading (nếu cần)
 
       return () => clearTimeout(timeout);
     }
@@ -116,7 +126,7 @@ function App() {
               <Route
                 path="users/roles"
                 element={
-                  <PrivateRoute requiredPermissions={["Roles"]}>
+                  <PrivateRoute requiredPermissions={["Users"]}>
                     <RoleAdmin />
                   </PrivateRoute>
                 }
@@ -182,6 +192,14 @@ function App() {
                 element={
                   <PrivateRoute requiredPermissions={["Feedback"]}>
                     <FeedbackAdmin />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="recruiment"
+                element={
+                  <PrivateRoute requiredPermissions={["Recruiment"]}>
+                    <RecruitmentManagement />
                   </PrivateRoute>
                 }
               />

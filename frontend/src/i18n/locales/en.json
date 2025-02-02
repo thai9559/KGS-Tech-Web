@@ -13,8 +13,11 @@
   "articles": "Articles",
   "categories": "Categories",
   "feedbackManagement": "Feedback Management",
-  "tagManagement": "Tag Management",
   "feedback": "Feedback",
+  "tagManagement": "Tag Management",
+  "recruitmentManagement": "Recruitment Management",
+  "recruitment": "Recruitment",
+
   "logout": "Logout",
   "manage": "Manage",
   "stats": {
@@ -250,6 +253,7 @@
     "account_management": "Account Management",
     "blog_management": "Blog Management",
     "feedback_management": "Feedback Management",
+    "recruitment_management": "Recruitment Management",
     "company_list": "Company infomation",
     "user_list": "User List",
     "role_list": "Role List",

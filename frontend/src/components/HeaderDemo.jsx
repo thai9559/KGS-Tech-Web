@@ -54,7 +54,7 @@ const HeaderDemo = ({ home, company, business, blog }) => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full flex justify-between items-center p-4 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full flex justify-between items-center p-6 z-50 transition-all duration-300 ${
         menuOpen
           ? "bg-white text-black shadow-md"
           : scrolled
@@ -81,9 +81,9 @@ const HeaderDemo = ({ home, company, business, blog }) => {
           menuOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
         } transition-all duration-300 ease-in-out z-50 lg:static lg:transform-none lg:translate-y-0 lg:opacity-100 lg:h-auto lg:flex-row lg:bg-transparent`}
       >
-        <ul className="flex flex-col lg:flex-row gap-8 cursor-pointer lg:w-auto">
+        <ul className="flex flex-col lg:flex-row  gap-8 cursor-pointer lg:w-auto">
           <li
-            className={`relative hover:text-gray-400 font-normal  font-notoSansJP text-lg text-center z-50 ${
+            className={`relative hover:text-gray-400  font-bold   font-notoSansJP text-lg text-center z-50 ${
               menuOpen || scrolled
                 ? isActive("/")
                   ? "text-black"
@@ -97,7 +97,7 @@ const HeaderDemo = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-normal  font-notoSansJP text-lg text-center z-50 ${
+            className={`relative hover:text-gray-400 font-bold   font-notoSansJP text-lg text-center z-50 ${
               menuOpen || scrolled
                 ? isActive("/company")
                   ? "text-black"
@@ -111,7 +111,7 @@ const HeaderDemo = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-normal font-notoSansJP text-lg text-center z-50 ${
+            className={`relative hover:text-gray-400 font-bold  font-notoSansJP text-lg text-center z-50 ${
               menuOpen || scrolled
                 ? isActive("/business")
                   ? "text-black"
@@ -125,7 +125,7 @@ const HeaderDemo = ({ home, company, business, blog }) => {
             )}
           </li>
           <li
-            className={`relative hover:text-gray-400 font-normal font-notoSansJP text-lg text-center z-50 ${
+            className={`relative hover:text-gray-400 font-bold  font-notoSansJP text-lg text-center z-50 ${
               menuOpen || scrolled
                 ? isActive("/blog")
                   ? "text-black"
@@ -151,19 +151,17 @@ const HeaderDemo = ({ home, company, business, blog }) => {
             : "bg-transparent text-white border-none"
         } order-last lg:order-none`}
       >
-        <option value="vi" className="bg-gray-800 text-white px-4 py-2">
+        <option value="vi" className="bg-white text-black p-4">
           Tiếng Việt
         </option>
-        <option value="en" className="bg-gray-800 text-white px-4 py-2">
+        <option value="en" className="bg-white text-black p-4">
           English
         </option>
-        <option value="ja" className="bg-gray-800 text-white px-4 py-2">
+        <option value="ja" className="bg-white text-black p-4">
           日本語
         </option>
       </select>
 
-      {/* Menu toggle for mobile */}
-      {/* Menu toggle for mobile */}
       <div className="lg:hidden z-50">
         <button
           onClick={toggleMenu}
