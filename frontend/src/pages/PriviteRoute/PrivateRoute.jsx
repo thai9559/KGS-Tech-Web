@@ -30,9 +30,16 @@ const PrivateRoute = ({ children, requiredPermissions = [] }) => {
   }
 
   // Kiểm tra quyền truy cập
-  const hasPermission = requiredPermissions.some((perm) =>
-    userPermissions.includes(perm)
-  );
+  // const hasPermission = requiredPermissions.some((perm) =>
+  //   userPermissions.includes(perm)
+  // );
+  const hasPermission = requiredPermissions.some((perm) => {
+    // Nếu yêu cầu quyền là "Roles", kiểm tra cả quyền "Users"
+    if (perm === "Roles") {
+      return userPermissions.includes("Users");
+    }
+    return userPermissions.includes(perm);
+  });
 
   // Nếu có quyền, hiển thị nội dung; nếu không, chuyển hướng đến "No Access"
   return hasPermission ? children : <Navigate to="/no-access" replace />;

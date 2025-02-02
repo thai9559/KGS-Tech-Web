@@ -17,23 +17,6 @@ function Business() {
   const location = useLocation();
   const [activeSection, setActiveSection] = useState("aboutUs");
 
-  const testimonials = [
-    {
-      quote: t("BusinessPage.whatClientsSay.testimony2"),
-      image:
-        "https://res.cloudinary.com/dtnuj2les/image/upload/v1736306406/medium-shot-smiley-colleagues-working-together-min_ahrn7i.jpg",
-      name: t("BusinessPage.whatClientsSay.name2"),
-      position: t("BusinessPage.whatClientsSay.position2"),
-    },
-    {
-      quote: t("BusinessPage.whatClientsSay.testimony1"),
-      image:
-        "https://res.cloudinary.com/dtnuj2les/image/upload/v1736306405/labor-union-members-working-together-min_gadspn.jpg",
-      name: t("BusinessPage.whatClientsSay.name1"),
-      position: t("BusinessPage.whatClientsSay.position1"),
-    },
-  ];
-
   const sections = [
     { id: "aboutUs", label: t("BusinessPage.aboutUs.title"), active: false },
     { id: "services", label: t("BusinessPage.services.title"), active: false },
@@ -119,22 +102,10 @@ function Business() {
           onSectionClick={handleSectionClick}
         />
         <div className=" py-6 px-4">
-          <div id="aboutUs" className="container">
-            <AboutUs
-              title={t("BusinessPage.aboutUs.title")}
-              description={t("BusinessPage.aboutUs.description")}
-              image="https://i.pinimg.com/736x/31/a4/9c/31a49cc7862d3d096852e91a0193a39c.jpg"
-            />
-          </div>
           <div id="services" className="container">
             <Service />
           </div>
-          <div id="testimonials" className="container">
-            <Testimonials
-              title={t("BusinessPage.whatClientsSay.title")}
-              testimonials={testimonials}
-            />
-          </div>
+
           <div id="contact" className="container">
             <Contact
               title={t("BusinessPage.contact.title")}

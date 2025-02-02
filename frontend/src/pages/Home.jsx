@@ -4,7 +4,7 @@ import LayoutHeader from "../components/LayoutHeader";
 import { Link } from "react-router-dom";
 import VerticalCarousel from "../components/Carousel";
 import ScrollToTop from "../components/ScrollToTop";
-
+import AboutUs from "../components/Bussiness/AboutUs";
 // Lazy load các component
 const CompanyStats = React.lazy(() =>
   import("../components/Home/CompanyStats")
@@ -14,16 +14,27 @@ const BlogSlider = React.lazy(() => import("../components/Home/BlogData"));
 const LogoGrid = React.lazy(() => import("../components/Company/LogoSlider"));
 const Message = React.lazy(() => import("../components/Home/message"));
 const ImageBanner = React.lazy(() => import("../components/Home/ImageBanner"));
+const Testimonials = React.lazy(() =>
+  import("../components/Home/Homepage/Testimonials")
+);
+const FeaturedServices = React.lazy(() =>
+  import("../components/Home/Homepage/FeaturedServices")
+);
+
+const CalltoAction = React.lazy(() =>
+  import("../components/Home/Homepage/CallToAction")
+);
 
 export default function Home() {
   const { t } = useTranslation();
 
   const sections = [
-    { id: "companyStats", label: "Company Stats", active: false },
+    { id: "aboutUs", label: "About Us", active: false },
     { id: "benefits", label: "Benefits", active: false },
     { id: "images", label: "Images", active: false },
     { id: "logos", label: "Logos", active: false },
-    { id: "message", label: "Message", active: false },
+    // { id: "message", label: "Message", active: false },
+    { id: "testimonials", label: "testimonials", active: false },
     { id: "blogSlider", label: "Blog Slider", active: false },
   ];
 
@@ -84,6 +95,8 @@ export default function Home() {
     "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/fpt-removebg-preview_dlhdq6.png",
     "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/hitachi-removebg-preview_geekow.png",
     "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/vng-removebg-preview_sokbcl.png",
+    "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/vng-removebg-preview_sokbcl.png",
+    "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/vng-removebg-preview_sokbcl.png",
   ];
 
   const title = t("message.title");
@@ -106,40 +119,42 @@ export default function Home() {
         onSectionClick={handleSectionClick}
       />
       <div className="flex flex-col overflow-hidden">
-        <div id="companyOverview">
-          <div className="bg-[#B6CBBD] p-4 h-[200px] flex flex-col justify-center items-center sm:hidden">
-            <h1 className="text-xl text-primary font-notoSansJP font-bold">
-              {t("banner.title")}
-            </h1>
-            <p className="text-sm text-gray-700 font-notoSansJP font-medium ">
-              {t("banner.slogan")}
-            </p>
-            <button className="mt-6 px-6 py-3 text-black font-notoSansJP font-medium rounded-lg border-2 border-white bg-transparent hover:text-white hover:bg-primary focus:outline-none">
-              <Link to="business/#services">{t("banner.description")}</Link>
-            </button>
-          </div>
-        </div>
-
         <Suspense fallback={<div>Loading...</div>}>
-          <div id="companyStats" className="container">
+          {/* <div id="companyStats" className="container">
             <h2 className="text-black text-3xl text-center font-notoSansJP font-semibold mt-10">
               {t("stats.ask")}
             </h2>
             <CompanyStats />
+          </div> */}
+          <div id="aboutUs">
+            <AboutUs
+              title={t("BusinessPage.aboutUs.title")}
+              description={t("BusinessPage.aboutUs.description")}
+              image="https://i.pinimg.com/736x/31/a4/9c/31a49cc7862d3d096852e91a0193a39c.jpg"
+            />
           </div>
-          <div id="benefits">
+          <div id="images">
+            <FeaturedServices />
+          </div>
+          {/* <div id="benefits">
             <Benefit />
-          </div>
-          <div id="images" className="bannerImage">
+          </div> */}
+          {/* <div id="images" className="bannerImage">
             <ImageBanner />
-          </div>
-          <div id="logos" className="container ">
+          </div> */}
+          <div id="logos" className=" ">
             <LogoGrid logos={logos} />
           </div>
-          <div id="message" className="bannerImage">
-            <Message slogan={slogan} title={title} message={message} />
+          <div id="testimonials" className="">
+            <Testimonials />
           </div>
-          <div id="blogSlider" className="container">
+          <div id="CalltoAction">
+            <CalltoAction />
+          </div>
+          {/* <div id="message" className="bannerImage">
+            <Message slogan={slogan} title={title} message={message} />
+          </div> */}
+          <div id="blogSlider" className="">
             <BlogSlider />
           </div>
         </Suspense>

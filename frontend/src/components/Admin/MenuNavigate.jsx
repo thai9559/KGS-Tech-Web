@@ -99,7 +99,7 @@ const MenuNavigate = () => {
         {
           key: "/admin/users/roles",
           label: <Link to="/admin/users/roles">{t("roles")}</Link>,
-          requiredPermissions: ["Roles"],
+          requiredPermissions: ["Users"],
         },
       ],
     },
@@ -136,6 +136,19 @@ const MenuNavigate = () => {
           key: "/admin/feedback",
           label: <Link to="/admin/feedback">{t("feedback")}</Link>,
           requiredPermissions: ["Feedback", "Full admin privileges"],
+        },
+      ],
+    },
+    {
+      key: "recruiment",
+      icon: <MessageOutlined />,
+      label: t("recruitmentManagement"),
+      requiredPermissions: ["Recruiment", "Full admin privileges"],
+      children: [
+        {
+          key: "/admin/recruiment",
+          label: <Link to="/admin/recruiment">{t("recruitment")}</Link>,
+          requiredPermissions: ["Recruiment", "Full admin privileges"],
         },
       ],
     },

@@ -3,6 +3,7 @@ import { blogApi } from "./api/blogApi";
 import { authApi } from "./api/authApi";
 import { userApi } from "./api/userApi";
 
+import { recruitmentApi } from "./api/recruitmentApi";
 import { companyApi } from "./api/companyApi";
 import blogReducer from "./slices/blogSlice";
 import { roleApi } from "./api/roleApi";
@@ -21,6 +22,7 @@ const store = configureStore({
     [roleApi.reducerPath]: roleApi.reducer,
     [tagApi.reducerPath]: tagApi.reducer,
     [activityLogApi.reducerPath]: activityLogApi.reducer,
+    [recruitmentApi.reducerPath]: recruitmentApi.reducer,
     blogs: blogReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -33,7 +35,8 @@ const store = configureStore({
       .concat(categoryApi.middleware)
       .concat(feedbackApi.middleware)
       .concat(activityLogApi.middleware)
-      .concat(tagApi.middleware),
+      .concat(tagApi.middleware)
+      .concat(recruitmentApi.middleware),
 });
 
 export default store;

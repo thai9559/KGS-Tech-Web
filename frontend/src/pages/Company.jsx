@@ -13,10 +13,14 @@ const Leadership = lazy(() => import("../components/Company/LeaderShip"));
 const Mission = lazy(() => import("../components/Company/Misson"));
 const VerticalCarousel = lazy(() => import("../components/Carousel"));
 const Banner = lazy(() => import("../components/Company/Banner"));
+const TechnologyPage = lazy(() =>
+  import("../components/Company/TechnologyPage")
+);
 
 const DevelopmentTimeline = lazy(() =>
   import("../components/Company/DevelopmentTimeline")
 );
+const Carrers = lazy(() => import("../components/Company/Careers"));
 
 const Company = () => {
   const { t } = useTranslation();
@@ -64,8 +68,10 @@ const Company = () => {
       label: t("developerTimeline.title"),
       active: false,
     },
+    { id: "TechnologyPage", label: t("TechnologyPage.title"), active: false },
     { id: "coreValues", label: t("coreValues.title"), active: false },
     { id: "mission", label: t("mission.title"), active: false },
+    { id: "Carrers", label: t("mission.title"), active: false },
     { id: "leadership", label: t("leadership.title"), active: false },
   ];
 
@@ -98,7 +104,7 @@ const Company = () => {
   const handleSectionClick = (id) => {
     const element = document.getElementById(id);
     if (element) {
-      const offset = element.offsetTop - 100;
+      const offset = element.offsetTop - 80;
       window.scrollTo({
         top: offset,
         behavior: "smooth",
@@ -129,16 +135,6 @@ const Company = () => {
         />
 
         <div className="bg-gray-50 ">
-          <div id="companyOverview">
-            <div className="bg-[#B6CBBD] p-4 h-[200px] flex flex-col justify-center items-center  md:hidden">
-              <h1 className="text-xl text-primary font-notoSansJP md:text-3xl font-bold">
-                {t("companyOverview.title")}
-              </h1>
-              <p className="text-sm text-gray-700 font-notoSansJP font-medium md:text-lg mt-2">
-                {t("companyOverview.description")}
-              </p>
-            </div>
-          </div>
           {/* <div>
             <Timeline />
           </div> */}
@@ -146,13 +142,19 @@ const Company = () => {
           <div id="developerTimeline" className=" min-h-[30vh]">
             <DevelopmentTimeline />
           </div>
+          <div id="TechnologyPage" className=" min-h-[30vh]">
+            <TechnologyPage />
+          </div>
 
-          <div id="coreValues" className="container min-h-[30vh] ">
+          <div id="coreValues" className=" min-h-[30vh] ">
             <CoreValues values={coreValues} />
           </div>
 
-          <div id="mission" className="container min-h-[40vh]">
+          <div id="mission" className=" min-h-[40vh]">
             <Mission mission={t("mission.description")} />
+          </div>
+          <div id="Carrers" className=" min-h-[40vh]">
+            <Carrers />
           </div>
 
           <div id="leadership" className="container">

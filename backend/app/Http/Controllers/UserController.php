@@ -288,7 +288,7 @@ public function register(Request $request)
     // Xác định permissions tự động dựa trên role_id
     $permissions = [];
     switch ($validatedData['role_id']) {
-        case 4: // Role 4 -> Permission 1
+        case 1: // Role 4 -> Permission 1
             $permissions = [1];
             break;
         case 2: // Role 2 -> Permission 2, 3

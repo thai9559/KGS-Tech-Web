@@ -45,7 +45,7 @@ class BlogController extends Controller
         'user_id' => 'required|exists:users,id', // Sử dụng user_id được gửi trong request
         'images' => 'nullable|array',
         'images.*' => 'string',
-        'thumbnail_image' => 'required|string|max:255',
+        'thumbnail_image' => 'nullable|string|max:255',
     ]);
 
     // Tự động tạo slug nếu không được cung cấp

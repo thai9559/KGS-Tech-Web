@@ -38,7 +38,7 @@ const Blog = () => {
   const blogs = blogsData?.data || [];
 
   return (
-    <Layout>
+    <Layout showBanner="true">
       <div className="container mx-auto p-6">
         <BlogPage blogs={blogs} suggestedBlogs={suggestedBlogs} />
       </div>

@@ -2,13 +2,13 @@ import React from "react";
 
 const HeroSection = () => {
   return (
-    <section className="relative bg-gray-50">
+    <section className="relative p-2 bg-gray-50">
       {/* Full-width background image with border radius */}
-      <div className="w-full mx-auto ">
+      <div className="w-full mx-auto border rounded-md overflow-hidden">
         <img
-          src="https://res.cloudinary.com/dtnuj2les/image/upload/v1736306408/high-angle-people-working-desk-min_dbrwxd.jpg"
+          src="https://res.cloudinary.com/dtnuj2les/image/upload/v1738203165/modern-equipped-computer-lab-min_ncs3jc.jpg"
           alt="IT Solutions Banner"
-          className="w-full h-[800px] object-cover  shadow-lg"
+          className="w-full h-[800px] object-cover shadow-lg"
         />
       </div>
       {/* Overlay text */}

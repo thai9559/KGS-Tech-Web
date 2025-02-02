@@ -14,11 +14,12 @@ class PermissionSeeder extends Seeder
     {
         // Tạo quyền
         Permission::insert([
-            ['name' => 'manage_users', 'description' => 'Manage Users'],
-            ['name' => 'create_blogs', 'description' => 'Create Blogs'],
-            ['name' => 'edit_blogs', 'description' => 'Edit Blogs'],
-            ['name' => 'delete_blogs', 'description' => 'Delete Blogs'],
-            ['name' => 'view_reports', 'description' => 'View Reports'],
+            ['name' => 'Full administrative privileges', 'description' => 'Full administrative privileges'],
+            ['name' => 'Users', 'description' => 'Users'],
+            ['name' => 'Blogs', 'description' => 'Blogs'],
+            ['name' => 'Feedback', 'description' => 'Feedback'],
+            ['name' => 'Company', 'description' => 'Company'],
+            ['name' => 'Recruiment', 'description' => 'Recruiment'],
         ]);
     }
 }

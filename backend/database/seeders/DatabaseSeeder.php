@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             BlogSeeder::class,
             CompanySeeder::class,
+            RecruitmentPageSeeder::class,
         ]);
     }
 }
