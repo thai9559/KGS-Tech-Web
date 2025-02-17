@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Drawer, Button, Form, Input, Upload, message, Select } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useCreateRecruitmentMutation } from "../../redux/api/recruitmentApi";
+import { useTranslation } from "react-i18next"; // Import useTranslation từ react-i18next
 
 const { Option } = Select;
 
 const Careers = () => {
+  const { t } = useTranslation(); // Shook để lấy chuỗi từ i18n
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [form] = Form.useForm();
   const [createRecruitment, { isLoading }] = useCreateRecruitmentMutation();
@@ -50,7 +52,7 @@ const Careers = () => {
 
       // Kiểm tra nếu chưa có file CV
       if (!fileList[0]) {
-        message.error("Vui lòng tải lên CV!");
+        message.error(t("Careers.messages.cvRequired"));
         return;
       }
 
@@ -63,85 +65,100 @@ const Careers = () => {
 
       // Xử lý phản hồi từ API
       if (response?.success) {
-        message.success("Nộp đơn thành công!");
+        message.success(t("Careers.messages.submissionSuccess"));
         closeDrawer();
       } else {
         message.warning(
-          response?.message || "Bạn đã ứng tuyển vị trí này rồi."
+          response?.message || t("Careers.messages.submissionError")
         );
       }
     } catch (error) {
       console.error("API Error:", error);
-      message.error("Lỗi khi gửi yêu cầu! Vui lòng thử lại.");
+      message.error(t("Careers.messages.submissionError"));
     }
   };
 
   return (
-    <div className="w-full h-[400px] flex flex-col justify-center items-center bg-gradient-to-b from-blue-50 to-gray-100">
-      <h1 className="text-4xl font-bold text-gray-800 text-center mb-6">
-        Tuyển dụng
+    <div className="w-full min-h-[400px] flex flex-col justify-center items-center bg-gradient-to-b from-blue-50 to-gray-100 px-4 sm:px-8 md:px-12 lg:px-20 text-center">
+      {/* Tiêu đề */}
+      <h1 className="text-3xl sm:text-4xl font-bold font-notoSansJP text-gray-800 mb-4 sm:mb-6">
+        {t("Careers.title")}
       </h1>
-      <p className="text-xl text-gray-700 text-center mb-10">
-        Tham gia đội ngũ của chúng tôi để cùng xây dựng các giải pháp công nghệ
-        tiên tiến.
+
+      {/* Mô tả */}
+      <p className="text-base sm:text-lg px-2 sm:px-5 w-full max-w-2xl text-gray-700 font-notoSansJP mb-6 sm:mb-10">
+        {t("Careers.description")}
       </p>
+
+      {/* Button Apply */}
       <Button
         type="primary"
-        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-10 py-4 rounded-lg"
+        className="bg-blue-500 hover:bg-blue-600 text-base sm:text-lg text-white font-semibold px-8 sm:px-10 py-3 sm:py-4 rounded-lg"
         onClick={showDrawer}
       >
-        Ứng tuyển ngay
+        {t("Careers.applyNow")}
       </Button>
 
-      {/* Drawer */}
+      {/* Drawer (Responsive Width) */}
       <Drawer
-        title="Nộp đơn ứng tuyển"
+        title={t("Careers.drawerTitle")}
         placement="right"
         onClose={closeDrawer}
         open={isDrawerOpen}
-        width={400}
+        width="400" // Drawer sẽ chiếm 90% màn hình trên mobile
+        className="sm:w-[400px]" // Khi màn hình sm (640px+) thì rộng 400px
       >
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
           <Form.Item
-            label="Họ và Tên"
+            label={t("Careers.form.fullname")}
             name="fullname"
             rules={[{ required: true }]}
           >
-            <Input placeholder="Nhập họ và tên" />
+            <Input placeholder={t("Careers.form.fullname")} />
           </Form.Item>
+
           <Form.Item
-            label="Email"
+            label={t("Careers.form.email")}
             name="email"
             rules={[{ required: true, type: "email" }]}
           >
-            <Input placeholder="Nhập email" />
+            <Input placeholder={t("Careers.form.email")} />
           </Form.Item>
+
           <Form.Item
-            label="Số điện thoại"
+            label={t("Careers.form.phone")}
             name="phone"
             rules={[{ required: true }]}
           >
-            <Input placeholder="Nhập số điện thoại" />
+            <Input placeholder={t("Careers.form.phone")} />
           </Form.Item>
+
           <Form.Item
-            label="Vị trí ứng tuyển"
+            label={t("Careers.form.position")}
             name="position"
             rules={[{ required: true }]}
           >
-            <Select placeholder="Chọn vị trí" onChange={handlePositionChange}>
-              <Option value="Frontend Developer">Frontend Developer</Option>
-              <Option value="Backend Developer">Backend Developer</Option>
+            <Select
+              placeholder={t("Careers.form.selectPosition")}
+              onChange={handlePositionChange}
+            >
+              <Option value="Frontend Developer">
+                {t("Careers.form.frontend")}
+              </Option>
+              <Option value="Backend Developer">
+                {t("Careers.form.backend")}
+              </Option>
             </Select>
           </Form.Item>
 
           {/* Hiển thị Select công nghệ tùy theo vị trí ứng tuyển */}
           {selectedPosition === "Frontend Developer" && (
             <Form.Item
-              label="Công nghệ Frontend"
+              label={t("Careers.form.technology")}
               name="technology"
               rules={[{ required: true }]}
             >
-              <Select placeholder="Chọn công nghệ">
+              <Select placeholder={t("Careers.form.technology")}>
                 <Option value="ReactJS">ReactJS</Option>
                 <Option value="VueJS">VueJS</Option>
               </Select>
@@ -149,18 +166,21 @@ const Careers = () => {
           )}
           {selectedPosition === "Backend Developer" && (
             <Form.Item
-              label="Công nghệ Backend"
+              label={t("Careers.form.technology")}
               name="technology"
               rules={[{ required: true }]}
             >
-              <Select placeholder="Chọn công nghệ">
+              <Select placeholder={t("Careers.form.technology")}>
                 <Option value="PHP + Laravel">PHP + Laravel</Option>
                 <Option value="NodeJS - NestJS">NodeJS - NestJS</Option>
               </Select>
             </Form.Item>
           )}
 
-          <Form.Item label="Tải lên CV" rules={[{ required: true }]}>
+          <Form.Item
+            label={t("Careers.form.uploadCv")}
+            rules={[{ required: true }]}
+          >
             <Upload
               beforeUpload={() => false} // Ngăn không cho tải lên ngay, chỉ lưu vào state
               accept=".pdf,.doc,.docx"
@@ -168,13 +188,18 @@ const Careers = () => {
               onChange={handleFileChange}
             >
               <Button icon={<UploadOutlined />}>
-                Chọn file CV (PDF, DOC, DOCX)
+                {t("Careers.form.cvPlaceholder")}
               </Button>
             </Upload>
           </Form.Item>
 
-          <Button type="primary" htmlType="submit" loading={isLoading}>
-            Nộp đơn
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={isLoading}
+            className="w-full"
+          >
+            {t("Careers.form.submit")}
           </Button>
         </Form>
       </Drawer>

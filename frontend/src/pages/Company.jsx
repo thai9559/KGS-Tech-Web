@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import LayoutCompany from "../components/LayoutCompanyt";
 import Timeline from "../components/Company/TimeLine";
-
+import ScrollToTop from "../components/ScrollToTop";
 // Lazy load components
 const CoreValues = lazy(() => import("../components/Company/CoreValues"));
 const CompanyOverview = lazy(() =>
@@ -69,9 +69,10 @@ const Company = () => {
       active: false,
     },
     { id: "TechnologyPage", label: t("TechnologyPage.title"), active: false },
-    { id: "coreValues", label: t("coreValues.title"), active: false },
     { id: "mission", label: t("mission.title"), active: false },
-    { id: "Carrers", label: t("mission.title"), active: false },
+    { id: "coreValues", label: t("coreValues.title"), active: false },
+
+    { id: "Carrers", label: "Carrers", active: false },
     { id: "leadership", label: t("leadership.title"), active: false },
   ];
 
@@ -145,22 +146,22 @@ const Company = () => {
           <div id="TechnologyPage" className=" min-h-[30vh]">
             <TechnologyPage />
           </div>
-
+          <div id="mission" className=" min-h-[40vh]">
+            <Mission mission={t("mission.description")} />
+          </div>
           <div id="coreValues" className=" min-h-[30vh] ">
             <CoreValues values={coreValues} />
           </div>
 
-          <div id="mission" className=" min-h-[40vh]">
-            <Mission mission={t("mission.description")} />
-          </div>
           <div id="Carrers" className=" min-h-[40vh]">
             <Carrers />
           </div>
 
-          <div id="leadership" className="container">
+          <div id="leadership" className="">
             <Leadership leaders={leaders} />
           </div>
         </div>
+        <ScrollToTop />
       </Suspense>
     </LayoutCompany>
   );

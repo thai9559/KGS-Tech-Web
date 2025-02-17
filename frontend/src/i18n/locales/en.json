@@ -17,7 +17,6 @@
   "tagManagement": "Tag Management",
   "recruitmentManagement": "Recruitment Management",
   "recruitment": "Recruitment",
-
   "logout": "Logout",
   "manage": "Manage",
   "stats": {
@@ -131,6 +130,10 @@
     "subtitle": "Innovating for a brighter future.",
     "aboutUs": {
       "title": "About Us",
+      "learnMore": "Learn More",
+      "contactUs": "Contact Us",
+      "slogan": "\"Innovating Today for a Smarter Tomorrow\"",
+      "trustBy": "Trusted by 100+ Companies",
       "description": "We offer comprehensive technology solution development services, including web system application development, mobile app development, and website creation. With a team of highly experienced technicians, we create products that optimize workflows, enhance operational efficiency, and deliver exceptional user experiences across all platforms. Whether you need flexible web applications, seamless mobile apps, or professional websites, we are committed to providing effective and tailored solutions to help your business thrive in the digital age."
     },
     "services": {
@@ -638,5 +641,143 @@
     "visible": "Visible",
     "invisible": "Invisible",
     "no_data": "No data"
-  }
+  },
+  "FeaturedServices": {
+    "services": {
+      "web_development": {
+        "title": "Web Development",
+        "description": "Providing robust and optimized web system development solutions for businesses."
+      },
+      "mobile_development": {
+        "title": "Mobile App Development",
+        "description": "Designing and developing high-quality mobile apps for Android and iOS."
+      },
+      "website_development": {
+        "title": "Website Development",
+        "description": "Building modern websites, SEO-friendly, and optimizing user experience."
+      }
+    },
+    "cta": {
+      "view_more": "View More"
+    },
+    "title": "Featured Services"
+  },
+  "CallToAction": {
+    "title": "Ready to Transform Your Business?",
+    "description": "Partner with us to harness the power of technology and take your company to the next level. Contact us today for a free consultation and see the difference we can make!",
+    "button": "Contact Us Today!"
+  },
+  "TechnologyPage": {
+    "title": "Featured Technologies",
+    "technologies": [
+      {
+        "title": "Artificial Intelligence"
+      },
+      {
+        "title": "Data Analytics"
+      },
+      {
+        "title": "IoT"
+      },
+      {
+        "title": "Smart Devices"
+      },
+      {
+        "title": "Cloud Computing"
+      },
+      {
+        "title": "System Design"
+      }
+    ]
+  },
+  "Careers": {
+    "title": "Recruitment",
+    "description": "Join our team to build innovative technological solutions that drive industries forward. We focus on creating cutting-edge products that enhance businesses and improve lives. If you're passionate about working with the latest technologies like AI, IoT, or Cloud Computing, come and be a part of our dynamic team where your skills and ideas will shape the future.",
+    "applyNow": "Apply Now",
+    "drawerTitle": "Submit Application",
+    "form": {
+      "fullname": "Full Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "position": "Position Applied For",
+      "selectPosition": "Select Position",
+      "frontend": "Frontend Developer",
+      "backend": "Backend Developer",
+      "technology": "Technology",
+      "uploadCv": "Upload CV",
+      "submit": "Submit Application",
+      "cvPlaceholder": "Choose CV file (PDF, DOC, DOCX)"
+    },
+    "messages": {
+      "cvRequired": "Please upload your CV!",
+      "submissionSuccess": "Application submitted successfully!",
+      "submissionError": "Error submitting the application. Please try again."
+    }
+  },
+  "industries": {
+    "title": "Industries",
+    "learnMore": "Learn More",
+    "E-commerce": {
+      "title": "E-commerce",
+      "description": "Providing tailored solutions for online stores, payment systems, and customer management."
+    },
+    "Healthcare": {
+      "title": "Healthcare",
+      "description": "Offering technology solutions to improve patient care, manage hospital records, and telemedicine services."
+    },
+    "Finance": {
+      "title": "Finance",
+      "description": "Helping financial institutions with digital transformation, fintech solutions, and secure online transactions."
+    },
+    "Education": {
+      "title": "Education",
+      "description": "Building e-learning platforms, student management systems, and digital classrooms for schools and universities."
+    },
+    "TravelHospitality": {
+      "title": "Travel & Hospitality",
+      "description": "Developing apps and websites for the travel industry, including booking systems, travel management, and customer service solutions."
+    },
+    "realEstate": {
+      "title": "Real Estate",
+      "description": "Creating real estate platforms, property management systems, and digital solutions for buyers and sellers."
+    }
+  },
+  "servicesBanner": [
+    {
+      "icon": "fa-laptop-code",
+      "title": "Custom Software",
+      "subtitle": "Tailored IT Solutions",
+      "description": "We create fully customized software solutions designed specifically for your business to improve workflow, optimize efficiency, and drive growth.",
+      "price": "1,500.00",
+      "duration": "2-4 weeks",
+      "highlighted": true
+    },
+    {
+      "icon": "fa-headset",
+      "title": "Technical Support",
+      "subtitle": "24/7 Assistance",
+      "description": "Round-the-clock technical support for troubleshooting and resolving IT issues related to hardware, software, and network systems.",
+      "price": "150.00",
+      "duration": "Per Hour",
+      "highlighted": false
+    },
+    {
+      "icon": "fa-cloud-upload-alt",
+      "title": "Cloud Migration Services",
+      "subtitle": "Seamless Cloud Integration",
+      "description": "Migrate your data, applications, and infrastructure to the cloud with no downtime, ensuring scalability, security, and efficiency for your business operations.",
+      "price": "1,000.00",
+      "duration": "1-2 weeks",
+      "highlighted": false
+    },
+    {
+      "icon": "fa-shield-alt",
+      "title": "Cybersecurity Solutions",
+      "subtitle": "Comprehensive Security Audit",
+      "description": "Our cybersecurity experts will assess your current infrastructure, perform vulnerability testing, and implement security measures to safeguard your data and networks from cyber threats.",
+      "price": "800.00",
+      "duration": "1-2 weeks",
+      "highlighted": false
+    }
+  ]
 }

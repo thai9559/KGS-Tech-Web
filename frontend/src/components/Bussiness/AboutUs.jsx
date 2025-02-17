@@ -1,29 +1,32 @@
 import React from "react";
+import { FaDesktop, FaMobileAlt, FaGlobe } from "react-icons/fa"; // Import các icon
+import { useTranslation } from "react-i18next"; // Import useTranslation từ react-i18next
 
-function AboutUs({ title, description, image }) {
+function AboutUs({ image }) {
+  const { t } = useTranslation(); // Sử dụng hook useTranslation để lấy các chuỗi ngôn ngữ
+
   return (
     <section className="bg-gray-50 py-12">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-12 px-6">
         {/* Phần text */}
         <div className="space-y-6">
           <h2 className="text-4xl font-extrabold font-notoSansJP text-gray-800">
-            {title || "About Our Company"}
+            {t("BusinessPage.aboutUs.title")}
           </h2>
           <p className="text-lg text-gray-700 leading-relaxed">
-            {description ||
-              "We are a leading IT company dedicated to delivering innovative solutions that transform businesses and enhance productivity. Our mission is to empower organizations through state-of-the-art technology."}
+            {t("BusinessPage.aboutUs.description")}
           </p>
           {/* Điểm nhấn */}
           <p className="text-md text-blue-600 font-semibold">
-            "Innovating Today for a Smarter Tomorrow"
+            {t("BusinessPage.aboutUs.slogan")}
           </p>
           {/* Nút CTA */}
           <div className="space-x-4">
             <button className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700">
-              Learn More
+              {t("BusinessPage.aboutUs.learnMore")}
             </button>
             <button className="px-6 py-3 bg-transparent border border-blue-600 text-blue-600 font-semibold rounded-lg shadow hover:bg-blue-600 hover:text-white">
-              Contact Us
+              {t("BusinessPage.aboutUs.contactUs")}
             </button>
           </div>
         </div>
@@ -37,7 +40,7 @@ function AboutUs({ title, description, image }) {
           />
           {/* Text nổi bật trên hình ảnh */}
           <div className="absolute top-0 left-0 bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-tr-lg rounded-bl-lg">
-            Trusted by 100+ Companies
+            {t("BusinessPage.aboutUs.trustBy")}
           </div>
         </div>
       </div>

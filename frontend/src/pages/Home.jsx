@@ -30,11 +30,12 @@ export default function Home() {
 
   const sections = [
     { id: "aboutUs", label: "About Us", active: false },
-    { id: "benefits", label: "Benefits", active: false },
+
     { id: "images", label: "Images", active: false },
     { id: "logos", label: "Logos", active: false },
     // { id: "message", label: "Message", active: false },
     { id: "testimonials", label: "testimonials", active: false },
+    { id: "CalltoAction", label: "CalltoAction", active: false },
     { id: "blogSlider", label: "Blog Slider", active: false },
   ];
 
@@ -42,7 +43,7 @@ export default function Home() {
 
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
-    const headerHeight = 60; // Điều chỉnh chiều cao của header nếu cần
+    const headerHeight = 60;
     const updatedSections = sections.map((section) => {
       const element = document.getElementById(section.id);
       const offsetTop = element?.offsetTop || 0;
@@ -64,10 +65,9 @@ export default function Home() {
   const handleSectionClick = (id) => {
     const element = document.getElementById(id);
     if (element) {
-      const headerHeight = 60; // Điều chỉnh độ cao của header nếu cần
+      const headerHeight = 60;
       const offsetTop = element.offsetTop;
 
-      // Cuộn đến vị trí phần tử, trừ đi độ cao của header
       window.scrollTo({
         top: offsetTop - headerHeight,
         behavior: "smooth",
@@ -95,8 +95,8 @@ export default function Home() {
     "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/fpt-removebg-preview_dlhdq6.png",
     "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/hitachi-removebg-preview_geekow.png",
     "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/vng-removebg-preview_sokbcl.png",
-    "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/vng-removebg-preview_sokbcl.png",
-    "https://res.cloudinary.com/dtnuj2les/image/upload/v1735886392/vng-removebg-preview_sokbcl.png",
+    "https://res.cloudinary.com/dtnuj2les/image/upload/v1738738065/logo-vnpt-inkythuatso-01-01-14-56-59_qi2h5k.jpg",
+    "https://res.cloudinary.com/dtnuj2les/image/upload/v1738737959/NEC-Logo.wine_jc4dvb.png",
   ];
 
   const title = t("message.title");

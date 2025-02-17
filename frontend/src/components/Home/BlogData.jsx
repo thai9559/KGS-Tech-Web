@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
 import { useGetBlogsQuery } from "../../redux/api/blogApi";
-
+import { useTranslation } from "react-i18next";
 const BlogList = () => {
   const { data, isLoading, isFetching, error, refetch } = useGetBlogsQuery();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   console.log(data);
   // Tự động reload dữ liệu mỗi 60 giây
   useEffect(() => {
@@ -58,7 +59,7 @@ const BlogList = () => {
       </Helmet>
 
       <h2 className="text-4xl font-notoSansJP font-extrabold text-center text-gray-800 mb-8">
-        Tin tức
+        {t("blog")}
       </h2>
 
       <div className="flex flex-col lg:flex-row lg:gap-4">
@@ -85,7 +86,7 @@ const BlogList = () => {
         </div>
 
         <div className="w-full lg:w-4/12 flex flex-col gap-2">
-          {blogs.slice(1).map((blog) => (
+          {blogs.slice(0, 4).map((blog) => (
             <div
               key={blog.id}
               className="bg-white border-2 border-gray-200 cursor-pointer rounded-lg shadow-lg p-4 flex flex-col sm:flex-row gap-4"

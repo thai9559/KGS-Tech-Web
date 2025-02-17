@@ -87,7 +87,7 @@ const Login = () => {
       className="relative flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat"
       style={{
         backgroundImage:
-          "url('https://res.cloudinary.com/dtnuj2les/image/upload/v1736683356/elegant-cozy-office-with-laptop-min_gmvp3p.jpg')",
+          "url('https://res.cloudinary.com/dtnuj2les/image/upload/v1739772710/contemporary-city-with-lake_q45cgq.png')",
       }}
     >
       {/* Language Selector */}

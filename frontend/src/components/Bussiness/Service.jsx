@@ -70,17 +70,17 @@ const Service = () => {
         </div>
 
         {/* Grid Layout for Mobile and Desktop */}
-        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4 p-6 mt-10">
+        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4 p-4 mt-10">
           {services.map((benefit) => (
             <Animation animationType="fade-up" key={benefit.title}>
-              <div className="relative p-8 bg-[#1ea0ff] text-center text-white shadow-2xl overflow-hidden group transition-all duration-500 h-[240px] sm:h-[280px]">
+              <div className="relative p-4 bg-[#1ea0ff] text-center justify-center text-white shadow-2xl overflow-hidden group transition-all duration-500  h-full max-h-[280px] ">
                 {/* Mobile interface (iPad and below) */}
                 <div className="flex flex-col items-center lg:hidden">
                   {benefit.icon}
-                  <h2 className="text-xl font-notoSansJP font-bold mt-2 px-4">
+                  <h2 className="text-base font-notoSansJP font-bold mt-2 px-4">
                     {benefit.title}
                   </h2>
-                  <p className="text-base font-notoSansJP mt-2 px-4">
+                  <p className="text-sm font-notoSansJP mt-2 px-4">
                     {benefit.description}
                   </p>
                 </div>

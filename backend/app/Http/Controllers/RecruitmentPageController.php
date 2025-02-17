@@ -16,26 +16,22 @@ class RecruitmentPageController extends Controller
 
     public function store(Request $request)
 {
-    // Kiểm tra nếu email đã ứng tuyển cho cùng một vị trí
-    $existingApplication = RecruitmentPage::where('email', $request->email)
-        ->where('position_apply', $request->position_apply)
-        ->exists(); // Sử dụng exists() để trả về true/false
+    $existingApplication = RecruitmentPage::where('email', $request->email)->exists();
 
     if ($existingApplication) {
         return response()->json([
             'success' => false,
             'message' => 'Bạn đã ứng tuyển vị trí này rồi.'
-        ], 200); // Trả về 200 OK nhưng `success: false`
+        ], 200); 
     }
 
-    // Xác thực dữ liệu đầu vào
     $request->validate([
         'fullname' => 'required|string|max:255',
         'email' => 'required|email',
         'phone' => 'required|string|max:20',
         'position_apply' => 'required|string|max:255',
         'technology' => 'nullable|string|max:255',
-        'cv' => 'required|file|mimes:pdf,doc,docx|max:2048', // 2MB
+        'cv' => 'required|file|mimes:pdf,doc,docx|max:4068', // 2MB
     ]);
 
     // Kiểm tra nếu có file CV

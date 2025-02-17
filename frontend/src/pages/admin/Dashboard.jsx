@@ -5,6 +5,7 @@ import {
   TeamOutlined,
   FormOutlined,
   CommentOutlined,
+  AppstoreAddOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -179,12 +180,12 @@ const Dashboard = () => {
               style={cardStyles}
               hoverable
               bodyStyle={{
-                backgroundColor: "#fff3e0",
+                backgroundColor: "#ffddff",
                 padding: "20px",
                 border: "none",
               }}
             >
-              <CommentOutlined
+              <AppstoreAddOutlined
                 style={{
                   fontSize: "48px",
                   color: "#ff6f00",

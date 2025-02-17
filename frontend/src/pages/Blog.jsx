@@ -1,17 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import BlogPage from "../components/Blog/BlogPage";
 import Layout from "../components/Layout";
 import { useGetBlogsQuery } from "../redux/api/blogApi";
 
 const Blog = () => {
   // Gọi API để lấy danh sách blog
-  const { data: blogsData, isLoading, isError } = useGetBlogsQuery();
-
-  const suggestedBlogs = [
+  const defaultBlogs = [
     { title: "Tìm hiểu về Hooks trong React", link: "#" },
     { title: "Cách sử dụng Context API", link: "#" },
     { title: "Thiết kế giao diện với Material-UI", link: "#" },
   ];
+
+  // State để lưu danh sách blog
+  const [suggestedBlogs, setSuggestedBlogs] = useState([]);
+
+  // Gọi API lấy danh sách blogs
+  const { data: blogsData, isLoading, isError } = useGetBlogsQuery();
+
+  useEffect(() => {
+    if (blogsData && blogsData.data) {
+      const blogs = blogsData.data.map((blog) => ({
+        title: blog.title,
+        link: blog.canonical_url || "#",
+      }));
+
+      // Nếu API có dữ liệu, cập nhật suggestedBlogs
+      if (blogs.length > 0) {
+        setSuggestedBlogs(blogs);
+      } else {
+        setSuggestedBlogs(defaultBlogs); // Nếu API rỗng, gán danh sách mặc định
+      }
+    } else {
+      setSuggestedBlogs(defaultBlogs); // Nếu API lỗi hoặc không có dữ liệu
+    }
+  }, [blogsData]);
 
   // Xử lý trạng thái tải và lỗi
   if (isLoading) {

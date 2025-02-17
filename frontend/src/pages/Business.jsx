@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import LayoutBusiness from "../components/LayoutBusiness";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-
+import ScrollToTop from "../components/ScrollToTop";
 // Lazy load components
 const AboutUs = lazy(() => import("../components/Bussiness/AboutUs"));
 const Services = lazy(() => import("../components/Bussiness/Services"));
@@ -11,6 +11,9 @@ const Testimonials = lazy(() => import("../components/Bussiness/Testimonials"));
 const Contact = lazy(() => import("../components/Bussiness/Contact"));
 const Service = lazy(() => import("../components/Bussiness/Service"));
 const VerticalCarousel = lazy(() => import("../components/Carousel"));
+const IndustriesPage = lazy(() =>
+  import("../components/Bussiness/IndustriesPage")
+);
 
 function Business() {
   const { t } = useTranslation();
@@ -18,11 +21,10 @@ function Business() {
   const [activeSection, setActiveSection] = useState("aboutUs");
 
   const sections = [
-    { id: "aboutUs", label: t("BusinessPage.aboutUs.title"), active: false },
     { id: "services", label: t("BusinessPage.services.title"), active: false },
     {
-      id: "testimonials",
-      label: t("BusinessPage.whatClientsSay.title"),
+      id: "IndustriesPage",
+      label: t("BusinessPage.IndustriesPage.title"),
       active: false,
     },
     { id: "contact", label: t("BusinessPage.contact.title"), active: false },
@@ -105,6 +107,9 @@ function Business() {
           <div id="services" className="container">
             <Service />
           </div>
+          <div id="IndustriesPage" className="container">
+            <IndustriesPage />
+          </div>
 
           <div id="contact" className="container">
             <Contact
@@ -113,6 +118,7 @@ function Business() {
             />
           </div>
         </div>
+        <ScrollToTop />
       </Suspense>
     </LayoutBusiness>
   );

@@ -21,42 +21,49 @@ const Benefit = () => {
       year: "2025",
       title: t("TimeLine.title5"),
       description: t("TimeLine.description5"),
-      image: "https://res.cloudinary.com/dtnuj2les/image/upload/v1736306407/medium-shot-people-working-together-min_x6by3n.jpg",
+      image:
+        "https://res.cloudinary.com/dtnuj2les/image/upload/v1736306407/medium-shot-people-working-together-min_x6by3n.jpg",
       background: "#ffffff",
     },
     {
       year: "2023",
       title: t("TimeLine.title4"),
       description: t("TimeLine.description4"),
-      image: "https://res.cloudinary.com/dtnuj2les/image/upload/v1736306405/labor-union-members-working-together-min_gadspn.jpg",
-      background: "https://res.cloudinary.com/dtnuj2les/image/upload/v1736393039/modern-background-with-lines_e35chm.jpg",
+      image:
+        "https://res.cloudinary.com/dtnuj2les/image/upload/v1736306405/labor-union-members-working-together-min_gadspn.jpg",
+      background:
+        "https://res.cloudinary.com/dtnuj2les/image/upload/v1736393039/modern-background-with-lines_e35chm.jpg",
     },
     {
       year: "2022",
       title: t("TimeLine.title3"),
       description: t("TimeLine.description3"),
-      image: "https://res.cloudinary.com/dtnuj2les/image/upload/v1736306406/medium-shot-smiley-colleagues-working-together-min_ahrn7i.jpg",
+      image:
+        "https://res.cloudinary.com/dtnuj2les/image/upload/v1736306406/medium-shot-smiley-colleagues-working-together-min_ahrn7i.jpg",
       background: "#ffffff",
     },
     {
       year: "2020",
       title: t("TimeLine.title2"),
       description: t("TimeLine.description2"),
-      image: "https://res.cloudinary.com/dtnuj2les/image/upload/v1735895694/people-learning-language-medium-shot_mlfjha.jpg",
-      background: "https://res.cloudinary.com/dtnuj2les/image/upload/v1736393039/modern-background-with-lines_e35chm.jpg",
+      image:
+        "https://res.cloudinary.com/dtnuj2les/image/upload/v1735895694/people-learning-language-medium-shot_mlfjha.jpg",
+      background:
+        "https://res.cloudinary.com/dtnuj2les/image/upload/v1736393039/modern-background-with-lines_e35chm.jpg",
     },
     {
       year: "2018",
       title: t("TimeLine.title1"),
       description: t("TimeLine.description1"),
-      image: "https://res.cloudinary.com/dtnuj2les/image/upload/v1735895946/close-up-young-colleagues-having-meeting_akm1o4.jpg",
+      image:
+        "https://res.cloudinary.com/dtnuj2les/image/upload/v1735895946/close-up-young-colleagues-having-meeting_akm1o4.jpg",
       background: "#ffffff",
     },
   ];
 
   return (
     <div className="flex flex-col items-center py-8 bg-white">
-      <h2 className="text-4xl font-bold text-orange-700 mb-8">
+      <h2 className="text-3xl font-bold text-black mb-8">
         <Animation animationType="zoom-in">{t("TimeLine.title")}</Animation>
       </h2>
 
@@ -97,12 +104,12 @@ const Benefit = () => {
                       }`}
                     >
                       <div className="flex items-center ">
-                        <div className="text-7xl font-bold">
-                          {event.year}
-                        </div>
+                        <div className="text-7xl font-bold">{event.year}</div>
                         <div
                           className={`ml-2 flex flex-col text-2xl items-start justify-center font-light ${
-                            isDarkBackground ? "text-orange-300" : "text-orange-700"
+                            isDarkBackground
+                              ? "text-orange-300"
+                              : "text-orange-700"
                           }`}
                         >
                           <span>KGS</span>
@@ -111,7 +118,7 @@ const Benefit = () => {
                       </div>
                       <h3 className="text-3xl font-bold mt-4">{event.title}</h3>
                       <p className="font-medium font-notoSansJP mt-4 leading-relaxed">
-                      {formatDescription(event.description)}
+                        {formatDescription(event.description)}
                       </p>
                     </div>
                   </div>
@@ -148,10 +155,14 @@ const Benefit = () => {
                       }`}
                     >
                       <div className="flex items-center">
-                        <div className="text-5xl font-bold">{event.year.substring(2)}</div>
+                        <div className="text-5xl font-bold">
+                          {event.year.substring(2)}
+                        </div>
                         <div
                           className={`ml-2 flex flex-col text-lg items-start justify-center font-light ${
-                            isDarkBackground ? "text-orange-300" : "text-orange-700"
+                            isDarkBackground
+                              ? "text-orange-300"
+                              : "text-orange-700"
                           }`}
                         >
                           <span>KGS</span>

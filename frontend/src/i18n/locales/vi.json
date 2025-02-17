@@ -128,6 +128,10 @@
     "subtitle": "Đổi mới vì một tương lai tươi sáng.",
     "aboutUs": {
       "title": "Về chúng tôi",
+      "learnMore": "Tìm hiểu thêm",
+      "contactUs": "Liên hệ",
+      "slogan": "\"Đổi mới hôm nay cho một ngày mai thông minh hơn\"",
+      "trustBy": "Được tin tưởng bởi hơn 100 công ty",
       "description": "Chúng tôi cung cấp dịch vụ phát triển các giải pháp công nghệ toàn diện, bao gồm phát triển ứng dụng hệ thống web, ứng dụng di động và website. Với đội ngũ kỹ thuật viên giàu kinh nghiệm, chúng tôi tạo ra các sản phẩm tối ưu hóa quy trình làm việc, nâng cao hiệu quả hoạt động và mang đến trải nghiệm người dùng tuyệt vời trên mọi nền tảng. Dù bạn cần ứng dụng web linh hoạt, app di động mượt mà hay website chuyên nghiệp, chúng tôi luôn cam kết cung cấp giải pháp phù hợp và hiệu quả, giúp doanh nghiệp bạn phát triển mạnh mẽ trong thời đại số."
     },
     "services": {
@@ -632,5 +636,143 @@
     "visible": "Hiển thị",
     "invisible": "Không hiển thị",
     "no_data": "Không có dữ liệu"
-  }
+  },
+  "FeaturedServices": {
+    "services": {
+      "web_development": {
+        "title": "Phát triển hệ thống web",
+        "description": "Cung cấp giải pháp phát triển hệ thống web mạnh mẽ và tối ưu cho doanh nghiệp."
+      },
+      "mobile_development": {
+        "title": "Phát triển ứng dụng di động",
+        "description": "Thiết kế và phát triển ứng dụng di động chất lượng cao cho Android và iOS."
+      },
+      "website_development": {
+        "title": "Phát triển website",
+        "description": "Xây dựng các trang web hiện đại, chuẩn SEO và tối ưu hóa trải nghiệm người dùng."
+      }
+    },
+    "cta": {
+      "view_more": "Xem thêm"
+    },
+    "title": "Dịch vụ nổi bật"
+  },
+  "CallToAction": {
+    "title": "Sẵn sàng để chuyển mình và phát triển doanh nghiệp của bạn?",
+    "description": "Hợp tác với chúng tôi để tận dụng sức mạnh công nghệ và đưa công ty của bạn lên một tầm cao mới. Liên hệ với chúng tôi hôm nay để nhận tư vấn miễn phí và cảm nhận sự khác biệt mà chúng tôi có thể mang lại!",
+    "button": "Liên hệ ngay hôm nay!"
+  },
+  "TechnologyPage": {
+    "title": "Công nghệ nổi bật",
+    "technologies": [
+      {
+        "title": "Trí tuệ nhân tạo"
+      },
+      {
+        "title": "Phân tích dữ liệu"
+      },
+      {
+        "title": "IoT"
+      },
+      {
+        "title": "Thiết bị thông minh"
+      },
+      {
+        "title": "Điện toán đám mây"
+      },
+      {
+        "title": "Thiết kế hệ thống"
+      }
+    ]
+  },
+  "Careers": {
+    "title": "Tuyển dụng",
+    "description": "Hãy tham gia vào đội ngũ của chúng tôi để xây dựng các giải pháp công nghệ sáng tạo giúp thúc đẩy các ngành công nghiệp. Chúng tôi tập trung vào việc tạo ra các sản phẩm tiên tiến giúp nâng cao doanh nghiệp và cải thiện cuộc sống. Nếu bạn đam mê làm việc với các công nghệ mới như AI, IoT, hay điện toán đám mây, hãy gia nhập đội ngũ năng động của chúng tôi.",
+    "applyNow": "Ứng tuyển ngay",
+    "drawerTitle": "Nộp đơn ứng tuyển",
+    "form": {
+      "fullname": "Họ và Tên",
+      "email": "Email",
+      "phone": "Số điện thoại",
+      "position": "Vị trí ứng tuyển",
+      "selectPosition": "Chọn vị trí",
+      "frontend": "Frontend Developer",
+      "backend": "Backend Developer",
+      "technology": "Công nghệ",
+      "uploadCv": "Tải lên CV",
+      "submit": "Nộp đơn",
+      "cvPlaceholder": "Chọn file CV (PDF, DOC, DOCX)"
+    },
+    "messages": {
+      "cvRequired": "Vui lòng tải lên CV!",
+      "submissionSuccess": "Nộp đơn thành công!",
+      "submissionError": "Lỗi khi gửi yêu cầu! Vui lòng thử lại."
+    }
+  },
+  "industries": {
+    "title": "Ngành nghề",
+    "learnMore": "Tìm hiểu thêm",
+    "E-commerce": {
+      "title": "Thương mại điện tử",
+      "description": "Cung cấp giải pháp cho các cửa hàng trực tuyến, hệ thống thanh toán và quản lý khách hàng."
+    },
+    "Healthcare": {
+      "title": "Y tế",
+      "description": "Cung cấp các giải pháp công nghệ để cải thiện chăm sóc bệnh nhân, quản lý hồ sơ bệnh viện và dịch vụ y tế từ xa."
+    },
+    "Finance": {
+      "title": "Tài chính",
+      "description": "Hỗ trợ các tổ chức tài chính với chuyển đổi số, giải pháp fintech và giao dịch trực tuyến an toàn."
+    },
+    "Education": {
+      "title": "Giáo dục",
+      "description": "Xây dựng nền tảng học trực tuyến, hệ thống quản lý sinh viên và lớp học kỹ thuật số cho các trường học và đại học."
+    },
+    "TravelHospitality": {
+      "title": "Du lịch & Lưu trú",
+      "description": "Phát triển ứng dụng và website cho ngành du lịch, bao gồm hệ thống đặt phòng, quản lý du lịch và các giải pháp dịch vụ khách hàng."
+    },
+    "realEstate": {
+      "title": "Bất động sản",
+      "description": "Tạo ra các nền tảng bất động sản, hệ thống quản lý tài sản và giải pháp số cho người mua và người bán."
+    }
+  },
+  "servicesBanner": [
+    {
+      "icon": "fa-laptop-code",
+      "title": "Phần Mềm Tùy Chỉnh",
+      "subtitle": "Giải Pháp CNTT Theo Yêu Cầu",
+      "description": "Chúng tôi tạo ra các giải pháp phần mềm tùy chỉnh hoàn toàn được thiết kế đặc biệt cho doanh nghiệp của bạn để cải thiện quy trình làm việc, tối ưu hóa hiệu quả và thúc đẩy sự phát triển.",
+      "price": "1,500.00",
+      "duration": "2-4 tuần",
+      "highlighted": true
+    },
+    {
+      "icon": "fa-headset",
+      "title": "Hỗ Trợ Kỹ Thuật",
+      "subtitle": "Hỗ Trợ 24/7",
+      "description": "Hỗ trợ kỹ thuật suốt ngày đêm để xử lý và giải quyết các vấn đề liên quan đến phần cứng, phần mềm và hệ thống mạng.",
+      "price": "150.00",
+      "duration": "Theo Giờ",
+      "highlighted": false
+    },
+    {
+      "icon": "fa-cloud-upload-alt",
+      "title": "Dịch Vụ Di Chuyển Lên Đám Mây",
+      "subtitle": "Tích Hợp Đám Mây Liền Mạch",
+      "description": "Chuyển dữ liệu, ứng dụng và cơ sở hạ tầng của bạn lên đám mây mà không có thời gian gián đoạn, đảm bảo khả năng mở rộng, bảo mật và hiệu quả cho các hoạt động kinh doanh của bạn.",
+      "price": "1,000.00",
+      "duration": "1-2 tuần",
+      "highlighted": false
+    },
+    {
+      "icon": "fa-shield-alt",
+      "title": "Giải Pháp An Ninh Mạng",
+      "subtitle": "Kiểm Tra An Ninh Toàn Diện",
+      "description": "Các chuyên gia bảo mật của chúng tôi sẽ đánh giá cơ sở hạ tầng hiện tại của bạn, thực hiện kiểm tra lỗ hổng và triển khai các biện pháp bảo mật để bảo vệ dữ liệu và mạng của bạn khỏi các mối đe dọa mạng.",
+      "price": "800.00",
+      "duration": "1-2 tuần",
+      "highlighted": false
+    }
+  ]
 }
